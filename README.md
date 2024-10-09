@@ -67,7 +67,8 @@ Open a Pull Request
 
 ## 👪 Our Team
 Pavel Zálešák - SCRUM Master
-Jan Větříšek - UX/UI Blacksmith
+Jan Větříšek - UX Blacksmith
+Mikuláš Novák - UI Cook
 Daniel Grisa - Full Stack Developer
 
 Project Link: https://github.com/UnicornUniversity/project-fourapp/tree/main
