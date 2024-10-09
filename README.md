@@ -1,4 +1,4 @@
-# 🚀 Project Name
+# 🚀 FourApp
 
 Welcome to **FourApp**! 🎉 This repository aims to be an e-shop for electronics.
 
