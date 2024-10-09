@@ -2,15 +2,6 @@
 
 Welcome to **FourApp**! 🎉 This repository aims to be an e-shop for electronics.
 
-## 📖 Table of Contents
-
-- [About the Project](#about-the-project)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#fork-the-project)
-- [Contact](#our-team)
-
 ## 📝 About the Project
 
 Project FourApp is an e-shop for electronics. It's designed to provide space for people to make their lives easier with internet shopping.
@@ -65,7 +56,6 @@ Commit your Changes (git commit -m 'Add some AmazingFeature')
 Push to the Branch (git push origin feature/AmazingFeature)
 Open a Pull Request
 
-#our-team
 ## 👪 Our Team
 Pavel Zálešák - SCRUM Master
 
