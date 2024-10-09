@@ -70,6 +70,7 @@ Open a Pull Request
 
 ## 👪 Our Team
 SCRUM Master - Pavel Zálešák
+
 Full-stack Blacksmith - Jan Větříšek
 
 Daniel Grisa
