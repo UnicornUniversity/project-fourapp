@@ -1,8 +1,6 @@
 # 🚀 Project Name
 
 Welcome to **FourApp**! 🎉 This repository aims to be an e-shop for electronics.
- 
-![Issues](https://img.shields.io/github/issues/username/repository.svg)
 
 ## 📖 Table of Contents
 
@@ -10,8 +8,8 @@ Welcome to **FourApp**! 🎉 This repository aims to be an e-shop for electronic
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [Contact](#contact)
+- [Contributing](#fork-the-project)
+- [Contact](#our-team)
 
 ## 📝 About the Project
 
@@ -53,7 +51,8 @@ Run the project:
 bash
 Zkopírovat kód
 npm start
-📚 Usage
+
+## 📚 Usage
 Here's a simple example of how to use this project:
 
 javascript
@@ -63,13 +62,13 @@ project.start();
 🤝 Contributing
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-Fork the Project
+## 🔱 Fork the Project
 Create your Feature Branch (git checkout -b feature/AmazingFeature)
 Commit your Changes (git commit -m 'Add some AmazingFeature')
 Push to the Branch (git push origin feature/AmazingFeature)
 Open a Pull Request
 
-📬 Get to know our team
+## 👪 Our Team
 SCRUM Master - Pavel Zálešák
 
 Project Link: https://github.com/UnicornUniversity/project-fourapp/tree/main
