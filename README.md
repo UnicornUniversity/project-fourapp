@@ -41,25 +41,22 @@ To get started, follow these simple steps:
 1. Clone the repo:
    ```bash
    git clone https://github.com/UnicornUniversity/project-fourapp.git
-Install dependencies:
-
-bash
-Zkopírovat kód
-npm install
-Run the project:
-
-bash
-Zkopírovat kód
-npm start
+   
+2. Install dependencies:
+   ```bash
+   npm install
+   
+3. Run the project:
+   ```bash
+   npm start
 
 ## 📚 Usage
-Here's a simple example of how to use this project:
+1. Here's a simple example of how to use this project:
+   ```javascript
+   const project = new Project();
+   project.start();
 
-javascript
-Zkopírovat kód
-const project = new Project();
-project.start();
-🤝 Contributing
+## 🤝 Contributing
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
 ## 🔱 Fork the Project
@@ -69,10 +66,8 @@ Push to the Branch (git push origin feature/AmazingFeature)
 Open a Pull Request
 
 ## 👪 Our Team
-SCRUM Master - Pavel Zálešák
-
-UX Blacksmith - Jan Větříšek
-
-Daniel Grisa
+Pavel Zálešák - SCRUM Master
+Jan Větříšek - UX Blacksmith
+Daniel Grisa - Full Stack Developer
 
 Project Link: https://github.com/UnicornUniversity/project-fourapp/tree/main
