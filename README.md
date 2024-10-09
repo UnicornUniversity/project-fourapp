@@ -70,6 +70,7 @@ Open a Pull Request
 
 ## 👪 Our Team
 SCRUM Master - Pavel Zálešák
+
 Daniel Grisa
 
 Project Link: https://github.com/UnicornUniversity/project-fourapp/tree/main
