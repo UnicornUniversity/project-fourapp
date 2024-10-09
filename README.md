@@ -65,6 +65,7 @@ Commit your Changes (git commit -m 'Add some AmazingFeature')
 Push to the Branch (git push origin feature/AmazingFeature)
 Open a Pull Request
 
+#our-team
 ## 👪 Our Team
 Pavel Zálešák - SCRUM Master
 
