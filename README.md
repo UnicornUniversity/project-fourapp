@@ -19,7 +19,7 @@ Project FourApp is an e-shop for electronics. It's designed to provide space for
 - ✨ Adding to cart
 - 🚀 Cart
 - ✨ Product detail
-- 🚀 Edit of cart
+- 🚀 Wishlist
 - ✨ Sign-up
 - 🚀 Login
 - ✨ Order
