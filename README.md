@@ -57,12 +57,24 @@ Push to the Branch (git push origin feature/AmazingFeature)
 Open a Pull Request
 
 ## 👪 Our Team
-Pavel Zálešák - SCRUM Master
+Daniel Grisa- PM
 
-Jan Větříšek - UX Blacksmith
+Jan Větříšek - PM
 
-Mikuláš Novák - UI Cook
+Mikuláš Novák - FE, UI/UX, BE
 
-Daniel Grisa - Full Stack Developer
+Pavel Zálešák - QA Engineer
+
+Lukáš Laifr	- FE Developer
+
+Estefaniia Petrova - Data Analyst
+
+Martin Hansl - BE Developer
+
+Tomáš Glaesner	BE Developer
+
+Laura Čačková	BE/FE Developer
+
+Matěj Soukup BE Developer
 
 Project Link: https://github.com/UnicornUniversity/project-fourapp/tree/main
