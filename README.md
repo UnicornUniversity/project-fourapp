@@ -1,6 +1,6 @@
 # 🚀 FourApp
 
-Welcome to **FourApp**! 🎉 This repository aims to be an e-shop for electronics.
+Welcome to **FourApp**! 🎉 This repository aims to be a fashion eshop.
 
 ## 📝 About the Project
 
@@ -57,7 +57,7 @@ Push to the Branch (git push origin feature/AmazingFeature)
 Open a Pull Request
 
 ## 👪 Our Team
-Daniel Grisa- PM
+Daniel Grisa - PM
 
 Jan Větříšek - PM
 
@@ -71,10 +71,10 @@ Estefaniia Petrova - Data Analyst
 
 Martin Hansl - BE Developer
 
-Tomáš Glaesner	BE Developer
+Tomáš Glaesner	- BE Developer
 
-Laura Čačková	BE/FE Developer
+Laura Čačková -BE/FE Developer
 
-Matěj Soukup BE Developer
+Matěj Soukup - BE Developer
 
 Project Link: https://github.com/UnicornUniversity/project-fourapp/tree/main
