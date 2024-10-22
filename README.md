@@ -14,16 +14,16 @@ Project FourApp is an e-shop for fashion clothes. It's designed to provide space
 
 ## 🌟 Features
 
-- ✨ Product Search, Filters, and Sorting
-- 🚀 Product List and Editing in Admin Panel
-- ✨ Add to basket
-- 🚀 Customer profile edit
-- ✨ Show product detail
-- 🚀 Wishlist
-- ✨ Add products
-- 🚀 Add category
-- ✨ Completing an Order
-- 🚀 Order history
+- 🔎 Product Search, Filters, and Sorting
+- ⚙️ Product List and Editing in Admin Panel
+- 🧺 Add to basket
+- 👦 Customer profile edit
+- 🕵️ Show product detail
+- 🌠 Wishlist
+- 👕 Add products
+- ⬆️ Add category
+- 📦 Completing an Order
+- 📜 Order history
 
 ## ⚙️ Installation
 
