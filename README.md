@@ -63,7 +63,7 @@ Jan Větříšek - PM
 
 Mikuláš Novák - FE, UI/UX, BE
 
-Pavel Zálešák - QA Engineer
+Pavel Zálešák - QA Engineer, Data Analyst, Back-office
 
 Lukáš Laifr	- FE Developer
 
