@@ -58,13 +58,13 @@ router.post("/register", async (req, res) => {
     }
 
     // Hashování hesla
-    //const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     // Uložení uživatele do databáze
     const newUser = new User({
       name,
       email,
-      password,
+      password: hashedPassword,
     });
 
     await newUser.save();
