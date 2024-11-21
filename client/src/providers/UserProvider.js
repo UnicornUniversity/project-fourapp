@@ -3,21 +3,21 @@ import { createContext } from "react";
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
-  async function handleRegister({ user }) {
+  async function handleRegister( user ) {
     try {
       const response = await fetch(
-        "https://your-backend-api.com/verify-token", //OUR API ENDPOINT
+        "http://localhost:5000/api/auth/register", //OUR API ENDPOINT
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: "", //USER DATA
+          body: JSON.stringify(user), //USER DATA
         }
       );
 
       const serverResponse = await response.json();
-
+      console.log(serverResponse)
       if (response.ok) {
         //console.log("Token verified successfully:", data); //WENT THROUGH RESPONSE
       } else {
@@ -28,21 +28,21 @@ function UserProvider({ children }) {
     }
   }
 
-  async function handleLogin({ user }) {
+  async function handleLogin( user ) {
     try {
       const response = await fetch(
-        "https://your-backend-api.com/verify-token", //OUR API ENDPOINT
+        "http://localhost:5000/api/auth/login", //OUR API ENDPOINT
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: "", //USER DATA
+          body: JSON.stringify(user), //USER DATA
         }
       );
 
       const serverResponse = await response.json(); //SHOULD BE TOKEN
-
+      console.log(serverResponse)
       if (response.ok) {
         //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
       } else {

@@ -11,7 +11,7 @@ function LoginCard() {
       const formData = new FormData(event.target);
 
       const user = {
-        title: formData.get("title"),
+        email: formData.get("email"),
         password: formData.get("password"),
       };
       try {
@@ -30,8 +30,8 @@ function LoginCard() {
       </div>
       <div>
         <form onSubmit={handleSubmit}>
-          <input type="email" placeholder="Email" id="email" required />
-          <input type="password" placeholder="Password" required />
+          <input name="email" type="email" placeholder="Email" id="email" required />
+          <input name="password" type="password" placeholder="Password" required />
           <p>Forgot password?</p>
           <input type="submit" value="Sign in" />
         </form>
