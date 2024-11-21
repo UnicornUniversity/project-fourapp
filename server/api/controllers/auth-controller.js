@@ -7,6 +7,10 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const userDao = require("../../dao/user-dao")
 const User = require("../../models/User")
 
+const Abl = require("../../abl/auth-abl")
+
+const abl = new Abl
+
 passport.use(
     new GoogleStrategy(
       {
@@ -43,11 +47,11 @@ passport.use(
   router.use(passport.initialize());
 
 router.post("/register" , (req , res) =>{
-
+  abl.register(req , res)
 })
 
 router.post("/login" , (req , res) =>{
-
+  abl.login(req , res)
 })
 
 router.get(
