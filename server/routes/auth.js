@@ -3,12 +3,22 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const User = require("../models/User");
+const mongoose = require("mongoose");
 
 const router = express.Router();
 
-// Google OAuth2 Strategie
+// MongoDB model uživatele
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: { type: String, unique: true },
+  password: String,
+  google_id: String,
+  role: { type: String, default: "user" },
+});
 
+const User = mongoose.model("User", userSchema);
+
+// Google OAuth strategie
 passport.use(
   new GoogleStrategy(
     {
@@ -20,95 +30,96 @@ passport.use(
       const { email, name } = profile._json;
 
       try {
-        // Zkontroluj, jestli uživatel existuje
         let user = await User.findOne({ email });
-
         if (!user) {
-          // Pokud uživatel neexistuje, vytoř nového
-          user = new User({
-            name,
-            email,
-            google_id: profile.id,
-          });
+          user = new User({ name, email, google_id: profile.id });
           await user.save();
         }
-
-        return done(null, user);
+        done(null, user);
       } catch (err) {
-        return done(err, null);
+        done(err, null);
       }
     }
   )
 );
 
+// Middleware pro ověřování JWT z cookies
+const authMiddleware = (req, res, next) => {
+  const token = req.cookies.token; // Načítání tokenu z cookies
 
-router.use(passport.initialize());
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
 
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    res.status(403).json({ message: "Invalid or expired token" });
+  }
+};
+
+// Endpointy
 
 // Registrace uživatele
-
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    // Zkontroluj, jestli uživatel existuje
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "Email už existuje" });
+      return res.status(400).json({ message: "Email already exists" });
     }
 
-    // Hashování hesla
     const hashedPassword = await bcrypt.hash(password, 12);
-
-    // Uložení uživatele do databáze
-    const newUser = new User({
-      name,
-      email,
-      password: hashedPassword,
-    });
-
+    const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
-    res.status(201).json({ message: "Uživatel vytvořen" });
+
+    res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Chyba serveru" });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-
 // Přihlášení uživatele
-
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Najdi uživatele podle emailu
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "Uživatel nenalezen" });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    // Ověření hesla
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-      return res.status(400).json({ message: "Nesprávné heslo" });
+      return res.status(400).json({ message: "Invalid password" });
     }
 
-    // Vytvoření JWT tokenu
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    res.status(200).json({ token, user: { id: user._id, email: user.email, role: user.role } });
+    // Nastavení tokenu jako cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 1000 * 60 * 60 * 24, // 1 den
+    });
+
+    res.status(200).json({
+      user: { id: user._id, email: user.email, role: user.role },
+    });
   } catch (err) {
-    res.status(500).json({ message: "Chyba serveru" });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-
 // Přihlášení přes Google
-
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
@@ -124,8 +135,36 @@ router.get(
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    res.status(200).json({ token, user: { id: req.user._id, email: req.user.email, role: req.user.role } });
+    // Nastavení tokenu jako cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 1000 * 60 * 60 * 24, // 1 den
+    });
+
+    // Přesměrování na frontend
+    res.redirect("http://localhost:3000/profile");
   }
 );
+
+// Získání uživatelských dat
+router.get("/profile", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    console.log("super");
+    res.status(200).json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 module.exports = router;
