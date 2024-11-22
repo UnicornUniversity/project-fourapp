@@ -10,7 +10,8 @@ function RegisterCard() {
       const formData = new FormData(event.target);
 
       const user = {
-        title: formData.get("title"),
+        name: formData.get("name"),
+        email: formData.get("email"),
         password: formData.get("password"),
       };
       try {
@@ -29,8 +30,9 @@ function RegisterCard() {
       </div>
       <div>
         <form onSubmit={handleSubmit}>
-          <input type="email" placeholder="Email" required />
-          <input type="password" placeholder="Password" required />
+        <input name="name" placeholder="Name" required />
+          <input name="email" type="email" placeholder="Email" required />
+          <input name="password" type="password" placeholder="Password" required />
           <p>Forgot password?</p>
           <input type="submit" value="Sign up"/>
         </form>
