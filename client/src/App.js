@@ -1,41 +1,24 @@
 import "./App.css";
 import UserProvider from "./providers/UserProvider";
-import NavBar from "./components/header/NavBar";
-import RegisterCard from "./components/login/RegisterCard";
-import LoginCard from "./components/login/LoginCard";
-import GoogleLogin from "./pages/google";
-import UserProfile from "./pages/userProfile"; // Import komponenty profilu
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // React Router
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Register from "./pages/Register";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <header>
-          <NavBar />
-        </header>
-        <main>
+      <UserProvider>
+        <BrowserRouter>
           <Routes>
-            {/* Domovská stránka */}
-            <Route
-              path="/"
-              element={
-                <>
-                  <GoogleLogin />
-                  <UserProvider>
-                    <LoginCard />
-                    <RegisterCard />
-                  </UserProvider>
-                </>
-              }
-            />
-
-            {/* Profil uživatele */}
-            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/user/login" element={<Login />} />
+            <Route path="/user/profile" element={<Profile />} />
+            <Route path="/user/register" element={<Register />} />
           </Routes>
-        </main>
-        <footer></footer>
-      </Router>
+        </BrowserRouter>
+      </UserProvider>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useCallback, useContext } from "react";
 import { UserContext } from "../../providers/UserProvider";
+import Card from "../../components/card/Card";
 import "./../../assets/styles/login.css";
 
 function LoginCard() {
@@ -24,19 +25,38 @@ function LoginCard() {
   );
 
   return (
-    <div className="loginCard">
+    <Card className="loginCard">
       <div>
         <h3>Login</h3>
       </div>
       <div>
         <form onSubmit={handleSubmit}>
-          <input name="email" type="email" placeholder="Email" id="email" required />
-          <input name="password" type="password" placeholder="Password" required />
-          <p>Forgot password?</p>
-          <input type="submit" value="Sign in" />
+          <div>
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              id="email"
+              required
+            />
+          </div>
+          <div>
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div>
+            <p>Forgot password?</p>
+          </div>
+          <div>
+            <input type="submit" value="Sign in" />
+          </div>
         </form>
       </div>
-    </div>
+    </Card>
   );
 }
 

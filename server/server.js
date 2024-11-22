@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
-const authRoutes = require("./routes/auth");
+const authRoutes = require("./routes/auth-new");
 const cookieParser = require("cookie-parser");
 const app = express();
 
@@ -19,10 +19,7 @@ app.use(passport.initialize());
 app.use(cookieParser());
 // Připojení k MongoDB
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("Připojeno k MongoDB"))
   .catch((err) => console.error("Chyba připojení k MongoDB:", err));
 

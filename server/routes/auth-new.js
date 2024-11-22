@@ -4,21 +4,10 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const mongoose = require("mongoose");
+const User = require("../models/User");
 
 const router = express.Router();
 
-// MongoDB model uživatele
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: { type: String, unique: true },
-  password: String,
-  google_id: String,
-  role: { type: String, default: "user" },
-});
-
-const User = mongoose.model("User", userSchema);
-
-// Google OAuth strategie
 passport.use(
   new GoogleStrategy(
     {
@@ -144,7 +133,7 @@ router.get(
     });
 
     // Přesměrování na frontend
-    res.redirect("http://localhost:3000/profile");
+    res.redirect("http://localhost:3000/user/profile");
   }
 );
 
@@ -155,7 +144,6 @@ router.get("/profile", authMiddleware, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log("super");
     res.status(200).json({
       id: user._id,
       name: user.name,
