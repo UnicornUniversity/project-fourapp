@@ -8,8 +8,6 @@ export default class CategoryController {
   static async create(req, res) {}
 
   static async list(req, res) {
-    res.status(200).json({
-      text: "hi",
-    });
+    
   }
 }

@@ -16,7 +16,7 @@ const productSchema = new Schema({
   price: { type: Number, required: true },
   isOnline: { type: Boolean, required: true },
   variants: { type: [variantSchema], required: true },
-  categoryId: { type: [String], required: false },
+  categories: { type: [Number], required: false },
 });
 
 productSchema.index({ name: "text", description: "text" });

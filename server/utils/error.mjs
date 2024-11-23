@@ -1,35 +1,44 @@
 import { MongooseError } from "mongoose";
+import { ZodError } from "zod";
 
 export class ApiError extends Error {
-  constructor(message, statusCode, errors = []) {
+  constructor(message, statusCode, extensions = {}) {
     super(message);
     this.name = this.constructor.name; // ApiError
     this.statusCode = statusCode;
-    this.errors = errors;
+    this.extensions = extensions;
 
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
     }
   }
 
-  static fromMessage(message, statusCode = 500) {
-    return new ApiError(message, statusCode);
+  jsonObject() {
+    return {
+      message: this.message,
+      status: this.statusCode,
+      extensions: this.extensions,
+    };
   }
 
-  static badRequest(message = "Bad request") {
-    return new ApiError(message, 400);
+  static fromMessage(message, statusCode = 500, extensions = {}) {
+    return new ApiError(message, statusCode, [], extensions);
   }
 
-  static forbidden(message = "Forbidden") {
-    return new ApiError(message, 403);
+  static badRequest(message = "Bad request", extensions = {}) {
+    return new ApiError(message, 400, [], extensions);
   }
 
-  static notFound(message = "Not found") {
-    return new ApiError(message, 404);
+  static forbidden(message = "Forbidden", extensions = {}) {
+    return new ApiError(message, 403, [], extensions);
   }
 
-  static internalServerError(message = "Unexpected error") {
-    return new ApiError(message, 500);
+  static notFound(message = "Not found", extensions = {}) {
+    return new ApiError(message, 404, [], extensions);
+  }
+
+  static internalServerError(message = "Unexpected error", extensions = {}) {
+    return new ApiError(message, 500, [], extensions);
   }
 
   static fromError(error) {
@@ -39,12 +48,18 @@ export class ApiError extends Error {
     }
 
     if (error instanceof MongooseError) {
-      return ApiError.internalServerError("Mongoose error");
+      return ApiError.internalServerError("Mongoose error", extensions);
+    }
+    if (error instanceof ZodError) {
+      return ApiError.badRequest("Validation error", {
+        ...extensions,
+        validationErrors: error.errors,
+      });
     }
     if (error instanceof Error) {
-      return ApiError.internalServerError(error.message);
+      return ApiError.internalServerError(error.message, extensions);
     }
 
-    return ApiError.internalServerError();
+    return ApiError.internalServerError("Unknown error", extensions);
   }
 }
