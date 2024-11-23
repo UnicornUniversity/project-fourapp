@@ -1,72 +1,109 @@
-import router, { use, post, get } from "../../routes/auth-new";
-import { sign } from "jsonwebtoken";
-import { use as _use, initialize, authenticate } from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { getByEmail, create } from "../../dao/user-dao";
-import User from "../../models/User";
-import Abl from "../../abl/auth-abl";
+const express = require("express");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
+const authMiddleware = require("../../middleware/auth-middleware");
+const userDao = require("../../dao/user-dao");
+const router = express.Router();
 
-const abl = new Abl();
+class AuthController {
+  // Registrace uživatele
+  static async register(req, res) {
+    try {
+      const { name, email, password } = req.body;
 
-_use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      const { email, name } = profile._json;
-
-      try {
-        // Zkontroluj, jestli uživatel existuje
-        let user = await getByEmail(email);
-
-        if (!user) {
-          // Pokud uživatel neexistuje, vytoř nového
-          user = new User({
-            name,
-            email,
-            google_id: profile.id,
-          });
-          await create(user);
-        }
-
-        return done(null, user);
-      } catch (err) {
-        return done(err, null);
+      const existingUser = await userDao.getByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ code: "emailExists", message: "Email already exists" });
       }
+
+      const hashedPassword = await bcrypt.hash(password, 12);
+      await userDao.create({ name, email, password: hashedPassword });
+
+      res.status(201).json({ message: "User registered successfully" });
+    } catch (err) {
+      res.status(400).json({ code: err.code || "failedToCreateUser", message: err.message });
     }
-  )
+  }
+
+  // Přihlášení uživatele
+  static async login(req, res) {
+    try {
+      const { email, password } = req.body;
+
+      const user = await userDao.getByEmail(email);
+      if (!user) {
+        return res.status(404).json({ code: "userNotFound", message: "User not found" });
+      }
+
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+      if (!isPasswordCorrect) {
+        return res.status(400).json({ code: "invalidPassword", message: "Invalid password" });
+      }
+
+      const token = jwt.sign(
+        { id: user._id, email: user.email, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN }
+      );
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 1000 * 60 * 60 * 24, // 1 den
+      });
+
+      res.status(200).json({ user: { id: user._id, email: user.email, role: user.role } });
+    } catch (err) {
+      res.status(400).json({ code: err.code || "failedToLogin", message: err.message });
+    }
+  }
+
+  // Získání uživatelského profilu
+  static async getUserProfile(req, res) {
+    try {
+      const user = await userDao.findById(req.user.id);
+      if (!user) {
+        return res.status(404).json({ code: "userNotFound", message: "User not found" });
+      }
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(400).json({ code: err.code || "failedToFetchUser", message: err.message });
+    }
+  }
+}
+
+// Routy
+router.post("/register", AuthController.register);
+router.post("/login", AuthController.login);
+router.get("/profile", authMiddleware, AuthController.getUserProfile);
+
+// Google OAuth routy
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-use(initialize());
-
-post("/register", (req, res) => {
-  abl.register(req, res);
-});
-
-post("/login", (req, res) => {
-  abl.login(req, res);
-});
-
-get("/google", authenticate("google", { scope: ["profile", "email"] }));
-
-get(
+router.get(
   "/google/callback",
-  authenticate("google", { session: false }),
+  passport.authenticate("google", { session: false }),
   (req, res) => {
-    const token = sign(
+    const token = jwt.sign(
       { id: req.user._id, email: req.user.email },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    res.status(200).json({
-      token,
-      user: { id: req.user._id, email: req.user.email, role: req.user.role },
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 1000 * 60 * 60 * 24, // 1 den
     });
+
+    res.redirect(process.env.CLIENT_URL || "http://localhost:3000");
   }
 );
 
-export default router;
+module.exports = router;
