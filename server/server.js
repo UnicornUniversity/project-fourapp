@@ -2,9 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const passport = require("./middleware/passport"); // Import Passport.js konfigurace
-const authRoutes = require("./routes/auth-routes"); // Nové auth-routes
+const passport = require("./middleware/passport");
 const cookieParser = require("cookie-parser");
+const authRoutes = require("./api/controllers/auth-controller");
 
 const app = express();
 
@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000", // Frontendová URL
+    origin: process.env.CLIENT_URL || "http://localhost:3000",
     credentials: true,
   })
 );
