@@ -19,4 +19,6 @@ const productSchema = new Schema({
   categoryId: { type: [String], required: false },
 });
 
+productSchema.index({ name: "text", description: "text" });
+
 export const Product = model("Product", productSchema);
