@@ -1,19 +1,14 @@
-//const router = require("../../routes/auth");
-const router = require("../../routes/auth-new");
-
-const express = require("express");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const userDao = require("../../dao/user-dao");
-const User = require("../../models/User");
-
-const Abl = require("../../abl/auth-abl");
+import router, { use, post, get } from "../../routes/auth-new";
+import { sign } from "jsonwebtoken";
+import { use as _use, initialize, authenticate } from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { getByEmail, create } from "../../dao/user-dao";
+import User from "../../models/User";
+import Abl from "../../abl/auth-abl";
 
 const abl = new Abl();
 
-passport.use(
+_use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -25,7 +20,7 @@ passport.use(
 
       try {
         // Zkontroluj, jestli uživatel existuje
-        let user = await userDao.getByEmail(email);
+        let user = await getByEmail(email);
 
         if (!user) {
           // Pokud uživatel neexistuje, vytoř nového
@@ -34,7 +29,7 @@ passport.use(
             email,
             google_id: profile.id,
           });
-          await userDao.create(user);
+          await create(user);
         }
 
         return done(null, user);
@@ -45,38 +40,33 @@ passport.use(
   )
 );
 
-router.use(passport.initialize());
+use(initialize());
 
-router.post("/register", (req, res) => {
+post("/register", (req, res) => {
   abl.register(req, res);
 });
 
-router.post("/login", (req, res) => {
+post("/login", (req, res) => {
   abl.login(req, res);
 });
 
-router.get(
-  "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
+get("/google", authenticate("google", { scope: ["profile", "email"] }));
 
-router.get(
+get(
   "/google/callback",
-  passport.authenticate("google", { session: false }),
+  authenticate("google", { session: false }),
   (req, res) => {
-    const token = jwt.sign(
+    const token = sign(
       { id: req.user._id, email: req.user.email },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    res
-      .status(200)
-      .json({
-        token,
-        user: { id: req.user._id, email: req.user.email, role: req.user.role },
-      });
+    res.status(200).json({
+      token,
+      user: { id: req.user._id, email: req.user.email, role: req.user.role },
+    });
   }
 );
 
-module.exports = router;
+export default router;
