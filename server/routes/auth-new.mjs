@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { hash, compare } from "bcrypt";
-import jsw from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import mongoose from "mongoose";
@@ -42,7 +42,7 @@ const authMiddleware = (req, res, next) => {
   }
 
   try {
-    const decoded = jsw.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (err) {
@@ -87,7 +87,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid password" });
     }
 
-    const token = jsw.sign(
+    const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
