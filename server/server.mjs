@@ -1,9 +1,9 @@
 import express from "express";
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import cors from "cors";
 import passport from "passport";
 import categoriesRouter from "./routes/categories.mjs";
-import authRouter from "./routes/auth-new.mjs";
+import authRouter from "./api/controllers/auth-controller.js"; // Přejmenován import pro čitelnost
 import cookieParser from "cookie-parser";
 import { env } from "./utils/env.mjs";
 import productsRouter from "./routes/products.mjs";
@@ -21,17 +21,17 @@ app.use(
 app.use(passport.initialize());
 app.use(cookieParser());
 
+// Připojení k databázi
 try {
-  console.info(`Connecting to mongo db: ${env.MONGO_URI}`);
+  console.info(`Connecting to MongoDB: ${env.MONGO_URI}`);
   await mongoose.connect(env.MONGO_URI);
-
-  console.info("Connected to mongo db");
+  console.info("Connected to MongoDB");
 } catch (error) {
-  console.error("Failed to connect to db", error);
+  console.error("Failed to connect to MongoDB", error);
 }
 
 // Endpointy
-app.use("/api/auth", authRouter);
+app.use("/api/auth", authRouter); // Použití přejmenovaného routeru
 app.use("/api/categories", categoriesRouter);
 app.use("/api/products", productsRouter);
 

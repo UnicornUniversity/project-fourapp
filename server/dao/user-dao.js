@@ -1,7 +1,6 @@
-const User = require("../models/User");
+import User from "../models/User.mjs";
 
 class userDao {
-
   static async getByEmail(email) {
     try {
       return User.findOne({ email });
@@ -28,4 +27,4 @@ class userDao {
   }
 }
 
-module.exports = userDao;
+export default userDao;

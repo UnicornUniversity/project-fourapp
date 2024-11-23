@@ -15,6 +15,6 @@
     "passport-google-oauth20": "^2.0.0"
   },
   "scripts": {
-    "start": "nodemon server.mjs"
+    "start": "nodemon --watch './**/*.mjs' server.mjs"
   }
 }
