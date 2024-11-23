@@ -2,8 +2,8 @@ import { Category } from "../models/Category.mjs";
 import { ApiError } from "../utils/error.mjs";
 
 export const categoriesDao = {
-  async create(data, parentCategoryId = null) {
-    const category = new Category({ ...data, parentCategoryId });
+  async create(data) {
+    const category = new Category(data);
 
     return await category.save();
   },
@@ -22,9 +22,8 @@ export const categoriesDao = {
     return await Category.find({});
   },
 
-  async update(object) {
-    const { id, ...updateData } = object;
-    return await Category.findOneAndUpdate({ id }, updateData, { new: true });
+  async update(id, data) {
+    return await Category.findOneAndUpdate({ id }, data, { new: true });
   },
 
   async delete(id) {

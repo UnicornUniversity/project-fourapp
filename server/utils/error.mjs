@@ -41,25 +41,36 @@ export class ApiError extends Error {
     return new ApiError(message, 500, [], extensions);
   }
 
-  static fromError(error) {
+  static fromError(error, message = undefined) {
     console.error(error);
     if (!error || typeof error !== "object") {
-      return new ApiError("Unknown error", 500);
+      return new ApiError(message || "Unknown error", 500);
+    }
+
+    if (error instanceof ApiError) {
+      return new ApiError(
+        message || error.message,
+        error.statusCode,
+        error.extensions
+      );
     }
 
     if (error instanceof MongooseError) {
-      return ApiError.internalServerError("Mongoose error", extensions);
+      return ApiError.internalServerError(
+        message || "Mongoose error",
+        extensions
+      );
     }
     if (error instanceof ZodError) {
-      return ApiError.badRequest("Validation error", {
+      return ApiError.badRequest(message || "Validation error", {
         ...extensions,
         validationErrors: error.errors,
       });
     }
     if (error instanceof Error) {
-      return ApiError.internalServerError(error.message, extensions);
+      return ApiError.internalServerError(message || error.message, extensions);
     }
 
-    return ApiError.internalServerError("Unknown error", extensions);
+    return ApiError.internalServerError(message || "Unknown error", extensions);
   }
 }
