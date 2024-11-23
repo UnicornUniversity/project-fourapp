@@ -74,7 +74,7 @@ class AuthController {
   }
 }
 
-// Registrace rout přímo zde
+// Routy
 router.post("/register", AuthController.register);
 router.post("/login", AuthController.login);
 router.get("/profile", authMiddleware, AuthController.getUserProfile);
