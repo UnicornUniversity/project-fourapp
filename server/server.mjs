@@ -7,6 +7,7 @@ import authRouter from "./api/controllers/auth-controller.js"; // Přejmenován 
 import cookieParser from "cookie-parser";
 import { env } from "./utils/env.mjs";
 import productsRouter from "./routes/products.mjs";
+import errorHandler from "./middleware/error-handler.mjs";
 
 const app = express();
 
@@ -34,6 +35,8 @@ try {
 app.use("/api/auth", authRouter); // Použití přejmenovaného routeru
 app.use("/api/categories", categoriesRouter);
 app.use("/api/products", productsRouter);
+
+app.use(errorHandler);
 
 // Spuštění serveru
 const PORT = env.PORT || 5000;

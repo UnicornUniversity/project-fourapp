@@ -12,7 +12,8 @@
     "mongoose": "^8.8.2",
     "nodemon": "^3.1.7",
     "passport": "^0.7.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "zod": "^3.23.8"
   },
   "scripts": {
     "start": "nodemon --watch './**/*.mjs' server.mjs"
