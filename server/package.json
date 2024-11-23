@@ -1,4 +1,7 @@
 {
+  "name": "server",
+  "version": "0.1.0",
+  "type": "module",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
@@ -12,6 +15,6 @@
     "passport-google-oauth20": "^2.0.0"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.mjs"
   }
 }
