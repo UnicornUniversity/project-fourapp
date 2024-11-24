@@ -1,60 +1,102 @@
-//const router = require("../../routes/auth");
-const router = require("../../routes/auth-new");
+import express from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import passport from "passport";
+import authMiddleware from "../../middleware/auth-middleware.js";
+import userDao from "../../dao/user-dao.js";
 
-const express = require("express");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const userDao = require("../../dao/user-dao");
-const User = require("../../models/User");
+const router = express.Router();
 
-const Abl = require("../../abl/auth-abl");
+class AuthController {
+  // Registrace uživatele
+  static async register(req, res) {
+    try {
+      const { name, email, password } = req.body;
 
-const abl = new Abl();
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      const { email, name } = profile._json;
-
-      try {
-        // Zkontroluj, jestli uživatel existuje
-        let user = await userDao.getByEmail(email);
-
-        if (!user) {
-          // Pokud uživatel neexistuje, vytoř nového
-          user = new User({
-            name,
-            email,
-            google_id: profile.id,
-          });
-          await userDao.create(user);
-        }
-
-        return done(null, user);
-      } catch (err) {
-        return done(err, null);
+      const existingUser = await userDao.getByEmail(email);
+      if (existingUser) {
+        return res
+          .status(400)
+          .json({ code: "emailExists", message: "Email already exists" });
       }
+
+      const hashedPassword = await bcrypt.hash(password, 12);
+      await userDao.create({ name, email, password: hashedPassword });
+
+      res.status(201).json({ message: "User registered successfully" });
+    } catch (err) {
+      res
+        .status(400)
+        .json({ code: err.code || "failedToCreateUser", message: err.message });
     }
-  )
-);
+  }
 
-router.use(passport.initialize());
+  // Přihlášení uživatele
+  static async login(req, res) {
+    try {
+      const { email, password } = req.body;
 
-router.post("/register", (req, res) => {
-  abl.register(req, res);
-});
+      const user = await userDao.getByEmail(email);
+      if (!user) {
+        return res
+          .status(404)
+          .json({ code: "userNotFound", message: "User not found" });
+      }
 
-router.post("/login", (req, res) => {
-  abl.login(req, res);
-});
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+      if (!isPasswordCorrect) {
+        return res
+          .status(400)
+          .json({ code: "invalidPassword", message: "Invalid password" });
+      }
 
+      const token = jwt.sign(
+        { id: user._id, email: user.email, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN }
+      );
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 1000 * 60 * 60 * 24, // 1 den
+      });
+
+      res
+        .status(200)
+        .json({ user: { id: user._id, email: user.email, role: user.role } });
+    } catch (err) {
+      res
+        .status(400)
+        .json({ code: err.code || "failedToLogin", message: err.message });
+    }
+  }
+
+  // Získání uživatelského profilu
+  static async getUserProfile(req, res) {
+    try {
+      const user = await userDao.findById(req.user.id);
+      if (!user) {
+        return res
+          .status(404)
+          .json({ code: "userNotFound", message: "User not found" });
+      }
+      res.status(200).json(user);
+    } catch (err) {
+      res
+        .status(400)
+        .json({ code: err.code || "failedToFetchUser", message: err.message });
+    }
+  }
+}
+
+// Routy
+router.post("/register", AuthController.register);
+router.post("/login", AuthController.login);
+router.get("/profile", authMiddleware, AuthController.getUserProfile);
+
+// Google OAuth routy
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
@@ -70,13 +112,15 @@ router.get(
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    res
-      .status(200)
-      .json({
-        token,
-        user: { id: req.user._id, email: req.user.email, role: req.user.role },
-      });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 1000 * 60 * 60 * 24, // 1 den
+    });
+
+    res.redirect(process.env.CLIENT_URL || "http://localhost:3000");
   }
 );
 
-module.exports = router;
+export default router;
