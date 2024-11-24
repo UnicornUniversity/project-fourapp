@@ -5,6 +5,7 @@ export const UserContext = createContext();
 function UserProvider({ children }) {
   const [user, setUser] = useState();
 
+
   async function handleRegister(user) {
     try {
       const response = await fetch(
@@ -67,12 +68,14 @@ function UserProvider({ children }) {
     }
   }
 
+
   const value = {
     user,
     handlerMap: {
       handleRegister,
       handleLogin,
       handleGoogleLogin,
+
     },
   };
 
