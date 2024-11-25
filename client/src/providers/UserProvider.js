@@ -5,9 +5,6 @@ export const UserContext = createContext();
 function UserProvider({ children }) {
   const [user, setUser] = useState();
 
-  useEffect(() => {
-    handleUserFetch();
-  }, []);
 
   async function handleRegister(user) {
     try {
@@ -40,6 +37,7 @@ function UserProvider({ children }) {
         "http://localhost:5000/api/auth/login", //OUR API ENDPOINT
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -48,8 +46,11 @@ function UserProvider({ children }) {
       );
 
       const serverResponse = await response.json(); //SHOULD BE TOKEN
+
       console.log(serverResponse);
       if (response.ok) {
+        setUser(response.user);
+        console.log(response.user);
         //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
       } else {
         //console.error("Token verification failed:", data); //SOME ERROR
@@ -67,25 +68,6 @@ function UserProvider({ children }) {
     }
   }
 
-  async function handleUserFetch() {
-    try {
-      const response = await axios.get(
-        "http://localhost:5000/api/auth/profile",
-        {
-          withCredentials: true, // Povolit odesílání cookies
-        }
-      );
-      console.log("Data uživatele načtena z API:", response.data);
-      setUser(response.data);
-    } catch (error) {
-      console.error("Chyba při načítání dat uživatele", error);
-      if (error.response && error.response.status === 401) {
-        console.error("Neplatný nebo vypršelý token");
-        alert("Vaše přihlášení vypršelo. Přihlaste se znovu.");
-        window.location.href = "/user/login"; // Přesměrování na přihlášení
-      }
-    }
-  }
 
   const value = {
     user,
@@ -93,7 +75,7 @@ function UserProvider({ children }) {
       handleRegister,
       handleLogin,
       handleGoogleLogin,
-      handleUserFetch,
+
     },
   };
 

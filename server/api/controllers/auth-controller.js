@@ -1,9 +1,9 @@
-import express from 'express';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import passport from 'passport';
-import authMiddleware from '../../middleware/auth-middleware.js';
-import userDao from '../../dao/user-dao.js';
+import express from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import passport from "passport";
+import authMiddleware from "../../middleware/auth-middleware.js";
+import userDao from "../../dao/user-dao.js";
 
 const router = express.Router();
 
@@ -15,7 +15,9 @@ class AuthController {
 
       const existingUser = await userDao.getByEmail(email);
       if (existingUser) {
-        return res.status(400).json({ code: "emailExists", message: "Email already exists" });
+        return res
+          .status(400)
+          .json({ code: "emailExists", message: "Email already exists" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 12);
@@ -23,7 +25,9 @@ class AuthController {
 
       res.status(201).json({ message: "User registered successfully" });
     } catch (err) {
-      res.status(400).json({ code: err.code || "failedToCreateUser", message: err.message });
+      res
+        .status(400)
+        .json({ code: err.code || "failedToCreateUser", message: err.message });
     }
   }
 
@@ -39,7 +43,9 @@ class AuthController {
 
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
       if (!isPasswordCorrect) {
-        return res.status(400).json({ code: "invalidPassword", message: "Invalid password" });
+        return res
+          .status(400)
+          .json({ code: "invalidPassword", message: "Invalid password" });
       }
 
       const token = jwt.sign(
@@ -55,9 +61,13 @@ class AuthController {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
       });
 
-      res.status(200).json({ user: { id: user._id, email: user.email, role: user.role } });
+      res
+        .status(200)
+        .json({ user: { id: user._id, email: user.email, role: user.role } });
     } catch (err) {
-      res.status(400).json({ code: err.code || "failedToLogin", message: err.message });
+      res
+        .status(400)
+        .json({ code: err.code || "failedToLogin", message: err.message });
     }
   }
 
@@ -66,12 +76,16 @@ class AuthController {
     try {
       const user = await userDao.findById(req.user.id);
       if (!user) {
-        return res.status(404).json({ code: "userNotFound", message: "User not found" });
+        return res
+          .status(404)
+          .json({ code: "userNotFound", message: "User not found" });
       }
 
       res.status(200).json(user);
     } catch (err) {
-      res.status(400).json({ code: err.code || "failedToFetchUser", message: err.message });
+      res
+        .status(400)
+        .json({ code: err.code || "failedToFetchUser", message: err.message });
     }
   }
 }

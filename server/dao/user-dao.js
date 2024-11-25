@@ -1,4 +1,4 @@
-import User from '../models/User.mjs';
+import User from "../models/User.mjs";
 
 class userDao {
   static async getByEmail(email) {
