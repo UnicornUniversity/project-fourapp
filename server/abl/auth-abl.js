@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import userDao from '../dao/user-dao.js';
 
-class AuthAbI {
+class AuthAbl {
   static async register({ name, email, password }) {
     const existingUser = await userDao.getByEmail(email);
     if (existingUser) {
@@ -45,4 +45,4 @@ class AuthAbI {
   }
 }
 
-export default AuthAbI;
+export default AuthAbl;
