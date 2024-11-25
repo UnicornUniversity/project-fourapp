@@ -1,0 +1,46 @@
+import { ProductAbl } from "../../abl/product-abl.mjs";
+import { requireParam } from "../../utils/index.mjs";
+
+export default class ProductController {
+  static async create(req, res, next) {
+    try {
+      const product = await ProductAbl.create(req.body);
+
+      res.status(201).json(product);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async delete(req, res, next) {
+    try {
+      const id = requireParam("id", req.params);
+      await ProductAbl.delete(id);
+
+      res.status(204).send();
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async list(req, res, next) {
+    try {
+      const products = await ProductAbl.list();
+
+      res.status(200).json({ products });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async update(req, res, next) {
+    try {
+      const id = requireParam("id", req.params);
+      const updatedProduct = await ProductAbl.update(id, req.body);
+
+      res.status(200).json(updatedProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+}

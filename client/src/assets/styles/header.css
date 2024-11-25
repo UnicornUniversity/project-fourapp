@@ -1,0 +1,23 @@
+.navBar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.navBar>div {
+    cursor: pointer;
+}
+
+.navBar>div:nth-child(2) {
+    display: flex;
+    gap: 3vw;
+}
+
+.navBar>div:nth-child(3) {
+    display: flex;
+    gap: 3vw;
+}

@@ -1,0 +1,48 @@
+import {
+  createCategorySchema,
+  updateCategorySchema,
+} from "../types/categories.mjs";
+import { ApiError } from "../utils/error.mjs";
+import { categoriesDao } from "../dao/category-dao.mjs";
+
+export class CategoryAbl {
+  static async create(data) {
+    try {
+      const parsed = createCategorySchema.parse(data);
+
+      return await categoriesDao.create(parsed);
+    } catch (error) {
+      throw ApiError.fromError(error, "Failed to create category");
+    }
+  }
+
+  static async update(id, data) {
+    try {
+      const parsed = updateCategorySchema.parse(data);
+      const updatedCategory = await categoriesDao.update(id, parsed);
+      if (!updatedCategory) {
+        throw ApiError.notFound("Category not found");
+      }
+
+      return updatedCategory;
+    } catch (error) {
+      throw ApiError.fromError(error, "Failed to update category");
+    }
+  }
+
+  static async delete(id) {
+    try {
+      await categoriesDao.delete(id);
+    } catch (error) {
+      throw ApiError.fromError(error, "Failed to delete category");
+    }
+  }
+
+  static async list() {
+    try {
+      return await categoriesDao.list();
+    } catch (error) {
+      throw ApiError.fromError(error, "Failed to list categories");
+    }
+  }
+}
