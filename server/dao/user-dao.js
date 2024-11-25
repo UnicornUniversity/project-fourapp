@@ -3,7 +3,7 @@ import User from "../models/User.mjs";
 class userDao {
   static async getByEmail(email) {
     try {
-      return User.findOne({ email });
+      return await User.findOne({ email });
     } catch (error) {
       throw { code: "failedToFindUser", message: error.message };
     }
@@ -11,7 +11,7 @@ class userDao {
 
   static async findById(id) {
     try {
-      return User.findById(id);
+      return await User.findById(id);
     } catch (error) {
       throw { code: "failedToFindUser", message: error.message };
     }
