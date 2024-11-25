@@ -1,8 +1,8 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const userDao = require("../dao/user-dao");
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import userDao from '../dao/user-dao.js';
 
-class AuthAbl {
+class AuthAbI {
   static async register({ name, email, password }) {
     const existingUser = await userDao.getByEmail(email);
     if (existingUser) {
@@ -12,6 +12,7 @@ class AuthAbl {
     const hashedPassword = await bcrypt.hash(password, 12);
     const newUser = { name, email, password: hashedPassword };
     await userDao.create(newUser);
+
     return { message: "User registered successfully" };
   }
 
@@ -44,4 +45,4 @@ class AuthAbl {
   }
 }
 
-module.exports = AuthAbl;
+export default AuthAbI;

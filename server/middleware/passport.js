@@ -1,6 +1,6 @@
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const userDao = require("../dao/user-dao");
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import userDao from '../dao/user-dao.js';
 
 passport.use(
   new GoogleStrategy(
@@ -18,6 +18,7 @@ passport.use(
           user = { name, email, google_id: profile.id };
           await userDao.create(user);
         }
+
         done(null, user);
       } catch (err) {
         done(err, null);
@@ -26,4 +27,4 @@ passport.use(
   )
 );
 
-module.exports = passport;
+export default passport;

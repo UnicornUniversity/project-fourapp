@@ -3,7 +3,7 @@ import mongoose, { mongo } from "mongoose";
 import cors from "cors";
 import passport from "passport";
 import categoriesRouter from "./routes/categories.mjs";
-import authRouter from "./routes/auth-new.mjs";
+import authRouter from "./api/controllers/auth-controller.js";
 import cookieParser from "cookie-parser";
 import { env } from "./utils/env.mjs";
 import productsRouter from "./routes/products.mjs";
