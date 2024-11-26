@@ -1,7 +1,46 @@
 .card {
     width: fit-content;
     padding: 1%;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.formInput {
+    padding: 1rem 10rem 1rem 1rem;
+    border: none;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 0.75rem;
+}
+
+.formButton {
+    padding: 1rem 9rem 1rem 9rem;
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.formButton:hover {
+    background-color: gray;
+    color: black;
+    transition: 0.2s;
+}
+
+.table {
+    background-color: white;
+}
+
+.table th,
+td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    font-size: 1rem;
 }

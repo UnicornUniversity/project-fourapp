@@ -1,10 +1,8 @@
-import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import { createContext, useState } from "react";
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
   const [user, setUser] = useState();
-
 
   async function handleRegister(user) {
     try {
@@ -68,14 +66,12 @@ function UserProvider({ children }) {
     }
   }
 
-
   const value = {
     user,
     handlerMap: {
       handleRegister,
       handleLogin,
       handleGoogleLogin,
-
     },
   };
 

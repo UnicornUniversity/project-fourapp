@@ -1,4 +1,5 @@
-import RegisterCard from "../components/login/RegisterCard";
+import RegisterCard from "../containers/auth/RegisterCard";
+
 import NavBar from "../containers/header/NavBar";
 
 function Register() {
