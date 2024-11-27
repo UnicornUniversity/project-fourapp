@@ -17,6 +17,16 @@ class userDao {
     }
   }
 
+  static async delete(id) {
+    try {
+      const result = await User.findByIdAndDelete(id);
+      if (!result) throw new Error("User not found");
+      return result;
+    } catch (error) {
+      throw { code: "failedToDeleteUser", message: error.message || "Invalid ID" };
+    }
+  }
+
   static async create(userData) {
     try {
       const user = new User(userData);
@@ -68,9 +78,18 @@ class userDao {
     }
   }
 
-  static async list() {
+  static async list({ limit = 10, page = 1 } = {}) {
     try {
-      return await User.find({});
+      limit = parseInt(limit, 10);
+      page = parseInt(page, 10);
+  
+      const users = await User.find({})
+        .skip((page - 1) * limit)
+        .limit(limit);
+  
+      const totalUsers = await User.countDocuments();
+  
+      return { users, totalPages: Math.ceil(totalUsers / limit), currentPage: page };
     } catch (error) {
       throw { code: "failedToListUsers", message: error.message };
     }
