@@ -1,8 +1,8 @@
-import LoginCard from "../containers/login/LoginCard";
-import Google from "../components/login/Google";
+import LoginCard from "../containers/auth/LoginCard";
 import NavBar from "../containers/header/NavBar";
 
 function Login() {
+ 
   return (
     <div className="login">
       <header>
@@ -10,9 +10,7 @@ function Login() {
       </header>
       <main>
         <LoginCard />
-        <Google />
       </main>
-
       <footer></footer>
     </div>
   );

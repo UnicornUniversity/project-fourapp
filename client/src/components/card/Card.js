@@ -1,7 +1,11 @@
 import "./../../assets/styles/global.css";
 
-function Card({ children }) {
-  return <div className="card">{children}</div>;
+function Card({ children, className = "", ...props }) {
+  return (
+    <div className={`card ${className}`} {...props}>
+      {children}
+    </div>
+  );
 }
 
 export default Card;

@@ -1,4 +1,3 @@
-import "./App.css";
 import UserProvider from "./providers/UserProvider";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -8,7 +7,7 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <UserProvider>
         <BrowserRouter>
           <Routes>

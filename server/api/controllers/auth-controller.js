@@ -8,7 +8,7 @@ import userDao from "../../dao/user-dao.js";
 const router = express.Router();
 
 class AuthController {
-  // Registrace uživatele
+  // Register user
   static async register(req, res) {
     try {
       const { name, email, password } = req.body;
@@ -31,16 +31,14 @@ class AuthController {
     }
   }
 
-  // Přihlášení uživatele
+  // Login user
   static async login(req, res) {
     try {
       const { email, password } = req.body;
 
       const user = await userDao.getByEmail(email);
       if (!user) {
-        return res
-          .status(404)
-          .json({ code: "userNotFound", message: "User not found" });
+        return res.status(400).json({ code: "userNotFound", message: "User not found" });
       }
 
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
@@ -60,7 +58,7 @@ class AuthController {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
-        maxAge: 1000 * 60 * 60 * 24, // 1 den
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
       });
 
       res
@@ -73,7 +71,7 @@ class AuthController {
     }
   }
 
-  // Získání uživatelského profilu
+  // Get user profile
   static async getUserProfile(req, res) {
     try {
       const user = await userDao.findById(req.user.id);
@@ -82,6 +80,7 @@ class AuthController {
           .status(404)
           .json({ code: "userNotFound", message: "User not found" });
       }
+
       res.status(200).json(user);
     } catch (err) {
       res
@@ -91,12 +90,12 @@ class AuthController {
   }
 }
 
-// Routy
+// Routes
 router.post("/register", AuthController.register);
 router.post("/login", AuthController.login);
 router.get("/profile", authMiddleware, AuthController.getUserProfile);
 
-// Google OAuth routy
+// Google OAuth routes
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
@@ -116,7 +115,7 @@ router.get(
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 1000 * 60 * 60 * 24, // 1 den
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
     });
 
     res.redirect(process.env.CLIENT_URL || "http://localhost:3000");
