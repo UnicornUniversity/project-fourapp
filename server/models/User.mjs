@@ -1,9 +1,14 @@
 import { Schema, model } from "mongoose";
 
-// Aktualizované schéma uživatele
 const userSchema = new Schema({
   name: { type: String },
-  email: { type: String, required: true, unique: true },
+  email: { 
+    type: String, 
+    required: function () { 
+      return this.isNew;
+    }, 
+    unique: true 
+  },
   password: { type: String },
   google_id: { type: String },
   phone_number: { type: String },
@@ -34,5 +39,7 @@ const userSchema = new Schema({
     },
   ],
 });
+
+userSchema.set("runValidators", true);
 
 export default model("User", userSchema);

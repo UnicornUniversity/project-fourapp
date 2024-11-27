@@ -20,6 +20,7 @@ import cookieParser from "cookie-parser";
 import { env } from "./utils/env.mjs";
 import productsRouter from "./routes/products.mjs";
 import errorHandler from "./middleware/error-handler.mjs";
+import userRoutes from './api/controllers/user-controller.js';
 
 const app = express();
 
@@ -47,6 +48,7 @@ try {
 app.use("/api/auth", authRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/products", productsRouter);
+app.use('/api/users', userRoutes);
 
 app.use(errorHandler);
 
