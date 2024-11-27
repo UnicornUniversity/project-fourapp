@@ -2,6 +2,7 @@ import LoginCard from "../containers/auth/LoginCard";
 import NavBar from "../containers/header/NavBar";
 
 function Login() {
+ 
   return (
     <div className="login">
       <header>
