@@ -17,6 +17,16 @@ class userDao {
     }
   }
 
+  static async delete(id) {
+    try {
+      const result = await User.findByIdAndDelete(id);
+      if (!result) throw new Error("User not found");
+      return result;
+    } catch (error) {
+      throw { code: "failedToDeleteUser", message: error.message || "Invalid ID" };
+    }
+  }
+
   static async create(userData) {
     try {
       const user = new User(userData);
@@ -25,6 +35,66 @@ class userDao {
       throw { code: "failedToCreateUser", message: error.message };
     }
   }
+
+  static async wishlistByUserId(id) {
+    try {
+      const user = await User.findById(id, "wishlist_array");
+      return user ? user.wishlist_array : [];
+    } catch (error) {
+      throw { code: "failedToGetWishlist", message: error.message };
+    }
+  }
+
+  static async cartByUserId(id) {
+    try {
+      const user = await User.findById(id, "cart_array");
+      return user ? user.cart_array : [];
+    } catch (error) {
+      throw { code: "failedToGetCart", message: error.message };
+    }
+  }
+
+  static async searchByFilter(filters) {
+    try {
+      return await User.find(filters);
+    } catch (error) {
+      throw { code: "failedToSearchUsers", message: error.message };
+    }
+  }
+
+  static async update(id, updatedData) {
+    try {
+      const updatedUser = await User.findByIdAndUpdate(
+        id,
+        { $set: updatedData },
+        { new: true, runValidators: true }
+      );
+      if (!updatedUser) {
+        throw { code: "failedToUpdateUser", message: "User not found." };
+      }
+      return updatedUser;
+    } catch (error) {
+      throw { code: "failedToUpdateUser", message: error.message };
+    }
+  }
+
+  static async list({ limit = 10, page = 1 } = {}) {
+    try {
+      limit = parseInt(limit, 10);
+      page = parseInt(page, 10);
+  
+      const users = await User.find({})
+        .skip((page - 1) * limit)
+        .limit(limit);
+  
+      const totalUsers = await User.countDocuments();
+  
+      return { users, totalPages: Math.ceil(totalUsers / limit), currentPage: page };
+    } catch (error) {
+      throw { code: "failedToListUsers", message: error.message };
+    }
+  }
+  
 }
 
 export default userDao;
