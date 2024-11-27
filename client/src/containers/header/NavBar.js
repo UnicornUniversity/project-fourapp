@@ -18,7 +18,7 @@ function App() {
         <i className="fa-solid fa-magnifying-glass"></i>
         <i
           className="fa-solid fa-user"
-          onClick={() => navigate("user/login")}
+          onClick={() => navigate("/user/login")}
         ></i>
         <i className="fa-solid fa-bag-shopping"></i>
       </div>
