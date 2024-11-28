@@ -1,8 +1,12 @@
 import "./../../assets/styles/header.css";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie"; // Import js-cookie library
 
 function App() {
   const navigate = useNavigate();
+  const token = Cookies.get("token");
+
+  console.log(token);
   return (
     <div className="navBar">
       <div>
@@ -18,7 +22,7 @@ function App() {
         <i className="fa-solid fa-magnifying-glass"></i>
         <i
           className="fa-solid fa-user"
-          onClick={() => navigate("/user/login")}
+          onClick={() => navigate(token ? "/user/profile" : "/user/login")}
         ></i>
         <i className="fa-solid fa-bag-shopping"></i>
       </div>

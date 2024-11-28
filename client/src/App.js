@@ -8,8 +8,9 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 function App() {
   return (
     <div>
-      <UserProvider>
-        <BrowserRouter>
+
+      <BrowserRouter>
+        <UserProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/user/login" element={<Login />} />
@@ -19,8 +20,8 @@ function App() {
             <Route path="/user/profile/admin" element={<Profile />} />
             <Route path="/user/register" element={<Register />} />
           </Routes>
-        </BrowserRouter>
-      </UserProvider>
+        </UserProvider>
+      </BrowserRouter>
     </div>
   );
 }

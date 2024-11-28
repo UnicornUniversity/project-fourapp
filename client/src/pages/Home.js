@@ -1,4 +1,5 @@
 import NavBar from "../containers/header/NavBar";
+import Button from "../components/button/Button";
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
         <NavBar />
       </header>
       <main>
-
+        <Button buttonText={"Ahoj"} />
       </main>
       <footer></footer>
     </div>

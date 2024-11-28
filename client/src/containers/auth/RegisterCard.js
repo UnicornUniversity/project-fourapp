@@ -3,6 +3,8 @@ import { UserContext } from "../../providers/UserProvider";
 import { Link } from "react-router-dom";
 import Card from "../../components/card/Card";
 import "./../../assets/styles/auth.css";
+import Input from "../../components/input/Input";
+
 
 function RegisterCard() {
   const { handlerMap } = useContext(UserContext);
@@ -32,38 +34,40 @@ function RegisterCard() {
       </div>
       <div>
         <form onSubmit={handleSubmit}>
-          <div className="inputWrapper">
-            <input
-              name="name"
-              placeholder="name"
-              className="formInput"
-              required
-            />
-          </div>
-          <div className="inputWrapper">
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              className="formInput"
-              required
-            />
-          </div>
-          <div className="inputWrapper">
-            <input
-              name="password"
-              type="password"
-              className="formInput"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <div className="password inputWrapper">
+          <Input
+            className="authInput"
+            type="text"
+            name="name"
+            placeholder="name"
+            required
+            id="name"
+          />
+          <Input
+            className="authInput"
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            id="email"
+          />
+          <Input
+            className="authInput"
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            id="password"
+          />
+          <div className="authPassword inputWrapper">
             <p>Forgot password?</p>
           </div>
-          <div className="inputWrapper">
-            <input type="submit" value="Sign in" className="formButton" />
-          </div>
+          <Input
+            className="authInput"
+            name="submit"
+            type="submit"
+            required
+            value="Sign in"
+          />
           <div className="inputWrapper">
             <div className="authSocial">
               <i
@@ -75,7 +79,7 @@ function RegisterCard() {
             </div>
             <div className="accountText">
               <span>Already have an account? </span>
-              <Link to="/user/login" className="registerLink">
+              <Link to="/user/login" className="authLink">
                 Sign in
               </Link>
             </div>

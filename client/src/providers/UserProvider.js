@@ -1,8 +1,10 @@
 import { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
   // const [user, setUser] = useState();
+  const navigate = useNavigate();
 
   async function handleRegister(user) {
     try {
@@ -20,6 +22,7 @@ function UserProvider({ children }) {
       const serverResponse = await response.json();
       console.log(serverResponse);
       if (response.ok) {
+
         //console.log("Token verified successfully:", data); //WENT THROUGH RESPONSE
       } else {
         //console.error("Token verification failed:", data); //SOME ERROR
@@ -47,8 +50,7 @@ function UserProvider({ children }) {
 
       console.log(serverResponse);
       if (response.ok) {
-        setUser(response.user);
-        console.log(response.user);
+        navigate('/user/profile');
         //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
       } else {
         //console.error("Token verification failed:", data); //SOME ERROR
