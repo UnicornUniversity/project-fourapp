@@ -25,9 +25,9 @@ export default class ProductController {
 
   static async list(req, res, next) {
     try {
-      const products = await ProductAbl.list();
-
-      res.status(200).json({ products });
+      const filters = listProductsQuerySchema.parse(req.query);
+      const result = await ProductAbl.list(filters);
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }

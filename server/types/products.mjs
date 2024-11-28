@@ -22,3 +22,13 @@ export const createProductRequestSchema = z.object({
 export const updateProductRequestSchema = createProductRequestSchema
   .partial()
   .omit({ id: true });
+
+export const listProductsQuerySchema = z.object({
+  search: z.string().optional(),
+  category: z.coerce.number().int().optional(),
+  maxPrice: z.coerce.number().optional(),
+  minPrice: z.coerce.number().optional(),
+  color: z.string().optional(),
+  page: z.coerce.number().int().optional(),
+  pageSize: z.coerce.number().int().optional(),
+});

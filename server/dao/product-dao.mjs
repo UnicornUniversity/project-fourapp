@@ -71,7 +71,6 @@ export const productsDao = {
     }
 
     const products = await Product.find(query)
-      .sort(sort)
       .skip(page * pageSize)
       .limit(pageSize);
 
