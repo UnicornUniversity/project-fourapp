@@ -4,7 +4,7 @@ export const envSchema = z.object({
   MONGO_URI: z.string(),
   JWT_SECRET: z.string(),
   JWT_EXPIRES_IN: z.string(),
-  PORT: z.string(),
+  PORT: z.coerce.number().int(),
   CLIENT_URL: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
