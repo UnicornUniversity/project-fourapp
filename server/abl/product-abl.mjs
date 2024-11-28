@@ -34,9 +34,9 @@ export class ProductAbl {
     }
   }
 
-  static async list() {
+  static async list(filters) {
     try {
-      return await productsDao.list();
+      return await productsDao.listByFilter(filters);
     } catch (error) {
       throw ApiError.fromError(error);
     }
