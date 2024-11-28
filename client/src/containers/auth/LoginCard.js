@@ -3,6 +3,7 @@ import { UserContext } from "../../providers/UserProvider";
 import { Link } from "react-router-dom";
 import Card from "../../components/card/Card";
 import "./../../assets/styles/auth.css";
+import Input from "../../components/input/Input";
 
 function LoginCard() {
   const { handlerMap } = useContext(UserContext);
@@ -32,31 +33,33 @@ function LoginCard() {
       </div>
       <div>
         <form onSubmit={handleSubmit}>
-          <div className="inputWrapper">
-            <input
-              className="formInput"
-              name="email"
-              type="email"
-              placeholder="Email"
-              id="email"
-              required
-            />
-          </div>
-          <div className="inputWrapper">
-            <input
-              className="formInput"
-              name="password"
-              type="password"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <div className="password inputWrapper">
+          <Input
+            className="authInput"
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            id="email"
+          />
+          <Input
+            className="authInput"
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            id="password"
+          />
+          <div className="authPassword inputWrapper">
             <p>Forgot password?</p>
           </div>
-          <div className="inputWrapper">
-            <input type="submit" value="Sign in" className="formButton" />
-          </div>
+
+          <Input
+            className="authInput"
+            name="submit"
+            type="submit"
+            required
+            value="Sign in"
+          />
 
           <div className="inputWrapper">
             <div className="authSocial">
@@ -67,9 +70,9 @@ function LoginCard() {
               <i class="fa-brands fa-facebook"></i>
               <i class="fa-brands fa-x-twitter"></i>
             </div>
-            <div className="accountText">
+            <div className="authText">
               <span>Don’t have an account? </span>
-              <Link to="/user/register" className="registerLink">
+              <Link to="/user/register" className="authLink">
                 Sign up
               </Link>
             </div>
