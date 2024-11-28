@@ -68,7 +68,7 @@
     min-width: min(100%, 800px);
     padding: 2rem;
     background-color: white;
-    border:none;
+    border: none;
 }
 
 .profile-Form form {
@@ -95,6 +95,7 @@
     border-radius: 0.375rem;
     font-size: 1rem;
 }
+
 .formInput:read-only {
     background-color: #f5f5f5;
     cursor: not-allowed;
@@ -119,3 +120,9 @@ input[type="date"].formInput::-webkit-calendar-picker-indicator {
     min-width: min(100%, 800px);
 }
 
+.adminPanel {
+    width: 80%;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+}

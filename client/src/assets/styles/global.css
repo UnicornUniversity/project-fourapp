@@ -1,12 +1,10 @@
-/*---ICONS---*/
-.fa-trash {
-    color: red;
+button {
+    padding: 1rem 3rem 1rem 3rem;
+    border: none;
+    background-color: black;
+    color: white;
+
 }
-
-
-
-
-/*------------*/
 
 /*---CARD---*/
 .card {
@@ -51,6 +49,7 @@
 .table {
     background-color: white;
     border-spacing: 0;
+    width: 100%;
 }
 
 .table th,
