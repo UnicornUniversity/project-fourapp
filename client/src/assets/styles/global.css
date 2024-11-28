@@ -40,11 +40,6 @@
     cursor: pointer;
 }
 
-.formButton:hover {
-    background-color: gray;
-    color: black;
-    transition: 0.2s;
-}
 
 /*------------*/
 
