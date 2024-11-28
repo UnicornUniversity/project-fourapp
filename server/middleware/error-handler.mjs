@@ -5,9 +5,9 @@ const errorHandler = (error, _req, res, _next) => {
   if (error instanceof ApiError) {
     res.status(error.statusCode).json(error.jsonObject());
   } else {
-    console.error("Unexpected Error: ", error);
+    const apiError = ApiError.fromError(error);
 
-    res.status(500).json(ApiError.internalServerError().jsonObject());
+    res.status(apiError.statusCode).json(apiError.jsonObject());
   }
 };
 
