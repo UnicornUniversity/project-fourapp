@@ -1,5 +1,6 @@
 import NavBar from "../containers/header/NavBar";
 import ProfileCard from "../containers/profile/ProfileCard";
+import AdminPanel from "../containers/profile/AdminPanel";
 //import OrderHistory from "../containers/profile/OrderHistory";
 import Sidebar from "../containers/profile/Sidebar";
 import { useLocation } from "react-router-dom";
@@ -11,7 +12,7 @@ function Profile() {
   const renderContent = () => {
     switch (location.pathname) {
       case '/user/profile/admin':
-        return <div>Admin Panel Content</div>;
+        return <AdminPanel />;
       case '/user/profile/orders':
         return <div>Order History</div>; /* return <OrderHistory />;*/
       default:
