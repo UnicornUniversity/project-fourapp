@@ -44,17 +44,11 @@ class UserAbl {
 
   static async listUsers({ limit = 10, page = 0 } = {}) {
     const result = await userDao.list({ limit, page });
-    if (!result || result.users.length === 0) {
-      throw ApiError.notFound("No users found");
-    }
     return result;
   }
   
   static async searchByFilters(filters) {
     const users = await userDao.searchByFilter(filters);
-    if (!users || users.length === 0) {
-      throw ApiError.notFound("No users found with the given filters");
-    }
     return users; 
   }
 }
