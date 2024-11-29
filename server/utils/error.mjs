@@ -61,7 +61,6 @@ export class ApiError extends Error {
       );
     }
     if (error instanceof ZodError) {
-      console.log(error);
       return ApiError.badRequest(message || "Validation error", {
         ...extensions,
         validationErrors: error.errors,
