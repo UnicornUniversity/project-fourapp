@@ -16,6 +16,17 @@
     "zod": "^3.23.8"
   },
   "scripts": {
-    "start": "nodemon --watch './**/*.mjs' server.mjs"
+    "prestart": "npm run lint",
+    "start": "nodemon --watch './**/*.mjs' server.mjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.15.0",
+    "eslint": "^9.15.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-node": "^11.1.0",
+    "globals": "^15.12.0"
   }
 }
