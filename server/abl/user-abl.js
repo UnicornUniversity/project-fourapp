@@ -1,17 +1,18 @@
 import userDao from '../dao/user-dao.js';
+import { ApiError } from '../utils/index.mjs';
 
 class UserAbl {
-  static async getWishlist(userId) {
-    const wishlist = await userDao.wishlistByUserId(userId);
-    if (!wishlist) throw { code: 'wishlistNotFound', message: 'Wishlist not found' };
-    return wishlist;
-  }
+static async getWishlist(userId) {
+  const wishlist = await userDao.wishlistByUserId(userId);
+  if (!wishlist) throw ApiError.notFound('Wishlist not found');
+  return wishlist;
+}
 
-  static async getCart(userId) {
-    const cart = await userDao.cartByUserId(userId);
-    if (!cart) throw { code: 'cartNotFound', message: 'Cart not found' };
-    return cart;
-  }
+static async getCart(userId) {
+  const cart = await userDao.cartByUserId(userId);
+  if (!cart) throw ApiError.notFound('Cart not found');
+  return cart;
+}
 
   static async updateUser(userId, updatedData) {
     const updatedUser = await userDao.update(userId, updatedData);
@@ -25,16 +26,14 @@ class UserAbl {
     return deletedUser;
   }
 
-  static async listUsers({ limit = 10, page = 1 } = {}) {
+  static async listUsers({ limit = 10, page = 0 } = {}) {
     const result = await userDao.list({ limit, page });
-    if (!result.users.length) throw { code: 'noUsersFound', message: 'No users found' };
     return result;
   }
-
+  
   static async searchByFilters(filters) {
     const users = await userDao.searchByFilter(filters);
-    if (!users.length) throw { code: 'noUsersFound', message: 'No users match the given filters' };
-    return users;
+    return users; 
   }
 }
 
