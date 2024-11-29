@@ -31,7 +31,7 @@ class UserController {
       const updatedData = req.body;
   
       if (!updatedData || Object.keys(updatedData).length === 0) {
-        return res.status(400).json({ message: "No data provided for update." });
+        throw ApiError.badRequest("No data provided for update.");
       }
   
       const updatedUser = await UserAbl.updateUser(userId, updatedData);
