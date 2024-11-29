@@ -22,27 +22,26 @@ export class ApiError extends Error {
   }
 
   static fromMessage(message, statusCode = 500, extensions = {}) {
-    return new ApiError(message, statusCode, [], extensions);
+    return new ApiError(message, statusCode, extensions);
   }
 
   static badRequest(message = "Bad request", extensions = {}) {
-    return new ApiError(message, 400, [], extensions);
+    return new ApiError(message, 400, extensions);
   }
 
   static forbidden(message = "Forbidden", extensions = {}) {
-    return new ApiError(message, 403, [], extensions);
+    return new ApiError(message, 403, extensions);
   }
 
   static notFound(message = "Not found", extensions = {}) {
-    return new ApiError(message, 404, [], extensions);
+    return new ApiError(message, 404, extensions);
   }
 
   static internalServerError(message = "Unexpected error", extensions = {}) {
-    return new ApiError(message, 500, [], extensions);
+    return new ApiError(message, 500, extensions);
   }
 
-  static fromError(error, message = undefined) {
-    console.error(error);
+  static fromError(error, message = undefined, extensions = {}) {
     if (!error || typeof error !== "object") {
       return new ApiError(message || "Unknown error", 500);
     }
@@ -62,6 +61,7 @@ export class ApiError extends Error {
       );
     }
     if (error instanceof ZodError) {
+      console.log(error);
       return ApiError.badRequest(message || "Validation error", {
         ...extensions,
         validationErrors: error.errors,
