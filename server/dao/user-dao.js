@@ -78,13 +78,13 @@ class userDao {
     }
   }
 
-  static async list({ limit = 10, page = 1 } = {}) {
+  static async list({ limit = 10, page = 0 } = {}) {
     try {
       limit = parseInt(limit, 10);
       page = parseInt(page, 10);
   
       const users = await User.find({})
-        .skip((page - 1) * limit)
+        .skip(page * limit)
         .limit(limit);
   
       const totalUsers = await User.countDocuments();
@@ -94,6 +94,7 @@ class userDao {
       throw { code: "failedToListUsers", message: error.message };
     }
   }
+  
   
 }
 
