@@ -1,16 +1,14 @@
 import NavBar from "../containers/header/Navbar";
-import ProfileUpdateForm from "../containers/profile/ProfileUpdateForm";
 import ProfileSidebar from "../containers/profile/ProfileSidebar";
-function ProfileUpdate() {
+function ProfileOrderHistory() {
   return (
-    <div className="profileUpdate">
+    <div className="profileOrderHistory">
       <header>
         <NavBar />
       </header>
       <main>
         <section className="profileContent">
           <ProfileSidebar />
-          <ProfileUpdateForm />
         </section>
       </main>
       <footer></footer>
@@ -18,4 +16,4 @@ function ProfileUpdate() {
   );
 }
 
-export default ProfileUpdate;
+export default ProfileOrderHistory;

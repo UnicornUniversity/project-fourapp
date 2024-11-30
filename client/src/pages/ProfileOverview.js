@@ -1,16 +1,18 @@
 import NavBar from "../containers/header/Navbar";
-import ProfileUpdateForm from "../containers/profile/ProfileUpdateForm";
+import ProfileOverviewForm from "../containers/profile/ProfileOverviewForm";
 import ProfileSidebar from "../containers/profile/ProfileSidebar";
-function ProfileUpdate() {
+import "../assets/styles/profile.css";
+
+function ProfileOverview() {
   return (
-    <div className="profileUpdate">
+    <div className="profileOverview">
       <header>
         <NavBar />
       </header>
       <main>
         <section className="profileContent">
           <ProfileSidebar />
-          <ProfileUpdateForm />
+          <ProfileOverviewForm />
         </section>
       </main>
       <footer></footer>
@@ -18,4 +20,4 @@ function ProfileUpdate() {
   );
 }
 
-export default ProfileUpdate;
+export default ProfileOverview;

@@ -7,11 +7,16 @@
 }
 
 .profileContent>div:nth-child(2) {
-    width: 90%;
+    width: 100%;
 }
 
-.sidebarButton {
-    margin-bottom: 2vh;
+.profileSidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.profileSidebarButton {
     background-color: white;
     width: 10vw;
     padding: 1rem;
@@ -33,11 +38,12 @@
     opacity: 1;
 }
 
-.profileAdmin {
+.profileAdminPanel {
     -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
+
 
 
 

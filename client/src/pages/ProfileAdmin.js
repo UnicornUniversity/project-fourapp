@@ -1,25 +1,21 @@
 import NavBar from "../containers/header/Navbar";
-import ProfileOverview from "../containers/profile/ProfileOverview";
+import ProfileAdminPanel from "../containers/profile/ProfileAdminPanel";
 import ProfileSidebar from "../containers/profile/ProfileSidebar";
-import "../assets/styles/profile.css";
-
-function Profile() {
-
-
+function ProfileAdmin() {
   return (
-    <div className="profile">
+    <div className="profileAdmin">
       <header>
         <NavBar />
       </header>
       <main>
-        <div className="profileContent">
+        <section className="profileContent">
           <ProfileSidebar />
-          <ProfileOverview />
-        </div>
+          <ProfileAdminPanel />
+        </section>
       </main>
       <footer></footer>
     </div>
   );
 }
 
-export default Profile;
+export default ProfileAdmin;

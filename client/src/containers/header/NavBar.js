@@ -1,14 +1,13 @@
 import "./../../assets/styles/header.css";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie"; // Import js-cookie library
+import Cookies from "js-cookie";
 
 function Navbar() {
   const navigate = useNavigate();
   const token = Cookies.get("token");
 
-  console.log(token);
   return (
-    <div className="navBar">
+    <div className="navbar">
       <div>
         <h3 onClick={() => navigate("/")}>Logo</h3>
       </div>
