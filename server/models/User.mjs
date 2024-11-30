@@ -27,15 +27,15 @@ const userSchema = new Schema({
   },
   cart_array: [
     {
-      id: { type: String },
-      variantId: { type: String },
-      quantity: { type: Number },
+      productId: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+      variantId: { type: String, required: true },
+      quantity: { type: Number, required: true, default: 1 },
     },
   ],
   wishlist_array: [
     {
-      id: { type: String },
-      variantId: { type: String },
+      productId: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+      variantId: { type: String, required: true },
     },
   ],
 });
