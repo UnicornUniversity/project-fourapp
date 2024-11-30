@@ -1,6 +1,7 @@
 import express from 'express';
 import UserAbl from '../../abl/user-abl.js';
 import { requireParam } from '../../utils/index.mjs';
+import { ApiError } from "../../utils/error.mjs";
 
 const router = express.Router();
 
