@@ -42,7 +42,7 @@ function AdminPanel() {
     const columnKeys = ["name", "category", "sizes", "price"]; // Map header order to object keys
 
     return (
-        <div className="adminPanel">
+        <div className="profileAdmin">
             <div>
                 <button>Add product</button>
             </div>

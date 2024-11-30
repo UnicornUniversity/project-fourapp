@@ -1,12 +1,12 @@
-import NavBar from "../containers/header/NavBar";
+import NavBar from "../containers/header/Navbar";
 import Button from "../components/button/Button";
 
-function App() {
+function Home() {
 
 
 
   return (
-    <div className="app">
+    <div className="home">
       <header>
         <NavBar />
       </header>
@@ -18,4 +18,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

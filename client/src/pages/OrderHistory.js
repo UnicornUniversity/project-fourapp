@@ -1,19 +1,20 @@
-import LoginCard from "../containers/auth/LoginCard";
 import NavBar from "../containers/header/Navbar";
 
-function Login() {
- 
+function OrderHistory() {
+
+
+
   return (
-    <div className="login">
+    <div className="orderHistory">
       <header>
         <NavBar />
       </header>
       <main>
-        <LoginCard />
+
       </main>
       <footer></footer>
     </div>
   );
 }
 
-export default Login;
+export default OrderHistory;

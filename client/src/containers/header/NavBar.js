@@ -2,7 +2,7 @@ import "./../../assets/styles/header.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"; // Import js-cookie library
 
-function App() {
+function Navbar() {
   const navigate = useNavigate();
   const token = Cookies.get("token");
 
@@ -30,4 +30,4 @@ function App() {
   );
 }
 
-export default App;
+export default Navbar;
