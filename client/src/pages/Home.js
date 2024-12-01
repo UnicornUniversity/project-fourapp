@@ -1,21 +1,15 @@
-import NavBar from "../containers/header/NavBar";
-import Button from "../components/button/Button";
+import NavBar from "../containers/header/Navbar";
 
-function App() {
-
-
-
+function Home() {
   return (
-    <div className="app">
+    <div className="home">
       <header>
         <NavBar />
       </header>
-      <main>
-        <Button buttonText={"Ahoj"} />
-      </main>
+      <main></main>
       <footer></footer>
     </div>
   );
 }
 
-export default App;
+export default Home;

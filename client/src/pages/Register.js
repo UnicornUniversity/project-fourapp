@@ -1,10 +1,10 @@
 import RegisterCard from "../containers/auth/RegisterCard";
 
-import NavBar from "../containers/header/NavBar";
+import NavBar from "../containers/header/Navbar";
 
 function Register() {
   return (
-    <div className="login">
+    <div className="register">
       <header>
         <NavBar />
       </header>

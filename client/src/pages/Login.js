@@ -1,5 +1,5 @@
 import LoginCard from "../containers/auth/LoginCard";
-import NavBar from "../containers/header/NavBar";
+import NavBar from "../containers/header/Navbar";
 
 function Login() {
  

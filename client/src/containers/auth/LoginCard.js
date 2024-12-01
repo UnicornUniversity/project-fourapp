@@ -31,54 +31,50 @@ function LoginCard() {
       <div>
         <h3>Login</h3>
       </div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <Input
-            className="authInput"
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            id="email"
-          />
-          <Input
-            className="authInput"
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-            id="password"
-          />
-          <div className="authPassword inputWrapper">
-            <p>Forgot password?</p>
-          </div>
+      <form onSubmit={handleSubmit}>
+        <Input
+          className="authInput"
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          id="email"
+        />
+        <Input
+          className="authInput"
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+          id="password"
+        />
+        <div className="authPassword inputWrapper">
+          <p>Forgot password?</p>
+        </div>
 
-          <Input
-            className="authInput"
-            name="submit"
-            type="submit"
-            required
-            value="Sign in"
-          />
+        <Input
+          className="authInput"
+          name="submit"
+          type="submit"
+          required
+          value="Sign in"
+        />
 
-          <div className="inputWrapper">
-            <div className="authSocial">
-              <i
-                class="fa-brands fa-google"
-                onClick={() => handlerMap.handleGoogleLogin()}
-              ></i>
-              <i class="fa-brands fa-facebook"></i>
-              <i class="fa-brands fa-x-twitter"></i>
-            </div>
-            <div className="authText">
-              <span>Don’t have an account? </span>
-              <Link to="/user/register" className="authLink">
-                Sign up
-              </Link>
-            </div>
+        <div className="inputWrapper">
+          <div className="authSocial">
+            <i
+              className="fa-brands fa-google"
+              onClick={() => handlerMap.handleGoogleLogin()}
+            ></i>
           </div>
-        </form>
-      </div>
+          <div className="authText">
+            <span>Don’t have an account? </span>
+            <Link to="/user/register" className="authLink">
+              Sign up
+            </Link>
+          </div>
+        </div>
+      </form>
     </Card>
   );
 }
