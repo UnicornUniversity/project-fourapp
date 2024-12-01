@@ -6,11 +6,12 @@ Welcome to **FourApp**! 🎉 This repository aims to be a fashion eshop.
 
 Project FourApp is an e-shop for fashion clothes. It's designed to provide space for people to make their lives easier with internet shopping.
 
-### Built With
+### Built With MERN stack
 
-- [⚙️ Framework 1](https://link-to-framework.com)
-- [⚡️ Tool 2](https://link-to-tool.com)
-- [🚀 Library 3](https://link-to-library.com)
+- [⚙️ MongoDB](https://www.mongodb.com/)
+- [⚡️ Express](https://expressjs.com/)
+- [🚀 React.js](https://react.dev/)
+- [🚀 Node.js](https://nodejs.org/en)
 
 ## 🌟 Features
 
