@@ -11,11 +11,11 @@ class userDao {
   }
 
   static async getByEmail(email) {
-    const user = await User.findOne({ email });
-    if (!user) {
-      throw ApiError.notFound("User with this email not found");
+    try {
+      return await User.findOne({ email });
+    } catch (error) {
+      throw { code: "failedToFindUser", message: error.message };
     }
-    return user;
   }
 
   static async findById(id) {
@@ -77,7 +77,11 @@ class userDao {
       .limit(limit);
 
     const totalUsers = await User.countDocuments();
-    return { users, totalPages: Math.ceil(totalUsers / limit), currentPage: page };
+    return {
+      users,
+      totalPages: Math.ceil(totalUsers / limit),
+      currentPage: page,
+    };
   }
 }
 
