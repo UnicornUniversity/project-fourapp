@@ -1,5 +1,6 @@
 import { ProductAbl } from "../../abl/product-abl.mjs";
 import { requireParam } from "../../utils/index.mjs";
+import { listProductsQuerySchema } from "../../types/products.mjs";
 
 export default class ProductController {
   static async create(req, res, next) {
@@ -25,9 +26,9 @@ export default class ProductController {
 
   static async list(req, res, next) {
     try {
-      const products = await ProductAbl.list();
-
-      res.status(200).json({ products });
+      const filters = listProductsQuerySchema.parse(req.query);
+      const result = await ProductAbl.list(filters);
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }

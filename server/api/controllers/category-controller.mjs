@@ -54,4 +54,26 @@ export default class CategoryController {
       next(error);
     }
   }
+
+  static async getSubcategories(req, res, next) {
+    try {
+      const id = requireParam("categoryId", req.params);
+      const subcategories = await CategoryAbl.getSubcategories(id);
+
+      res.status(200).json({ subcategories });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getCategoryTree(req, res, next) {
+    try {
+      const id = requireParam("categoryId", req.params);
+      const tree = await CategoryAbl.getCategoryTree(id);
+
+      res.status(200).json(tree);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

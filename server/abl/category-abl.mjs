@@ -45,4 +45,20 @@ export class CategoryAbl {
       throw ApiError.fromError(error, "Failed to list categories");
     }
   }
+
+  static async getSubcategories(id) {
+    try {
+      return await categoriesDao.getByParentCategory(id);
+    } catch (error) {
+      throw ApiError.fromError(error, "Failed to get subcategories");
+    }
+  }
+
+  static async getCategoryTree(id) {
+    try {
+      return await categoriesDao.getCategoryTree(id);
+    } catch (error) {
+      throw ApiError.fromError(error, "Failed to get category tree");
+    }
+  }
 }
