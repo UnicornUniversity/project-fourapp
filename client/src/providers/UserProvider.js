@@ -3,10 +3,7 @@ import { useNavigate } from "react-router-dom";
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
-  // const [user, setUser] = useState();
-  const navigate = useNavigate();
-
-  async function handleRegister(user) {
+  async function handleRegister( user ) {
     try {
       const response = await fetch(
         "http://localhost:5000/api/auth/register", //OUR API ENDPOINT
@@ -20,7 +17,7 @@ function UserProvider({ children }) {
       );
 
       const serverResponse = await response.json();
-      console.log(serverResponse);
+      console.log(serverResponse)
       if (response.ok) {
         navigate("/user/login");
         //console.log("Token verified successfully:", data); //WENT THROUGH RESPONSE
@@ -32,7 +29,7 @@ function UserProvider({ children }) {
     }
   }
 
-  async function handleLogin(user) {
+  async function handleLogin( user ) {
     try {
       const response = await fetch(
         "http://localhost:5000/api/auth/login", //OUR API ENDPOINT
@@ -47,8 +44,7 @@ function UserProvider({ children }) {
       );
 
       const serverResponse = await response.json(); //SHOULD BE TOKEN
-
-      console.log(serverResponse);
+      console.log(serverResponse)
       if (response.ok) {
         navigate("/user/profile");
         //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?

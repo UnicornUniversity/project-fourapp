@@ -7,29 +7,27 @@ import ProfileOrderHistory from "./pages/ProfileOrderHistory";
 import ProfileUpdate from "./pages/ProfileUpdate";
 import Register from "./pages/Register";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Layout from "./pages/Layout";
+import { Products } from "./pages/Products";
+import { Layout } from "./pages/Layout";
 
 function App() {
   return (
     <div>
-      <BrowserRouter>
-        <UserProvider>
+      <UserProvider>
+        <BrowserRouter>
           <Layout>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Products />} />
               <Route path="/user/login" element={<Login />} />
-              <Route path="/user/profile" element={<ProfileOverview />} />
-              <Route path="/user/profile/update" element={<ProfileUpdate />} />
-              <Route
-                path="/user/profile/orders"
-                element={<ProfileOrderHistory />}
-              />
-              <Route path="/user/profile/admin" element={<ProfileAdmin />} />
+              <Route path="/user/profile" element={<Profile />} />
+              <Route path="/user/profile/edit" element={<Profile />} />
+              <Route path="/user/profile/orders" element={<Profile />} />
+              <Route path="/user/profile/admin" element={<Profile />} />
               <Route path="/user/register" element={<Register />} />
             </Routes>
           </Layout>
-        </UserProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </UserProvider>
     </div>
   );
 }
