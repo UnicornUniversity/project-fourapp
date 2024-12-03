@@ -1,13 +1,9 @@
-import NavBar from "../containers/header/Navbar";
+import Products from "./Products";
 
 function Home() {
   return (
     <div className="home">
-      <header>
-        <NavBar />
-      </header>
-      <main></main>
-      <footer></footer>
+      <Products />
     </div>
   );
 }
