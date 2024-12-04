@@ -22,7 +22,7 @@ function UserProvider({ children }) {
       const serverResponse = await response.json();
       console.log(serverResponse);
       if (response.ok) {
-
+        navigate("/user/login");
         //console.log("Token verified successfully:", data); //WENT THROUGH RESPONSE
       } else {
         //console.error("Token verification failed:", data); //SOME ERROR
@@ -50,7 +50,7 @@ function UserProvider({ children }) {
 
       console.log(serverResponse);
       if (response.ok) {
-        navigate('/user/profile');
+        navigate("/user/profile");
         //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
       } else {
         //console.error("Token verification failed:", data); //SOME ERROR
@@ -75,13 +75,13 @@ function UserProvider({ children }) {
     email: "karel.macha@example.com",
     phone_number: "123-456-7890",
     dob: "1990-01-01",
-    role: "admin"
+    role: "admin",
   });
 
   const updateUserProfile = (userData) => {
-    setUser(prevUser => ({
+    setUser((prevUser) => ({
       ...prevUser,
-      ...userData
+      ...userData,
     }));
   };
 
@@ -91,7 +91,7 @@ function UserProvider({ children }) {
       handleRegister,
       handleLogin,
       handleGoogleLogin,
-      updateUserProfile
+      updateUserProfile,
     },
   };
 

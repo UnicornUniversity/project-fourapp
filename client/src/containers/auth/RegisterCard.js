@@ -1,12 +1,16 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { UserContext } from "../../providers/UserProvider";
 import { Link } from "react-router-dom";
 import Card from "../../components/card/Card";
 import "./../../assets/styles/auth.css";
+//import "./../../assets/styles/tooltip.css"; // Custom styles for the tooltip
 import Input from "../../components/input/Input";
 
 function RegisterCard() {
   const { handlerMap } = useContext(UserContext);
+
+  const [errors, setErrors] = useState({ name: "", email: "", password: "" });
+
   const handleSubmit = useCallback(
     async (event) => {
       event.preventDefault();
@@ -17,6 +21,33 @@ function RegisterCard() {
         email: formData.get("email"),
         password: formData.get("password"),
       };
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+      const passwordPattern = /^(?=.*\d).{6,}$/;
+
+      const newErrors = { name: "", email: "", password: "" };
+
+      if (!user.name.trim()) {
+        newErrors.name = "Name is required.";
+      }
+
+      if (!emailPattern.test(user.email)) {
+        newErrors.email = "Invalid email format.";
+      } else if (user.email === "example@example.com") {
+        newErrors.email = "Email already in use.";
+      }
+
+      if (!passwordPattern.test(user.password)) {
+        newErrors.password =
+          "Password must be at least 6 characters long and include at least one number.";
+      }
+
+      setErrors(newErrors);
+
+      if (newErrors.name || newErrors.email || newErrors.password) {
+        return;
+      }
+
       try {
         await handlerMap.handleRegister(user);
       } catch (error) {
@@ -37,36 +68,41 @@ function RegisterCard() {
           className="authInput"
           type="text"
           name="name"
-          placeholder="name"
-          required
+          placeholder="Name"
           id="name"
+          errorMessage={errors.name}
         />
+
         <Input
           className="authInput"
           type="email"
           name="email"
           placeholder="Email"
-          required
           id="email"
+          errorMessage={errors.email}
         />
+
         <Input
           className="authInput"
           type="password"
           name="password"
           placeholder="Password"
-          required
           id="password"
+          errorMessage={errors.password}
         />
+
         <div className="authPassword inputWrapper">
           <p>Forgot password?</p>
         </div>
+
         <Input
           className="authInput"
           name="submit"
           type="submit"
           required
-          value="Sign in"
+          value="Sign up"
         />
+
         <div className="inputWrapper">
           <div className="authSocial">
             <i

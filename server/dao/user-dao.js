@@ -18,6 +18,11 @@ class userDao {
     }
   }
 
+  static async existsByEmail(email) {
+    const user = await User.findOne({ email });
+    return !!user; // Vrací true, pokud uživatel existuje, jinak false
+}
+
   static async findById(id) {
     return await User.findById(id);
   }

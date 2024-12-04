@@ -1,13 +1,35 @@
 import "./../../assets/styles/global.css";
 
-function Input({ className = "", type, placeholder, required = false, disabled = false, id, name, value, children }) {
-    return (
-        <div className="inputWrapper">
-            {children}
-            <input className={`input ${className}`} type={type} placeholder={placeholder} required={required} disabled={disabled} id={id} name={name} value={value}>
-            </input>
+function Input({
+  className = "",
+  type,
+  placeholder,
+  disabled = false,
+  id,
+  name,
+  value,
+  children,
+  errorMessage,
+}) {
+  return (
+    <div className="inputWrapper">
+      {children}
+      <input
+        className={`input ${className} ${errorMessage ? "inputError" : ""}`} // Add 'inputError' if errorMessage exists
+        type={type}
+        placeholder={placeholder}
+        disabled={disabled}
+        id={id}
+        name={name}
+        value={value}
+      ></input>
+      {errorMessage && (
+        <div className="tooltipError">
+          <span>{errorMessage}</span>
         </div>
-    );
+      )}
+    </div>
+  );
 }
 
 export default Input;
