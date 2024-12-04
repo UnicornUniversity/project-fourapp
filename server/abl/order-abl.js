@@ -42,7 +42,7 @@ class OrderAbl {
   static async calculateTotalCost(cart) {
     let totalCost = 0;
     for (const item of cart) {
-      const product = await productsDao.findById(item.id);
+      const product = await productsDao.get(item.id);
       if (!product) throw ApiError.notFound(`Product ${item.id} not found abl`);
       totalCost += product.price * item.quantity;
     }
@@ -50,7 +50,13 @@ class OrderAbl {
   }
 
   // Dokončení objednávky
-  static async completeOrder(id, shipping_method, total_cost, shipping_address, payment_method) {
+  static async completeOrder(
+    id,
+    shipping_method,
+    total_cost,
+    shipping_address,
+    payment_method
+  ) {
     const validShippingMethods = ["Standard", "Express", "Courier"];
     const validPaymentMethods = ["Credit Card", "PayPal", "Bank Transfer"];
 

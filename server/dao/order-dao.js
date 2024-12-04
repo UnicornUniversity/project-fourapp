@@ -24,19 +24,6 @@ class orderDao {
     }
   }
 
-  // Načtení produktu podle ID
-  static async getProductById(productId) {
-    try {
-      const product = await Product.findById(productId);
-      if (!product) {
-        throw ApiError.notFound("Product not found");
-      }
-      return product;
-    } catch (error) {
-      throw ApiError.badRequest("Failed to get product", error.message);
-    }
-  }
-
   // Seznam všech objednávek
   static async list() {
     try {
@@ -71,7 +58,10 @@ class orderDao {
       if (!updatedOrder) throw ApiError.notFound("Order not found");
       return updatedOrder;
     } catch (error) {
-      throw ApiError.badRequest("Failed to update payment method", error.message);
+      throw ApiError.badRequest(
+        "Failed to update payment method",
+        error.message
+      );
     }
   }
 
@@ -102,7 +92,10 @@ class orderDao {
         };
       return await Order.find(query);
     } catch (error) {
-      throw ApiError.badRequest("Failed to list orders by filter", error.message);
+      throw ApiError.badRequest(
+        "Failed to list orders by filter",
+        error.message
+      );
     }
   }
 }
