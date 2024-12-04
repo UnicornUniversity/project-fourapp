@@ -6,6 +6,8 @@ import ProfileAdmin from "./pages/ProfileAdmin";
 import ProfileOrderHistory from "./pages/ProfileOrderHistory";
 import ProfileUpdate from "./pages/ProfileUpdate";
 import Register from "./pages/Register";
+import Product from "./pages/Product";
+import ProductProvider from "./providers/ProductProvider";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Layout from "./pages/Layout";
 
@@ -14,6 +16,7 @@ function App() {
     <div>
       <BrowserRouter>
         <UserProvider>
+          <ProductProvider>
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -26,8 +29,10 @@ function App() {
               />
               <Route path="/user/profile/admin" element={<ProfileAdmin />} />
               <Route path="/user/register" element={<Register />} />
+              <Route path="/product/:productId" element={<Product />} />
             </Routes>
           </Layout>
+          </ProductProvider>
         </UserProvider>
       </BrowserRouter>
     </div>
