@@ -7,9 +7,7 @@ import "./../../assets/styles/auth.css";
 import Input from "../../components/input/Input";
 
 function RegisterCard() {
-  const { handlerMap , error } = useContext(UserContext);
-
-  console.log(error)
+  const { handlerMap } = useContext(UserContext);
 
   const [errors, setErrors] = useState({ name: "", email: "", password: "" });
 
@@ -37,11 +35,6 @@ function RegisterCard() {
         newErrors.email = "Invalid email format.";
       } else if (user.email === "example@example.com") {
         newErrors.email = "Email already in use.";
-      }
-
-      if(error){
-        newErrors.email = error.message
-        handlerMap.setError()
       }
 
       if (!passwordPattern.test(user.password)) {

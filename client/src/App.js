@@ -6,7 +6,11 @@ import ProfileAdmin from "./pages/ProfileAdmin";
 import ProfileOrderHistory from "./pages/ProfileOrderHistory";
 import ProfileUpdate from "./pages/ProfileUpdate";
 import Register from "./pages/Register";
+import Product from "./pages/Product";
+import ProductProvider from "./providers/ProductProvider";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import CategoryCreate from "./pages/CategoryCreate";
+import ProductCreate from "./pages/ProductCreate";
 import Layout from "./pages/Layout";
 
 function App() {
@@ -14,20 +18,34 @@ function App() {
     <div>
       <BrowserRouter>
         <UserProvider>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/user/login" element={<Login />} />
-              <Route path="/user/profile" element={<ProfileOverview />} />
-              <Route path="/user/profile/update" element={<ProfileUpdate />} />
-              <Route
-                path="/user/profile/orders"
-                element={<ProfileOrderHistory />}
-              />
-              <Route path="/user/profile/admin" element={<ProfileAdmin />} />
-              <Route path="/user/register" element={<Register />} />
-            </Routes>
-          </Layout>
+          <ProductProvider>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/user/login" element={<Login />} />
+                <Route path="/user/profile" element={<ProfileOverview />} />
+                <Route
+                  path="/user/profile/update"
+                  element={<ProfileUpdate />}
+                />
+                <Route
+                  path="/user/profile/orders"
+                  element={<ProfileOrderHistory />}
+                />
+                <Route path="/user/profile/admin" element={<ProfileAdmin />} />
+                <Route path="/user/register" element={<Register />} />
+                <Route path="/product/:productId" element={<Product />} />
+                <Route
+                  path="/user/profile/admin/category/create"
+                  element={<CategoryCreate />}
+                />
+                <Route
+                  path="/user/profile/admin/product/create"
+                  element={<ProductCreate />}
+                />
+              </Routes>
+            </Layout>
+          </ProductProvider>
         </UserProvider>
       </BrowserRouter>
     </div>
