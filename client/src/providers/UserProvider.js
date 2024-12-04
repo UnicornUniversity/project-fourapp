@@ -5,6 +5,7 @@ export const UserContext = createContext();
 function UserProvider({ children }) {
   // const [user, setUser] = useState();
   const navigate = useNavigate();
+  const [error , setError] = useState();
 
   async function handleRegister(user) {
     try {
@@ -18,14 +19,14 @@ function UserProvider({ children }) {
           body: JSON.stringify(user), //USER DATA
         }
       );
-
       const serverResponse = await response.json();
       console.log(serverResponse);
       if (response.ok) {
         navigate("/user/login");
         //console.log("Token verified successfully:", data); //WENT THROUGH RESPONSE
       } else {
-        //console.error("Token verification failed:", data); //SOME ERROR
+        //console.error("Token verification failed:"); //SOME ERROR
+        setError(serverResponse)
       }
     } catch (error) {
       //console.error("Error sending token to backend:", error);
@@ -86,12 +87,13 @@ function UserProvider({ children }) {
   };
 
   const value = {
-    user,
+    user, error,
     handlerMap: {
       handleRegister,
       handleLogin,
       handleGoogleLogin,
       updateUserProfile,
+      setError,
     },
   };
 

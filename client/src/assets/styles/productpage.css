@@ -8,12 +8,14 @@
     padding: 2rem 0;
 }
 
+
 .productGallery {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     max-width: 600px;
 }
+
 
 .productMainImage {
     position: relative;
@@ -35,7 +37,6 @@
     top: 0;
     left: 0;
 }
-
 .productThumbnails {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

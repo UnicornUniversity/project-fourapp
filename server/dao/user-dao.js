@@ -11,12 +11,17 @@ class userDao {
   }
 
   static async getByEmail(email) {
-    const user = await User.findOne({ email });
-    if (!user) {
-      throw ApiError.notFound("User with this email not found");
+    try {
+      return await User.findOne({ email });
+    } catch (error) {
+      throw { code: "failedToFindUser", message: error.message };
     }
-    return user;
   }
+
+  static async existsByEmail(email) {
+    const user = await User.findOne({ email });
+    return !!user; // Vrací true, pokud uživatel existuje, jinak false
+}
 
   static async findById(id) {
     return await User.findById(id);

@@ -16,16 +16,16 @@ function ProductCard({ product }) {
   return (
     <Card className="productCard">
       {/* Main Image */}
-      <div className="imageContainer">
+      <div className="productCardImageContainer">
         <img
           src={mainImage}
           alt={product.name}
-          className="mainImage"
+          className="productCardMainImage"
           onError={handleImageError}
         />
       </div>
       {/* Small Images */}
-      <div className="smallImages">
+      <div className="productCardSmallImageContainer">
         {otherImages.length > 0 ? (
           otherImages.map((img, index) => (
             <img
@@ -33,7 +33,7 @@ function ProductCard({ product }) {
               src={img}
               alt={`${product.name} variant ${index + 1}`}
               onError={handleImageError}
-              className="smallImage"
+              className="productCardSmallImage"
             />
           ))
         ) : (
@@ -41,36 +41,33 @@ function ProductCard({ product }) {
             width={50}
             src="/images/default/image-placeholder.webp"
             alt="Default placeholder"
-            className="smallImage"
+            className="productCardSmallImage"
           />
         )}
       </div>
 
       {/* Title */}
-      <h3>{product.name}</h3>
+      <h3 className="productCardTitle">{product.name}</h3>
 
       {/* Colors */}
-      <div className="colors">
+      <div className="productCardColorContainer">
         {product.variant.map((v, index) => (
           <span
             key={index}
-            className="color"
+            className="productCardColor"
             style={{
-              backgroundColor: v.color.toLowerCase(),
-              border: "1px solid #000",
-              display: "inline-block",
-              width: "25px",
-              height: "25px",
-              marginRight: "5px",
+              "background-color": v.color.toLowerCase(),
             }}
           ></span>
         ))}
       </div>
       <hr />
       {/* Price */}
-      <div>
-        <p className="price">${product.price}</p>
-        <span></span>
+      <div className="productCardFooter">
+        <p>${product.price}</p>
+        <span>
+          <i className="fa-solid fa-bag-shopping"></i>
+        </span>
       </div>
     </Card>
   );
