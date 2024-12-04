@@ -1,6 +1,10 @@
 import Table from "../../components/table/Table";
 import "../../assets/styles/profile.css";
+import { useNavigate } from "react-router-dom";
+
 function ProfileAdmin() {
+  const navigate = useNavigate();
+
   /*
     const data = [
       [1, "Product 1", "Category 1", "S, M, L", "$452.85"], // Product Name is at index 1
@@ -44,32 +48,43 @@ function ProfileAdmin() {
   return (
     <div className="profileAdminPanel">
       <div>
-        <button>Add product</button>
+        <div>
+          <button
+            onClick={() => navigate("/user/profile/admin/category/create")}
+          >
+            Add category
+          </button>
+        </div>
+        <Table
+          headers={headers}
+          data={data}
+          columnKeys={columnKeys}
+          renderAction={() => (
+            <div>
+              <i className="fa-solid fa-trash"></i>
+            </div>
+          )}
+        />
       </div>
-      <Table
-        headers={headers}
-        data={data}
-        columnKeys={columnKeys}
-        renderAction={() => (
-          <div>
-            <i className="fa-solid fa-trash"></i>
-          </div>
-        )}
-      />
-
       <div>
-        <button>Add category</button>
+        <div>
+          <button
+            onClick={() => navigate("/user/profile/admin/product/create")}
+          >
+            Add product
+          </button>
+        </div>
+        <Table
+          headers={headers}
+          data={data}
+          columnKeys={columnKeys}
+          renderAction={() => (
+            <div>
+              <i className="fa-solid fa-trash"></i>
+            </div>
+          )}
+        />
       </div>
-      <Table
-        headers={headers}
-        data={data}
-        columnKeys={columnKeys}
-        renderAction={() => (
-          <div>
-            <i className="fa-solid fa-trash"></i>
-          </div>
-        )}
-      />
     </div>
   );
 }
