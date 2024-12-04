@@ -1,3 +1,4 @@
+
 import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Button from "../components/button/Button";
@@ -8,7 +9,6 @@ import "../assets/styles/global.css";
 function ProductDetails() {
   const { productId } = useParams();
   const { products } = useContext(ProductContext);
-  
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -18,7 +18,7 @@ function ProductDetails() {
 
   useEffect(() => {
     if (productId && products) {
-      const product = products.find(p => p.id === productId);
+      const product = products.find((p) => p.id === productId);
       setSelectedProduct(product);
     }
   }, [productId, products]);
@@ -34,13 +34,21 @@ function ProductDetails() {
 
   if (!selectedProduct) return <div>Product not found</div>;
 
-  const availableSizes = [...new Set(selectedProduct.variant.map(v => v.size))];
-  const availableColors = [...new Set(selectedProduct.variant.map(v => v.color))];
+
+  const availableSizes = [
+    ...new Set(selectedProduct.variant.map((v) => v.size)),
+  ];
+  const availableColors = [
+    ...new Set(selectedProduct.variant.map((v) => v.color)),
+  ];
+
 
   const handleSizeSelect = (size) => {
     setSelectedSize(size);
     const newVariant = selectedProduct.variant.find(
-      v => v.size === size && (!selectedColor || v.color === selectedColor)
+
+      (v) => v.size === size && (!selectedColor || v.color === selectedColor)
+
     );
     if (newVariant) {
       setSelectedVariant(newVariant);
@@ -51,7 +59,7 @@ function ProductDetails() {
   const handleColorSelect = (color) => {
     setSelectedColor(color);
     const newVariant = selectedProduct.variant.find(
-      v => v.color === color && (!selectedSize || v.size === selectedSize)
+      (v) => v.color === color && (!selectedSize || v.size === selectedSize)
     );
     if (newVariant) {
       setSelectedVariant(newVariant);
@@ -132,7 +140,9 @@ function ProductDetails() {
           <div className="productAccordion">
             <Button
               className="accordionButton"
+
               buttonText={`Description ${showDescription ? '▼' : '▲'}`}
+
               onClick={() => setShowDescription(!showDescription)}
             />
             {showDescription && (
@@ -148,3 +158,4 @@ function ProductDetails() {
 }
 
 export default ProductDetails;
+
