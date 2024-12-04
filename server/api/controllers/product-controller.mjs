@@ -1,5 +1,6 @@
 import { ProductAbl } from "../../abl/product-abl.mjs";
 import { requireParam } from "../../utils/index.mjs";
+import { listProductsQuerySchema } from "../../types/products.mjs";
 
 export default class ProductController {
   static async create(req, res, next) {
@@ -39,6 +40,17 @@ export default class ProductController {
       const updatedProduct = await ProductAbl.update(id, req.body);
 
       res.status(200).json(updatedProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async get(req, res, next) {
+    try {
+      const id = requireParam("id", req.params);
+      const product = await ProductAbl.get(id);
+
+      res.status(200).json(product);
     } catch (error) {
       next(error);
     }

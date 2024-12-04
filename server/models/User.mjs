@@ -1,9 +1,14 @@
 import { Schema, model } from "mongoose";
 
-// Aktualizované schéma uživatele
 const userSchema = new Schema({
   name: { type: String },
-  email: { type: String, required: true, unique: true },
+  email: { 
+    type: String, 
+    required: function () { 
+      return this.isNew;
+    }, 
+    unique: true 
+  },
   password: { type: String },
   google_id: { type: String },
   phone_number: { type: String },
@@ -22,17 +27,19 @@ const userSchema = new Schema({
   },
   cart_array: [
     {
-      id: { type: String },
-      variantId: { type: String },
-      quantity: { type: Number },
+      productId: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+      variantId: { type: String, required: true },
+      quantity: { type: Number, required: true, default: 1 },
     },
   ],
   wishlist_array: [
     {
-      id: { type: String },
-      variantId: { type: String },
+      productId: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+      variantId: { type: String, required: true },
     },
   ],
 });
+
+userSchema.set("runValidators", true);
 
 export default model("User", userSchema);
