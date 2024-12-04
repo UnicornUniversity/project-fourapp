@@ -1,6 +1,5 @@
-
-import React, { useState, useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Button from "../components/button/Button";
 import { ProductContext } from "../providers/ProductProvider";
 import "../assets/styles/productpage.css";
@@ -34,7 +33,6 @@ function ProductDetails() {
 
   if (!selectedProduct) return <div>Product not found</div>;
 
-
   const availableSizes = [
     ...new Set(selectedProduct.variant.map((v) => v.size)),
   ];
@@ -42,13 +40,10 @@ function ProductDetails() {
     ...new Set(selectedProduct.variant.map((v) => v.color)),
   ];
 
-
   const handleSizeSelect = (size) => {
     setSelectedSize(size);
     const newVariant = selectedProduct.variant.find(
-
       (v) => v.size === size && (!selectedColor || v.color === selectedColor)
-
     );
     if (newVariant) {
       setSelectedVariant(newVariant);
@@ -71,19 +66,27 @@ function ProductDetails() {
     <div className="productContent">
       <div className="productGallery">
         <div className="productMainImage">
-          <img 
-            src={selectedVariant?.image?.[currentImage] || selectedProduct.variant[0]?.image?.[0]} 
-            alt={`${selectedProduct.name} - ${selectedVariant?.color || ''}`} 
+          <img
+            src={
+              selectedVariant?.image?.[currentImage] ||
+              selectedProduct.variant[0]?.image?.[0]
+            }
+            alt={`${selectedProduct.name} - ${selectedVariant?.color || ""}`}
           />
         </div>
         <div className="productThumbnails">
           {selectedVariant?.image?.map((image, index) => (
-            <div 
+            <div
               key={index}
-              className={`thumbnailImage ${currentImage === index ? 'active' : ''}`}
+              className={`thumbnailImage ${
+                currentImage === index ? "active" : ""
+              }`}
               onClick={() => setCurrentImage(index)}
             >
-              <img src={image} alt={`${selectedProduct.name} view ${index + 1}`} />
+              <img
+                src={image}
+                alt={`${selectedProduct.name} view ${index + 1}`}
+              />
             </div>
           ))}
         </div>
@@ -93,7 +96,7 @@ function ProductDetails() {
         <div className="productHeader">
           <h1>{selectedProduct.name}</h1>
           <div className="productPrice">
-            <span>{selectedProduct.price} CZK</span>
+            <span>{selectedProduct.price} €</span>
           </div>
         </div>
 
@@ -103,7 +106,9 @@ function ProductDetails() {
             {availableSizes.map((size) => (
               <Button
                 key={size}
-                className={`variantButton ${selectedSize === size ? 'active' : ''}`}
+                className={`variantButton ${
+                  selectedSize === size ? "active" : ""
+                }`}
                 buttonText={size}
                 onClick={() => handleSizeSelect(size)}
               />
@@ -117,7 +122,9 @@ function ProductDetails() {
             {availableColors.map((color) => (
               <Button
                 key={color}
-                className={`variantButton ${selectedColor === color ? 'active' : ''}`}
+                className={`variantButton ${
+                  selectedColor === color ? "active" : ""
+                }`}
                 buttonText={color}
                 onClick={() => handleColorSelect(color)}
               />
@@ -125,14 +132,16 @@ function ProductDetails() {
           </div>
         </div>
 
-        <div className="stockInfo">
-          In stock: {selectedVariant?.stock || 0}
-        </div>
+        <div className="stockInfo">In stock: {selectedVariant?.stock || 0}</div>
 
-        <Button 
-          className={`addToBasketButton ${(!selectedVariant || selectedVariant.stock === 0) ? 'disabled' : ''}`}
+        <Button
+          className={`addToBasketButton ${
+            !selectedVariant || selectedVariant.stock === 0 ? "disabled" : ""
+          }`}
           buttonText="Add to basket"
-          onClick={() => {/* Add to cart logic */}}
+          onClick={() => {
+            /* Add to cart logic */
+          }}
           disabled={!selectedVariant || selectedVariant.stock === 0}
         />
 
@@ -140,9 +149,7 @@ function ProductDetails() {
           <div className="productAccordion">
             <Button
               className="accordionButton"
-
-              buttonText={`Description ${showDescription ? '▼' : '▲'}`}
-
+              buttonText={`Description ${showDescription ? "▼" : "▲"}`}
               onClick={() => setShowDescription(!showDescription)}
             />
             {showDescription && (
@@ -158,4 +165,3 @@ function ProductDetails() {
 }
 
 export default ProductDetails;
-
