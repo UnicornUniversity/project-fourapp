@@ -18,9 +18,8 @@ class OrderController {
       }
 
       const newOrder = await OrderAbl.createOrder(user_id);
-      res.status(201).json({ message: "Order created successfully", newOrder });
+      res.status(201).json(newOrder);
     } catch (error) {
-      console.error("Error creating order:", error.message);
       next(error);
     }
   }
@@ -28,7 +27,8 @@ class OrderController {
   // Dokončení objednávky
   static async complete(req, res, next) {
     const { id } = req.params;
-    const { shipping_method, total_cost, shipping_address, payment_method } = req.body;
+    const { shipping_method, total_cost, shipping_address, payment_method } =
+      req.body;
 
     try {
       const updatedOrder = await OrderAbl.completeOrder(
@@ -38,9 +38,8 @@ class OrderController {
         shipping_address,
         payment_method
       );
-      res.status(200).json({ message: "Order completed successfully", updatedOrder });
+      res.status(200).json(updatedOrder);
     } catch (error) {
-      console.error("Error completing order:", error.message);
       next(error);
     }
   }
@@ -52,9 +51,8 @@ class OrderController {
 
     try {
       const updatedOrder = await OrderAbl.addPaymentMethod(id, payment_method);
-      res.status(200).json({ message: "Payment method added successfully", updatedOrder });
+      res.status(200).json(updatedOrder);
     } catch (error) {
-      console.error("Error updating payment method:", error.message);
       next(error);
     }
   }
@@ -67,7 +65,6 @@ class OrderController {
       const orders = await OrderAbl.listOrdersByFilter(user_id, year, month);
       res.status(200).json(orders);
     } catch (error) {
-      console.error("Error filtering orders:", error.message);
       next(error);
     }
   }
