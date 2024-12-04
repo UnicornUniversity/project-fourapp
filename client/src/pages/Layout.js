@@ -1,4 +1,4 @@
-import NavBar from "../containers/header/Navbar";
+import NavBar from "../containers/header/NavBar";
 import "../assets/styles/layout.css";
 
 function Layout({ children }) {
