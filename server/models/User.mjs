@@ -2,12 +2,12 @@ import { Schema, model } from "mongoose";
 
 const userSchema = new Schema({
   name: { type: String },
-  email: { 
-    type: String, 
-    required: function () { 
+  email: {
+    type: String,
+    required: function () {
       return this.isNew;
-    }, 
-    unique: true 
+    },
+    unique: true,
   },
   password: { type: String },
   google_id: { type: String },
@@ -27,14 +27,22 @@ const userSchema = new Schema({
   },
   cart_array: [
     {
-      productId: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+      productId: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
       variantId: { type: String, required: true },
       quantity: { type: Number, required: true, default: 1 },
     },
   ],
   wishlist_array: [
     {
-      productId: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+      productId: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
       variantId: { type: String, required: true },
     },
   ],

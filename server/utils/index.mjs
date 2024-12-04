@@ -7,5 +7,5 @@ export const requireParam = (value, params) => {
     throw ApiError.badRequest(`${value} is a required search param`);
   }
 
-  return params.value;
+  return params[value]; // Correctly access the key
 };

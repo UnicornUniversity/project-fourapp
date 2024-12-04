@@ -1,5 +1,5 @@
-import userDao from '../dao/user-dao.js';
-import { ApiError } from '../utils/index.mjs';
+import userDao from "../dao/user-dao.js";
+import { ApiError } from "../utils/index.mjs";
 
 class UserAbl {
   static async getUser(userId) {
@@ -9,7 +9,7 @@ class UserAbl {
     }
     return user;
   }
-  
+
   static async getWishlist(userId) {
     const wishlist = await userDao.wishlistByUserId(userId);
     if (!wishlist || wishlist.length === 0) {
@@ -49,13 +49,13 @@ class UserAbl {
     }
     return result;
   }
-  
+
   static async searchByFilters(filters) {
     const users = await userDao.searchByFilter(filters);
     if (!users || users.length === 0) {
       throw ApiError.notFound("No users found with the given filters");
     }
-    return users; 
+    return users;
   }
 }
 
