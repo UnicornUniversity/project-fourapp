@@ -32,6 +32,14 @@ function ProductProvider({ children }) {
           stock: 30,
           image: ["/images/tshirt/navy-t-shirt.webp"],
         },
+        {
+          variantId: "1c",
+          name: "T-Shirt Small Blue",
+          size: "S",
+          color: "Blue",
+          stock: 30,
+          image: ["/images/tshirt/navy-t-shirt.webp"],
+        }
       ],
       categoryId: ["101"],
     },
@@ -58,6 +66,14 @@ function ProductProvider({ children }) {
           stock: 20,
           image: ["path/to/jeans-regular-black.jpg"],
         },
+        {
+          variantId: "2c",
+          name: "Jeans Regular Fit",
+          size: "32",
+          color: "Black",
+          stock: 20,
+          image: ["path/to/jeans-regular-black.jpg"],
+        }
       ],
       categoryId: ["102"],
     },
