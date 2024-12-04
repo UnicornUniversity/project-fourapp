@@ -1,5 +1,6 @@
 import Order from "../models/Order.js";
 import { Product } from "../models/Product.mjs";
+import { ApiError } from "../utils/error.mjs";
 
 class orderDao {
   // Vytvoření nové objednávky
@@ -8,7 +9,7 @@ class orderDao {
       const newOrder = new Order(orderData);
       return await newOrder.save();
     } catch (error) {
-      throw { code: "failedToCreateOrder", message: error.message };
+      throw ApiError.badRequest("Failed to create order", error.message);
     }
   }
 
@@ -16,20 +17,24 @@ class orderDao {
   static async get(id) {
     try {
       const order = await Order.findById(id);
-      if (!order) throw new Error("Order not found");
+      if (!order) throw ApiError.notFound("Order not found");
       return order;
     } catch (error) {
-      throw { code: "failedToGetOrder", message: error.message };
+      throw ApiError.badRequest("Failed to get order", error.message);
     }
   }
 
   // Načtení produktu podle ID
   static async getProductById(productId) {
-    const product = await Product.findById(productId);
-    if (!product) {
-      throw new Error("Product not found");
+    try {
+      const product = await Product.findById(productId);
+      if (!product) {
+        throw ApiError.notFound("Product not found");
+      }
+      return product;
+    } catch (error) {
+      throw ApiError.badRequest("Failed to get product", error.message);
     }
-    return product;
   }
 
   // Seznam všech objednávek
@@ -37,7 +42,7 @@ class orderDao {
     try {
       return await Order.find({});
     } catch (error) {
-      throw { code: "failedToListOrders", message: error.message };
+      throw ApiError.badRequest("Failed to list orders", error.message);
     }
   }
 
@@ -48,10 +53,10 @@ class orderDao {
       const updatedOrder = await Order.findByIdAndUpdate(id, updateData, {
         new: true,
       });
-      if (!updatedOrder) throw new Error("Order not found");
+      if (!updatedOrder) throw ApiError.notFound("Order not found");
       return updatedOrder;
     } catch (error) {
-      throw { code: "failedToUpdateOrder", message: error.message };
+      throw ApiError.badRequest("Failed to update order", error.message);
     }
   }
 
@@ -63,10 +68,10 @@ class orderDao {
         { payment_method },
         { new: true }
       );
-      if (!updatedOrder) throw new Error("Order not found");
+      if (!updatedOrder) throw ApiError.notFound("Order not found");
       return updatedOrder;
     } catch (error) {
-      throw { code: "failedToUpdatePaymentMethod", message: error.message };
+      throw ApiError.badRequest("Failed to update payment method", error.message);
     }
   }
 
@@ -74,10 +79,10 @@ class orderDao {
   static async delete(id) {
     try {
       const deletedOrder = await Order.findByIdAndDelete(id);
-      if (!deletedOrder) throw new Error("Order not found");
+      if (!deletedOrder) throw ApiError.notFound("Order not found");
       return deletedOrder;
     } catch (error) {
-      throw { code: "failedToDeleteOrder", message: error.message };
+      throw ApiError.badRequest("Failed to delete order", error.message);
     }
   }
 
@@ -85,11 +90,19 @@ class orderDao {
   static async listByFilter(user_id, year, month) {
     try {
       const query = { user_id };
-      if (year) query.createdAt = { $gte: new Date(year, 0, 1), $lte: new Date(year, 11, 31) };
-      if (month) query.createdAt = { $gte: new Date(year, month - 1, 1), $lte: new Date(year, month, 0) };
+      if (year)
+        query.createdAt = {
+          $gte: new Date(year, 0, 1),
+          $lte: new Date(year, 11, 31),
+        };
+      if (month)
+        query.createdAt = {
+          $gte: new Date(year, month - 1, 1),
+          $lte: new Date(year, month, 0),
+        };
       return await Order.find(query);
     } catch (error) {
-      throw { code: "failedToListByFilter", message: error.message };
+      throw ApiError.badRequest("Failed to list orders by filter", error.message);
     }
   }
 }

@@ -1,6 +1,7 @@
 import orderDao from "../dao/order-dao.js";
 import userDao from "../dao/user-dao.js";
 import { ApiError } from "../utils/error.mjs";
+import { productsDao } from "../dao/product-dao.mjs";
 
 class OrderAbl {
   // Vytvoření objednávky
@@ -41,8 +42,8 @@ class OrderAbl {
   static async calculateTotalCost(cart) {
     let totalCost = 0;
     for (const item of cart) {
-      const product = await orderDao.getProductById(item.id);
-      if (!product) throw ApiError.notFound(`Product ${item.id} not found`);
+      const product = await productsDao.findById(item.id);
+      if (!product) throw ApiError.notFound(`Product ${item.id} not found abl`);
       totalCost += product.price * item.quantity;
     }
     return totalCost;
