@@ -7,38 +7,31 @@ import { productsDao } from "../dao/product-dao.mjs";
 
 export class ProductAbl {
   static async create(data) {
-    try {
-      const parsed = await createProductRequestSchema.parseAsync(data);
+    const parsed = await createProductRequestSchema.parseAsync(data);
 
-      return await productsDao.create(parsed);
-    } catch (error) {
-      throw ApiError.fromError(error);
-    }
+    return await productsDao.create(parsed);
   }
 
   static async update(id, data) {
-    try {
-      const parsed = await updateProductRequestSchema.parseAsync(data);
+    const parsed = await updateProductRequestSchema.parseAsync(data);
 
-      return await productsDao.update(id, parsed);
-    } catch (error) {
-      throw ApiError.fromError(error);
-    }
+    return await productsDao.update(id, parsed);
   }
 
   static async delete(id) {
-    try {
-      await productsDao.delete(id);
-    } catch (error) {
-      throw ApiError.fromError(error);
-    }
+    await productsDao.delete(id);
   }
 
   static async list(filters) {
-    try {
-      return await productsDao.listByFilter(filters);
-    } catch (error) {
-      throw ApiError.fromError(error);
+    return await productsDao.listByFilter(filters);
+  }
+
+  static async get(id) {
+    const product = await productsDao.get(id);
+    if (!product) {
+      throw ApiError.notFound("Product not found");
     }
+
+    return product;
   }
 }
