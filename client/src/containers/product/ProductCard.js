@@ -15,59 +15,60 @@ export function ProductCard({ product }) {
 
   return (
     <Card className="productCard">
-        {/* Main Image */}
+      {/* Main Image */}
+      <div className="productCardImageContainer">
         <img
           src={mainImage}
           alt={product.name}
-          className="mainImage"
+          className="productCardMainImage"
           onError={handleImageError}
         />
-
-        {/* Small Images */}
-        <div className="smallImages">
-          {otherImages.length > 0 ? (
-            otherImages.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={`${product.name} variant ${index + 1}`}
-                onError={handleImageError}
-                className="smallImage"
-              />
-            ))
-          ) : (
+      </div>
+      {/* Small Images */}
+      <div className="productCardSmallImageContainer">
+        {otherImages.length > 0 ? (
+          otherImages.map((img, index) => (
             <img
-              width={50}
-              src="/images/default/image-placeholder.webp"
-              alt="Default placeholder"
-              className="small-image-placeholder"
-            />
-          )}
-        </div>
-
-        {/* Title */}
-        <h2>{product.name}</h2>
-
-        {/* Colors */}
-        <div className="colors">
-          {product.variant.map((v, index) => (
-            <span
               key={index}
-              className="color"
-              style={{
-                backgroundColor: v.color.toLowerCase(),
-                border: "1px solid #000",
-                display: "inline-block",
-                width: "25px",
-                height: "25px",
-                marginRight: "5px",
-              }}
-            ></span>
-          ))}
-        </div>
-        <hr />
-        {/* Price */}
-        <p className="price">${product.price}</p>
+              src={img}
+              alt={`${product.name} variant ${index + 1}`}
+              onError={handleImageError}
+              className="productCardSmallImage"
+            />
+          ))
+        ) : (
+          <img
+            width={50}
+            src="/images/default/image-placeholder.webp"
+            alt="Default placeholder"
+            className="productCardSmallImage"
+          />
+        )}
+      </div>
+
+      {/* Title */}
+      <h3 className="productCardTitle">{product.name}</h3>
+
+      {/* Colors */}
+      <div className="productCardColorContainer">
+        {product.variant.map((v, index) => (
+          <span
+            key={index}
+            className="productCardColor"
+            style={{
+              "background-color": v.color.toLowerCase(),
+            }}
+          ></span>
+        ))}
+      </div>
+      <hr />
+      {/* Price */}
+      <div className="productCardFooter">
+        <p>${product.price}</p>
+        <span>
+          <i className="fa-solid fa-bag-shopping"></i>
+        </span>
+      </div>
     </Card>
   );
 }

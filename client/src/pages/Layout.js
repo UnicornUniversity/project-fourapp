@@ -1,5 +1,5 @@
-import NavBar from "../containers/header/NavBar"
-import "../assets/styles/layout.css"
+import NavBar from "../containers/header/NavBar";
+import "../assets/styles/layout.css";
 
 export function Layout({children}){
     return (

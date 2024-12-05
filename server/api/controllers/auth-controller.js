@@ -14,7 +14,7 @@ class AuthController {
     try {
       const { name, email, password } = req.body;
 
-      const existingUser = await userDao.getByEmail(email);
+      const existingUser = await userDao.existsByEmail(email);
       if (existingUser) {
         return res
           .status(400)

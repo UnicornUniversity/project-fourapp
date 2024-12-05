@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
-  async function handleRegister( user ) {
+  // const [user, setUser] = useState();
+  const navigate = useNavigate();
+  const [error , setError] = useState();
+
+  async function handleRegister(user) {
     try {
       const response = await fetch(
         "http://localhost:5000/api/auth/register", //OUR API ENDPOINT
@@ -15,14 +19,14 @@ function UserProvider({ children }) {
           body: JSON.stringify(user), //USER DATA
         }
       );
-
       const serverResponse = await response.json();
       console.log(serverResponse)
       if (response.ok) {
         navigate("/user/login");
         //console.log("Token verified successfully:", data); //WENT THROUGH RESPONSE
       } else {
-        //console.error("Token verification failed:", data); //SOME ERROR
+        //console.error("Token verification failed:"); //SOME ERROR
+        setError(serverResponse)
       }
     } catch (error) {
       //console.error("Error sending token to backend:", error);
@@ -82,12 +86,13 @@ function UserProvider({ children }) {
   };
 
   const value = {
-    user,
+    user, error,
     handlerMap: {
       handleRegister,
       handleLogin,
       handleGoogleLogin,
       updateUserProfile,
+      setError,
     },
   };
 
