@@ -4,7 +4,7 @@ import { userDao } from "../dao/user-dao.js";
 
 class AuthAbl {
   static async register({ name, email, password }) {
-    const existingUser = await userDao.existsByEmail(email);
+    const existingUser = await userDao.getByEmail(email);
     if (existingUser) {
       throw { code: "emailExists", message: "Email already exists" };
     }
