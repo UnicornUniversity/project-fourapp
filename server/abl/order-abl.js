@@ -1,5 +1,5 @@
 import orderDao from "../dao/order-dao.js";
-import userDao from "../dao/user-dao.js";
+import { userDao } from "../dao/user-dao.js";
 import { ApiError } from "../utils/error.mjs";
 import { Product } from "../models/Product.mjs";
 import mongoose from "mongoose";

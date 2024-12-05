@@ -3,7 +3,7 @@ import { ProductContext } from "../../providers/ProductProvider";
 import ProductCard from "./ProductCard";
 import "../../assets/styles/product.css";
 
-function ProductList() {
+export function ProductList() {
   const { products } = useContext(ProductContext);
 
   return (

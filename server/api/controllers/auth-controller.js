@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import passport from "passport";
 import authMiddleware from "../../middleware/auth-middleware.js";
-import userDao from "../../dao/user-dao.js";
+import { userDao } from "../../dao/user-dao.js";
 
 const router = express.Router();
 
@@ -38,7 +38,9 @@ class AuthController {
 
       const user = await userDao.getByEmail(email);
       if (!user) {
-        return res.status(400).json({ code: "userNotFound", message: "User not found" });
+        return res
+          .status(400)
+          .json({ code: "userNotFound", message: "User not found" });
       }
 
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
@@ -56,7 +58,7 @@ class AuthController {
 
       res.cookie("token", token, {
         httpOnly: false,
-        secure:true,
+        secure: true,
         sameSite: "Lax",
         maxAge: 1000 * 60 * 60 * 24, // 1 day
       });

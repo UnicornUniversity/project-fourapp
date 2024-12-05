@@ -1,7 +1,7 @@
 import User from "../models/User.mjs";
 import { ApiError } from "../utils/index.mjs";
 
-class userDao {
+export class userDao {
   static async get(id) {
     const user = await User.findById(id);
     if (!user) {
@@ -84,5 +84,3 @@ class userDao {
     };
   }
 }
-
-export default userDao;

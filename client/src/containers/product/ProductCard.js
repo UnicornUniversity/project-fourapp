@@ -1,8 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import Card from "../../components/card/Card";
 
 import React from "react";
 
-function ProductCard({ product }) {
+export function ProductCard({ product }) {
   const mainVariant = product.variant[0];
   const mainImage =
     mainVariant.image[0] || "/images/default/image-placeholder.webp";
@@ -13,8 +14,10 @@ function ProductCard({ product }) {
     event.target.src = "/images/default/image-placeholder.webp";
   };
 
+  const navigate = useNavigate()
+
   return (
-    <Card className="productCard">
+    <Card className="productCard" onClick={() => navigate(`/product/${product.id}`)}>
       {/* Main Image */}
       <div className="productCardImageContainer">
         <img

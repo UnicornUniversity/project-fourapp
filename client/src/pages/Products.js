@@ -1,15 +1,17 @@
-import ProductProvider from "../providers/ProductProvider";
-import ProductList from "../containers/product/ProductList";
-import "../assets/styles/product.css";
+import { ProductProvider } from "../providers/ProductProvider";
+import { ProductList } from "../containers/product/ProductList";
+import ProductFilters from "../containers/product/ProductFilters"
 
-function Products() {
-  return (
-    <div>
-      <ProductProvider>
-        <div>filters</div>
-        <ProductList />
-      </ProductProvider>
-    </div>
-  );
+export function Products(){
+      return (
+        <div>
+           <ProductProvider>
+              <ProductFilters/>
+              <ProductList/>
+            </ProductProvider> 
+        </div>
+      )
+      
 }
-export default Products;
+
+export default Products
