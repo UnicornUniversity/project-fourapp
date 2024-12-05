@@ -3,16 +3,19 @@ import { ApiError } from "../utils/index.mjs";
 
 class userDao {
   static async get(id) {
-    return await User.findById(id);
+    const user = await User.findById(id);
+    if (!user) {
+      throw ApiError.notFound("User not found");
+    }
+    return user;
   }
 
   static async getByEmail(email) {
-    return await User.findOne({ email });
-  }
-
-  static async existsByEmail(email) {
-    const user = await User.findOne({ email });
-    return !!user; // Vrací true, pokud uživatel existuje, jinak false
+    try {
+      return await User.findOne({ email });
+    } catch (error) {
+      throw { code: "failedToFindUser", message: error.message };
+    }
   }
 
   static async findById(id) {
