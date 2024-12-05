@@ -1,5 +1,5 @@
 import OrderAbl from "../../abl/order-abl.js"; // Import business logiky pro objednávky
-import userDao from "../../dao/user-dao.js"; // Import pro práci s uživateli
+import { userDao } from "../../dao/user-dao.js"; // Import pro práci s uživateli
 import { ApiError } from "../../utils/error.mjs";
 
 class OrderController {

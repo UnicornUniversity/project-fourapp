@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 import User from "../models/User.mjs";
 import { ApiError } from "../utils/index.mjs";
 
-class userDao {
+export class userDao {
   static async get(id) {
     return await User.findById(id);
   }
@@ -82,6 +81,3 @@ class userDao {
     };
   }
 }
-
-module.exports = userDao
->>>>>>> 2b8748c (ServerFolder + connect backend login/register)
