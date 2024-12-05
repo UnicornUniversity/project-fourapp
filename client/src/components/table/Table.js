@@ -19,7 +19,7 @@ function Table({
           {headers.map((header, index) => (
             <th key={index}>{header}</th>
           ))}
-          {renderAction && <th>Action</th>}
+          {renderAction && <th className="tableAction">Action</th>}
         </tr>
       </thead>
       <tbody>
