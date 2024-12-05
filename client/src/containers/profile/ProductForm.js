@@ -48,16 +48,16 @@ function ProductForm({ initialData = {}, onSubmit }) {
           value={formData.price}
           onChange={handleChange}
         >
-          <label className="inputLabel">Surname</label>
+          <label className="inputLabel">Price</label>
         </Input>
 
         <textarea
           className="profileInput"
-          name="email"
+          name="description"
           value={formData.description}
           onChange={handleChange}
         >
-          <label className="inputLabel">Description</label>
+          <label className="inputLabel" name="description">Description</label>
         </textarea>
         <div className="productFormCheckSelect">
           <Input
@@ -81,6 +81,7 @@ function ProductForm({ initialData = {}, onSubmit }) {
             <option value="1">Test 1</option>
             <option value="2">Test 2</option>
           </select>
+
         </div>
 
         <Input
