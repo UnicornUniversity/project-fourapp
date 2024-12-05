@@ -10,6 +10,7 @@ function Input({
   value,
   children,
   errorMessage,
+  checked
 }) {
   return (
     <div className="inputWrapper">
@@ -22,6 +23,7 @@ function Input({
         id={id}
         name={name}
         value={value}
+        checked={checked}
       ></input>
       {errorMessage && (
         <div className="tooltipError">
