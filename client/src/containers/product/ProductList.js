@@ -1,17 +1,17 @@
-import { useContext } from "react"
-import {ProductContext} from "../../providers/ProductProvider"
-import { ProductCard } from "./ProductCard"
-import "../../assets/styles/list.css"
+import { useContext } from "react";
+import { ProductContext } from "../../providers/ProductProvider";
+import ProductCard from "./ProductCard";
+import "../../assets/styles/product.css";
 
-export function ProductList(){
-const {products} = useContext(ProductContext)
+export function ProductList() {
+  const { products } = useContext(ProductContext);
 
-return(
-    <div className="productCards">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-)
-
+  return (
+    <div className="productList">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
+  );
 }
+export default ProductList;

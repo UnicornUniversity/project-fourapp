@@ -112,3 +112,4 @@ export function ProductProvider ({ children }){
   );
 };
 
+export default ProductProvider;

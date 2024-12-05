@@ -1,14 +1,17 @@
 import { ProductProvider } from "../providers/ProductProvider";
 import { ProductList } from "../containers/product/ProductList";
+import ProductFilters from "../containers/product/ProductFilters"
 
 export function Products(){
       return (
         <div>
            <ProductProvider>
-              <div>filters</div>
+              <ProductFilters/>
               <ProductList/>
             </ProductProvider> 
         </div>
       )
       
 }
+
+export default Products
