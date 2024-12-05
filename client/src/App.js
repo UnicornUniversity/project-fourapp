@@ -12,6 +12,9 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import CategoryCreate from "./pages/CategoryCreate";
 import ProductCreate from "./pages/ProductCreate";
 import Layout from "./pages/Layout";
+import ProductUpdate from "./pages/ProductUpdate";
+import CategoryUpdate from "./pages/CategoryUpdate";
+
 
 function App() {
   return (
@@ -42,6 +45,14 @@ function App() {
                 <Route
                   path="/user/profile/admin/product/create"
                   element={<ProductCreate />}
+                />
+                <Route
+                  path="/user/profile/admin/product/update"
+                  element={<ProductUpdate />}
+                />
+                <Route
+                  path="/user/profile/admin/category/update"
+                  element={<CategoryUpdate />}
                 />
               </Routes>
             </Layout>

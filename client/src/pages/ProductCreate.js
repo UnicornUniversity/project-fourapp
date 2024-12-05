@@ -1,10 +1,12 @@
-import ProductCreateForm from "../containers/profile/ProductCreateForm";
+import ProductForm from "../containers/profile/ProductForm";
 import ProfileSidebar from "../containers/profile/ProfileSidebar";
 function ProductCreate() {
   return (
     <section className="profileContent">
       <ProfileSidebar />
-      <ProductCreateForm />
+
+      <ProductForm />
+
     </section>
   );
 }

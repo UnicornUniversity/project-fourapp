@@ -50,7 +50,7 @@ function ProfileAdmin() {
       <div>
         <div>
           <button
-            onClick={() => navigate("/user/profile/admin/category/create")}
+            onClick={() => navigate("category/create")}
           >
             Add category
           </button>
@@ -62,6 +62,7 @@ function ProfileAdmin() {
           renderAction={() => (
             <div>
               <i className="fa-solid fa-trash"></i>
+              <i className="fa-solid fa-pen-to-square" onClick={() => navigate("category/update")}></i>
             </div>
           )}
         />
@@ -69,7 +70,7 @@ function ProfileAdmin() {
       <div>
         <div>
           <button
-            onClick={() => navigate("/user/profile/admin/product/create")}
+            onClick={() => navigate("product/create")}
           >
             Add product
           </button>
@@ -81,6 +82,7 @@ function ProfileAdmin() {
           renderAction={() => (
             <div>
               <i className="fa-solid fa-trash"></i>
+              <i className="fa-solid fa-pen-to-square" onClick={() => navigate("product/update")}></i>
             </div>
           )}
         />
