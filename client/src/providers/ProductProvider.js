@@ -1,10 +1,10 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from 'react';
 
 // Create the context
 export const ProductContext = createContext();
 
 // Provider Component
-function ProductProvider({ children }) {
+export function ProductProvider ({ children }){
   const [products, setProducts] = useState([
     {
       id: "1",
@@ -110,6 +110,6 @@ function ProductProvider({ children }) {
       {children}
     </ProductContext.Provider>
   );
-}
+};
 
 export default ProductProvider;

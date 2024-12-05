@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import User from "../models/User.mjs";
 import { ApiError } from "../utils/index.mjs";
 
@@ -82,4 +83,5 @@ class userDao {
   }
 }
 
-export default userDao;
+module.exports = userDao
+>>>>>>> 2b8748c (ServerFolder + connect backend login/register)
