@@ -17,21 +17,21 @@ function ProfileSidebar() {
         buttonText="Update"
         className="profileSidebarButton"
       >
-        <i className="fa-solid fa-user"></i>
+        <i class="fa-solid fa-pen-to-square"></i>
       </Button>
       <Button
         onClick={() => navigate("/user/profile/orders")}
         buttonText="Orders"
         className="profileSidebarButton"
       >
-        <i className="fa-solid fa-user"></i>
+        <i class="fa-solid fa-list"></i>
       </Button>
       <Button
         onClick={() => navigate("/user/profile/admin")}
         buttonText="Admin"
         className="profileSidebarButton"
       >
-        <i className="fa-solid fa-user"></i>
+        <i class="fa-solid fa-wrench"></i>
       </Button>
     </div>
   );
