@@ -1,6 +1,6 @@
 import express from "express";
 import OrderAbl from "../../abl/order-abl.js";
-import userDao from "../../dao/user-dao.js";
+import { userDao } from "../../dao/user-dao.js";
 import { ApiError } from "../../utils/error.mjs";
 
 const router = express.Router();
@@ -29,7 +29,8 @@ router.post("/", async (req, res) => {
 
 router.post("/:id/complete", async (req, res) => {
   const { id } = req.params;
-  const { shipping_method, total_cost, shipping_address, payment_method } = req.body;
+  const { shipping_method, total_cost, shipping_address, payment_method } =
+    req.body;
 
   try {
     const updatedOrder = await OrderAbl.completeOrder(
@@ -39,7 +40,9 @@ router.post("/:id/complete", async (req, res) => {
       shipping_address,
       payment_method
     );
-    res.status(200).json({ message: "Order completed successfully", updatedOrder });
+    res
+      .status(200)
+      .json({ message: "Order completed successfully", updatedOrder });
   } catch (error) {
     const apiError = ApiError.fromError(error);
     console.error(apiError.message);
@@ -53,7 +56,9 @@ router.patch("/:id/payment", async (req, res) => {
 
   try {
     const updatedOrder = await OrderAbl.addPaymentMethod(id, payment_method);
-    res.status(200).json({ message: "Payment method added successfully", updatedOrder });
+    res
+      .status(200)
+      .json({ message: "Payment method added successfully", updatedOrder });
   } catch (error) {
     const apiError = ApiError.fromError(error);
     console.error(apiError.message);
@@ -90,7 +95,9 @@ router.delete("/:id", async (req, res) => {
 
   try {
     const deletedOrder = await OrderAbl.deleteOrder(id);
-    res.status(200).json({ message: "Order deleted successfully", deletedOrder });
+    res
+      .status(200)
+      .json({ message: "Order deleted successfully", deletedOrder });
   } catch (error) {
     const apiError = ApiError.fromError(error);
     console.error(apiError.message);
