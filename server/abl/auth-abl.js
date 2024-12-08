@@ -1,10 +1,10 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { userDao } from "../dao/user-dao.js";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import userDao from '../dao/user-dao.js';
 
 class AuthAbl {
   static async register({ name, email, password }) {
-    const existingUser = await userDao.getByEmail(email);
+    const existingUser = await userDao.existsByEmail(email);
     if (existingUser) {
       throw { code: "emailExists", message: "Email already exists" };
     }
@@ -33,10 +33,7 @@ class AuthAbl {
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    return {
-      user: { id: user._id, email: user.email, role: user.role },
-      token,
-    };
+    return { user: { id: user._id, email: user.email, role: user.role }, token };
   }
 
   static async getUserProfile(userId) {
@@ -44,6 +41,7 @@ class AuthAbl {
     if (!user) {
       throw { code: "userNotFound", message: "User not found" };
     }
+    return user;
   }
 }
 

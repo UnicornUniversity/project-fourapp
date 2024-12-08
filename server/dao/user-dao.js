@@ -1,21 +1,18 @@
 import User from "../models/User.mjs";
 import { ApiError } from "../utils/index.mjs";
 
-export class userDao {
+class userDao {
   static async get(id) {
-    const user = await User.findById(id);
-    if (!user) {
-      throw ApiError.notFound("User not found");
-    }
-    return user;
+    return await User.findById(id);
   }
 
   static async getByEmail(email) {
-    try {
-      return await User.findOne({ email });
-    } catch (error) {
-      throw { code: "failedToFindUser", message: error.message };
-    }
+    return await User.findOne({ email });
+  }
+
+  static async existsByEmail(email) {
+    const user = await User.findOne({ email });
+    return !!user; // Vrací true, pokud uživatel existuje, jinak false
   }
 
   static async findById(id) {
@@ -84,3 +81,5 @@ export class userDao {
     };
   }
 }
+
+export default userDao;
