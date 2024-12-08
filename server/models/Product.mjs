@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
 
 const variantSchema = new Schema({
-  id: { type: String, required: true },
   name: { type: String, required: true },
   size: { type: String, required: false },
   color: { type: String, required: false },
@@ -10,7 +9,6 @@ const variantSchema = new Schema({
 });
 
 const productSchema = new Schema({
-  id: { type: String, required: true },
   name: { type: String, required: true },
   description: { type: String, required: false },
   price: { type: Number, required: true },
