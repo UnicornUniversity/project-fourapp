@@ -31,7 +31,7 @@ export default [
     },
     rules: {
       "no-unused-vars": "warn",
-      "no-console": "warn",
+      "no-console": "off",
       "no-process-exit": "error",
       "no-path-concat": "error",
       "no-sync": "warn",

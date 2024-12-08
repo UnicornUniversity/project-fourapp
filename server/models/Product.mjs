@@ -16,7 +16,11 @@ const productSchema = new Schema({
   price: { type: Number, required: true },
   isOnline: { type: Boolean, required: true },
   variants: { type: [variantSchema], required: true },
-  categories: { type: [Number], required: false },
+  categories: {
+    type: [Schema.Types.ObjectId],
+    ref: "Category",
+    required: false,
+  },
 });
 
 productSchema.index({ name: "text", description: "text" });

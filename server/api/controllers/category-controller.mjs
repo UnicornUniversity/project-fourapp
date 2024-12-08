@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { CategoryAbl } from "../../abl/category-abl.mjs";
 import { requireParam } from "../../utils/index.mjs";
 
@@ -14,7 +15,7 @@ export default class CategoryController {
 
   static async update(req, res, next) {
     try {
-      const id = requireParam("id", req.params);
+      const id = new Types.ObjectId(requireParam("categoryId", req.params));
       const updatedCategory = await CategoryAbl.update(id, req.body);
 
       res.status(200).json(updatedCategory);
@@ -24,8 +25,10 @@ export default class CategoryController {
   }
 
   static async delete(req, res, next) {
+    console.log("delete");
     try {
-      const id = requireParam("id", req.params);
+      const id = new Types.ObjectId(requireParam("categoryId", req.params));
+      console.log(id);
       await CategoryAbl.delete(id);
 
       res.status(204).send();
@@ -46,7 +49,7 @@ export default class CategoryController {
 
   static async get(req, res, next) {
     try {
-      const id = requireParam("id", req.params);
+      const id = new Types.ObjectId(requireParam("categoryId", req.params));
       const category = await CategoryAbl.get(id);
 
       res.status(200).json(category);
@@ -57,7 +60,7 @@ export default class CategoryController {
 
   static async getSubcategories(req, res, next) {
     try {
-      const id = requireParam("categoryId", req.params);
+      const id = new Types.ObjectId(requireParam("categoryId", req.params));
       const subcategories = await CategoryAbl.getSubcategories(id);
 
       res.status(200).json({ subcategories });
@@ -68,7 +71,7 @@ export default class CategoryController {
 
   static async getCategoryTree(req, res, next) {
     try {
-      const id = requireParam("categoryId", req.params);
+      const id = new Types.ObjectId(requireParam("categoryId", req.params));
       const tree = await CategoryAbl.getCategoryTree(id);
 
       res.status(200).json(tree);
