@@ -11,6 +11,7 @@ import productsRouter from "./routes/products.mjs";
 import errorHandler from "./middleware/error-handler.mjs";
 import userRoutes from "./api/controllers/user-controller.js";
 import ordersRouter from "./api/controllers/order-controller.js";
+import requestLogger from "./middleware/request-logger.mjs";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(cookieParser());
+app.use(requestLogger);
 
 // Připojení k databázi
 try {

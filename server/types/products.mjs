@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const productVariantSchema = z.object({
-  id: z.string(),
   name: z.string().min(1),
   size: z.string().optional(),
   color: z.string().optional(),
@@ -10,18 +9,15 @@ export const productVariantSchema = z.object({
 });
 
 export const createProductRequestSchema = z.object({
-  id: z.string(),
   name: z.string().min(1),
   description: z.string().optional(),
   price: z.number().nonnegative(),
   isOnline: z.boolean(),
   variants: z.array(productVariantSchema).nonempty(),
-  categories: z.array(z.number()).optional(),
+  categories: z.array(z.string()).optional(),
 });
 
-export const updateProductRequestSchema = createProductRequestSchema
-  .partial()
-  .omit({ id: true });
+export const updateProductRequestSchema = createProductRequestSchema.partial();
 
 export const listProductsQuerySchema = z.object({
   search: z.string().optional(),
