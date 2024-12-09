@@ -1,6 +1,6 @@
 import express from "express";
 import OrderAbl from "../../abl/order-abl.js";
-import { userDao } from "../../dao/user-dao.js";
+import userDao from "../../dao/user-dao.js";
 import { ApiError } from "../../utils/error.mjs";
 
 const router = express.Router();

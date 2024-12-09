@@ -1,5 +1,5 @@
 import orderDao from "../dao/order-dao.js";
-import { userDao } from "../dao/user-dao.js";
+import userDao from "../dao/user-dao.js";
 import { ApiError } from "../utils/error.mjs";
 import { Product } from "../models/Product.mjs";
 import mongoose from "mongoose";
@@ -12,18 +12,26 @@ class OrderAbl {
 
     const cart = user.cart_array || [];
     if (cart.length === 0) throw ApiError.badRequest("User's cart is empty");
-    const productIds = cart.map(item => new mongoose.Types.ObjectId(item.productId));
+    const productIds = cart.map(
+      (item) => new mongoose.Types.ObjectId(item.productId)
+    );
     const products = await Product.find({ _id: { $in: productIds } });
 
     const order = {
       user_id,
-      products_array: cart.map(item => {
-        const product = products.find(p => p._id.toString() === item.productId.toString());
-        if (!product) throw ApiError.notFound(`Product ${item.productId} not found`);
-    
-        const variant = product.variants.find(v => v._id.toString() === item.variantId.toString());
-        if (!variant) throw ApiError.notFound(`Variant ${item.variantId} not found`);
-    
+      products_array: cart.map((item) => {
+        const product = products.find(
+          (p) => p._id.toString() === item.productId.toString()
+        );
+        if (!product)
+          throw ApiError.notFound(`Product ${item.productId} not found`);
+
+        const variant = product.variants.find(
+          (v) => v._id.toString() === item.variantId.toString()
+        );
+        if (!variant)
+          throw ApiError.notFound(`Variant ${item.variantId} not found`);
+
         return {
           id: product._id,
           variantId: variant._id,
@@ -35,7 +43,7 @@ class OrderAbl {
       total_cost: await this.calculateTotalCost(cart),
       status: "pending",
     };
-   
+
     return await orderDao.create(order);
   }
 
@@ -44,18 +52,28 @@ class OrderAbl {
     let totalCost = 0;
     for (const item of cart) {
       const product = await Product.findById(item.productId);
-      if (!product) throw ApiError.notFound(`Product ${item.productId} not found`);
-  
-      const variant = product.variants.find(v => v._id.toString() === item.variantId.toString());
-      if (!variant) throw ApiError.notFound(`Variant ${item.variantId} not found`);
-  
+      if (!product)
+        throw ApiError.notFound(`Product ${item.productId} not found`);
+
+      const variant = product.variants.find(
+        (v) => v._id.toString() === item.variantId.toString()
+      );
+      if (!variant)
+        throw ApiError.notFound(`Variant ${item.variantId} not found`);
+
       totalCost += product.price * item.quantity; // Pokud má varianta vlastní cenu, nahraď `product.price` cenou varianty.
     }
     return totalCost;
   }
 
   // Dokončení objednávky
-  static async completeOrder(id, shipping_method, total_cost, shipping_address, payment_method) {
+  static async completeOrder(
+    id,
+    shipping_method,
+    total_cost,
+    shipping_address,
+    payment_method
+  ) {
     const validShippingMethods = ["Standard", "Express", "Courier"];
     const validPaymentMethods = ["Credit Card", "PayPal", "Bank Transfer"];
 
@@ -101,14 +119,18 @@ class OrderAbl {
       throw ApiError.internal("Failed to retrieve orders", error.message);
     }
   }
- 
-    static async listOrders() {
-        try {
-            return await orderDao.list();
-        } catch (error) {
-            throw { status: 500, message: "Failed to list orders", details: error.message };
-        }
+
+  static async listOrders() {
+    try {
+      return await orderDao.list();
+    } catch (error) {
+      throw {
+        status: 500,
+        message: "Failed to list orders",
+        details: error.message,
+      };
     }
+  }
 
   // Smazání objednávky podle ID
   static async deleteOrder(id) {
