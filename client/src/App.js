@@ -14,6 +14,8 @@ import ProductCreate from "./pages/ProductCreate";
 import Layout from "./pages/Layout";
 import ProductUpdate from "./pages/ProductUpdate";
 import CategoryUpdate from "./pages/CategoryUpdate";
+import CategoryProvider from "./providers/CategoryProvider";
+import Products from "./pages/Products";
 
 
 function App() {
@@ -21,10 +23,12 @@ function App() {
     <div>
       <BrowserRouter>
         <UserProvider>
+          <CategoryProvider>
           <ProductProvider>
             <Layout>
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/:categoryName" element={<Products/>}/>
                 <Route path="/user/login" element={<Login />} />
                 <Route path="/user/profile" element={<ProfileOverview />} />
                 <Route
@@ -57,6 +61,7 @@ function App() {
               </Routes>
             </Layout>
           </ProductProvider>
+        </CategoryProvider>
         </UserProvider>
       </BrowserRouter>
     </div>

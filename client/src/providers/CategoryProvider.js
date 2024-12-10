@@ -2,19 +2,30 @@ import React, { createContext, useState, useContext } from 'react';
 
 export const CategoryContext = createContext();
 
-function CategoryProvider(){
-const [navbarCategories, setNavbarCategories] = useState()
+function CategoryProvider({children}){
+const [navbarCategories, setNavbarCategories] = useState([{name:"Men"},{name:"Women"},{name:"Kids"},{name:"Everyone"}])
 
 
 async function handleLoad(){
 try {
     const response = await fetch(
     ""
-    
+
     )
 } catch (error) {
     
 }
+}
+
+async function handleLoadSubCategories(){
+    try {
+        const response = await fetch(
+        ""
+    
+        )
+    } catch (error) {
+        
+    }   
 }
 
 
