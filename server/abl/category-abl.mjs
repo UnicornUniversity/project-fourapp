@@ -6,14 +6,14 @@ import { ApiError } from "../utils/error.mjs";
 import { categoriesDao } from "../dao/category-dao.mjs";
 
 export class CategoryAbl {
-  static async create(data) {
-    try {
-      const parsed = createCategorySchema.parse(data);
+  static async get(id) {
+    return await categoriesDao.get(id);
+  }
 
-      return await categoriesDao.create(parsed);
-    } catch (error) {
-      throw ApiError.fromError(error, "Failed to create category");
-    }
+  static async create(data) {
+    const parsed = createCategorySchema.parse(data);
+
+    return await categoriesDao.create(parsed);
   }
 
   static async update(id, data) {

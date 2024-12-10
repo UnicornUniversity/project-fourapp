@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { userDao } from "../dao/user-dao.js";
+import userDao from "../dao/user-dao.js";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import path from "path";

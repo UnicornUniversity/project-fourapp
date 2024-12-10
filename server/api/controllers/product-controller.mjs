@@ -1,6 +1,7 @@
 import { ProductAbl } from "../../abl/product-abl.mjs";
 import { requireParam } from "../../utils/index.mjs";
 import { listProductsQuerySchema } from "../../types/products.mjs";
+import { Types } from "mongoose";
 
 export default class ProductController {
   static async create(req, res, next) {
@@ -15,7 +16,9 @@ export default class ProductController {
 
   static async delete(req, res, next) {
     try {
-      const id = requireParam("id", req.params);
+      const id = Types.ObjectId.createFromHexString(
+        requireParam("productId", req.params)
+      );
       await ProductAbl.delete(id);
 
       res.status(204).send();
@@ -36,7 +39,9 @@ export default class ProductController {
 
   static async update(req, res, next) {
     try {
-      const id = requireParam("id", req.params);
+      const id = Types.ObjectId.createFromHexString(
+        requireParam("productId", req.params)
+      );
       const updatedProduct = await ProductAbl.update(id, req.body);
 
       res.status(200).json(updatedProduct);
