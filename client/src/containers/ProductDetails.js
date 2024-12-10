@@ -95,6 +95,8 @@ function ProductDetails() {
   // Get current variant's images based on selected color
   const currentVariantImages = selectedVariant?.image || [];
 
+console.log(products)
+
   return (
     <div className="productContent">
       <div className="productGallery">
