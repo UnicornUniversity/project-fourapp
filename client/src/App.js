@@ -55,7 +55,7 @@ function App() {
                   element={<ProductUpdate />}
                 />
                 <Route
-                  path="/user/profile/admin/category/update"
+                  path="/user/profile/admin/category/:id/update"
                   element={<CategoryUpdate />}
                 />
               </Routes>

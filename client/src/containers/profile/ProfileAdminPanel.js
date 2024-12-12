@@ -6,7 +6,7 @@ import { CategoryContext } from "../../providers/CategoryProvider";
 
 function ProfileAdmin() {
   const navigate = useNavigate();
-  const {categories} = useContext(CategoryContext)
+  const {categories , handlerMap} = useContext(CategoryContext)
   console.log(categories)
   /*
     const data = [
@@ -71,10 +71,10 @@ function ProfileAdmin() {
           headers={headersCategory}
           data={categoryData}
           columnKeys={columnKeysCategory}
-          renderAction={() => (
+          renderAction={(_id) => (
             <div>
-              <i className="fa-solid fa-trash"></i>
-              <i className="fa-solid fa-pen-to-square" onClick={() => navigate("category/update")}></i>
+              <i className="fa-solid fa-trash" onClick={() =>handlerMap.handleDelete(_id)}></i>
+              <i className="fa-solid fa-pen-to-square" onClick={() => navigate(`category/${_id}/update`)}></i>
             </div>
           )}
         />

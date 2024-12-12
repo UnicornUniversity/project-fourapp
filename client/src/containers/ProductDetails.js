@@ -20,6 +20,7 @@ function ProductDetails() {
   useEffect(() => {
     if (productId) {
       handlerMap.handleGet(productId)
+      console.log(product)
       setSelectedProduct(product);
     }
   }, [productId]);

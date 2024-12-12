@@ -16,7 +16,8 @@ function Navbar() {
       </div>
       <div>
         {navbarCategories ? navbarCategories.map((category) =>(
-          <div onClick={() => navigate(`/${category.name}`)}>{category.name}</div>
+        (category.parentCategoryId === null)?
+          <div onClick={() => navigate(`/${category.name}`)}>{category.name}</div> : <></>
         )
         ): <></>}
       </div>
