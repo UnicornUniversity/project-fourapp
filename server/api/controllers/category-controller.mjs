@@ -27,7 +27,6 @@ export default class CategoryController {
   }
 
   static async delete(req, res, next) {
-    console.log("delete");
     try {
       const id = Types.ObjectId.createFromHexString(
         requireParam("categoryId", req.params)
