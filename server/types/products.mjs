@@ -21,10 +21,11 @@ export const updateProductRequestSchema = createProductRequestSchema.partial();
 
 export const listProductsQuerySchema = z.object({
   search: z.string().optional(),
-  category: z.coerce.string().optional(),
+  categories: z.array(z.string()).optional(),
   maxPrice: z.coerce.number().optional(),
   minPrice: z.coerce.number().optional(),
-  color: z.string().optional(),
+  colors: z.array(z.string()).optional(),
+  sizes: z.array(z.string()).optional(),
   page: z.coerce.number().int().optional(),
   pageSize: z.coerce.number().int().optional(),
 });
