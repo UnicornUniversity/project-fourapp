@@ -21,7 +21,7 @@ export const updateProductRequestSchema = createProductRequestSchema.partial();
 
 export const listProductsQuerySchema = z.object({
   search: z.string().optional(),
-  category: z.coerce.number().int().optional(),
+  category: z.coerce.string().optional(),
   maxPrice: z.coerce.number().optional(),
   minPrice: z.coerce.number().optional(),
   color: z.string().optional(),
