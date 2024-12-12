@@ -42,7 +42,7 @@ export const productsDao = {
   },
 
   async listByFilter({
-    searchQuery,
+    search,
     category,
     maxPrice,
     minPrice,
@@ -52,9 +52,9 @@ export const productsDao = {
   }) {
     const query = {};
 
-    if (searchQuery)
+    if (search)
       query.name = {
-        $regex: searchQuery,
+        $regex: search,
         $options: "i",
       };
     if (category?.length) {

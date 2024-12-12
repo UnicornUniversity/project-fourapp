@@ -43,7 +43,7 @@ function Table({
               return <td key={keyIndex}>{row[key]}</td>;
             })}
             {renderAction && (
-              <td className="tableAction">{renderAction(rowIndex)}</td>
+              <td className="tableAction">{renderAction(row._id)}</td>
             )}
           </tr>
         ))}

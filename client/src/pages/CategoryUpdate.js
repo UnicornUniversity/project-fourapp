@@ -1,12 +1,24 @@
+import { useContext } from "react";
 import CategoryUpdateForm from "../containers/profile/ProfileCategoryUpdate";
 import ProfileSidebar from "../containers/profile/ProfileSidebar";
+import { CategoryContext } from "../providers/CategoryProvider";
+import { useLocation } from "react-router-dom";
 
 function CategoryUpdate() {
+    const { handlerMap } = useContext(CategoryContext);
+    const location = useLocation();
+
+    // Extract the ID from the location.pathname
+    const pathSegments = location.pathname.split("/");
+    const categoryId = pathSegments[pathSegments.indexOf("category") + 1];
+
+    console.log(categoryId)
+
     return (
         <section className="profileContent">
             <ProfileSidebar />
             <CategoryUpdateForm
-                category={{ name: "Category", parentCategoryId: "1" }}
+                category={handlerMap.handleGet(categoryId)}
             />
         </section>
     );

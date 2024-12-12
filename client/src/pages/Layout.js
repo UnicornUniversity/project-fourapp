@@ -5,7 +5,7 @@ function Layout({ children }) {
   return (
     <div className="app">
       <header>
-        <NavBar />
+        <NavBar/>
       </header>
       <main>
         <section className="layoutContent">{children}</section>

@@ -49,4 +49,18 @@ export default class ProductController {
       next(error);
     }
   }
+
+  static async get(req, res, next){
+    try {
+      const id = Types.ObjectId.createFromHexString(
+        requireParam("productId", req.params)
+      );
+      const product = await ProductAbl.get(id)
+
+      res.status(200).json(product)
+
+    } catch (error) {
+      next(error)
+    }
+  }
 }

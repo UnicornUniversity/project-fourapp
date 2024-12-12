@@ -4,10 +4,9 @@ import Card from "../../components/card/Card";
 import React from "react";
 
 export function ProductCard({ product }) {
-  const mainVariant = product.variant[0];
-  const mainImage =
-    mainVariant.image[0] || "/images/default/image-placeholder.webp";
-  const otherImages = mainVariant.image.slice(1);
+  const mainVariant = product.variants[0];
+  const mainImage = mainVariant.images[0] || "/images/default/image-placeholder.webp";
+  const otherImages = mainVariant.images.slice(1);
 
   // Helper function for image fallback
   const handleImageError = (event) => {
@@ -17,7 +16,7 @@ export function ProductCard({ product }) {
   const navigate = useNavigate()
 
   return (
-    <Card className="productCard" onClick={() => navigate(`/product/${product.id}`)}>
+    <Card className="productCard" onClick={() => navigate(`/product/${product._id}`)}>
       {/* Main Image */}
       <div className="productCardImageContainer">
         <img
@@ -54,7 +53,7 @@ export function ProductCard({ product }) {
 
       {/* Colors */}
       <div className="productCardColorContainer">
-        {product.variant.map((v, index) => (
+        {product.variants.map((v, index) => (
           <span
             key={index}
             className="productCardColor"

@@ -7,7 +7,7 @@ import "../assets/styles/global.css";
 
 function ProductDetails() {
   const { productId } = useParams();
-  const { products } = useContext(ProductContext);
+  const { product , handlerMap } = useContext(ProductContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -15,16 +15,19 @@ function ProductDetails() {
   const [currentImage, setCurrentImage] = useState(0);
   const [showDescription, setShowDescription] = useState(false);
 
-  useEffect(() => {
-    if (productId && products) {
-      const product = products.find((p) => p.id === productId);
-      setSelectedProduct(product);
-    }
-  }, [productId, products]);
+
 
   useEffect(() => {
-    if (selectedProduct?.variant?.length > 0) {
-      const firstInStockVariant = selectedProduct.variant.find(v => v.stock > 0);
+    if (productId) {
+      handlerMap.handleGet(productId)
+      console.log(product)
+      setSelectedProduct(product);
+    }
+  }, [productId]);
+
+  useEffect(() => {
+    if (selectedProduct?.variants?.length > 0) {
+      const firstInStockVariant = selectedProduct.variants.find(v => v.stock > 0);
       if (firstInStockVariant) {
         setSelectedVariant(firstInStockVariant);
         setSelectedSize(firstInStockVariant.size);
@@ -36,15 +39,15 @@ function ProductDetails() {
   if (!selectedProduct) return <div>Product not found</div>;
 
   const availableSizes = [
-    ...new Set(selectedProduct.variant.map((v) => v.size)),
+    ...new Set(selectedProduct.variants.map((v) => v.size)),
   ];
   const availableColors = [
-    ...new Set(selectedProduct.variant.map((v) => v.color)),
+    ...new Set(selectedProduct.variants.map((v) => v.color)),
   ];
 
   // Check if a size is available for the current color
   const isSizeAvailable = (size) => {
-    return selectedProduct.variant.some(v => 
+    return selectedProduct.variants.some(v => 
       v.size === size && 
       v.stock > 0 && 
       (!selectedColor || v.color === selectedColor)
@@ -53,7 +56,7 @@ function ProductDetails() {
 
   // Check if a color is available for the current size
   const isColorAvailable = (color) => {
-    return selectedProduct.variant.some(v => 
+    return selectedProduct.variants.some(v => 
       v.color === color && 
       v.stock > 0 && 
       (!selectedSize || v.size === selectedSize)
@@ -65,7 +68,7 @@ function ProductDetails() {
     
     setSelectedSize(size);
     // Find variant with current color and new size
-    const newVariant = selectedProduct.variant.find(
+    const newVariant = selectedProduct.variants.find(
 
       v => v.size === size && v.color === selectedColor && v.stock > 0
 
@@ -82,7 +85,7 @@ function ProductDetails() {
     setCurrentImage(0); // Reset to first image
     
     // Find variant with new color and current size or any available size
-    const newVariant = selectedProduct.variant.find(
+    const newVariant = selectedProduct.variants.find(
       v => v.color === color && v.stock > 0 && (!selectedSize || v.size === selectedSize)
 
     );
@@ -93,7 +96,7 @@ function ProductDetails() {
   };
 
   // Get current variant's images based on selected color
-  const currentVariantImages = selectedVariant?.image || [];
+  const currentVariantImages = selectedVariant?.images || [];
 
   return (
     <div className="productContent">
