@@ -1,10 +1,13 @@
 import Table from "../../components/table/Table";
 import "../../assets/styles/profile.css";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { CategoryContext } from "../../providers/CategoryProvider";
 
 function ProfileAdmin() {
   const navigate = useNavigate();
-
+  const {categories , handlerMap} = useContext(CategoryContext)
+  console.log(categories)
   /*
     const data = [
       [1, "Product 1", "Category 1", "S, M, L", "$452.85"], // Product Name is at index 1
@@ -41,9 +44,18 @@ function ProfileAdmin() {
       price: "$510.30",
     },
   ];
+  let categoryData;
+
+  if(categories){
+    categoryData = categories
+  }else{
+    categoryData = [{_id : "null" , name:"test"}] 
+  }
 
   const headers = ["Product Name", "Category", "Size", "Price USD"];
   const columnKeys = ["name", "category", "sizes", "price"]; // Map header order to object keys
+  const columnKeysCategory = ["_id", "name"]
+  const headersCategory = ["Id", "Name"]
 
   return (
     <div className="profileAdminPanel">
@@ -56,13 +68,13 @@ function ProfileAdmin() {
           </button>
         </div>
         <Table
-          headers={headers}
-          data={data}
-          columnKeys={columnKeys}
-          renderAction={() => (
+          headers={headersCategory}
+          data={categoryData}
+          columnKeys={columnKeysCategory}
+          renderAction={(_id) => (
             <div>
-              <i className="fa-solid fa-trash"></i>
-              <i className="fa-solid fa-pen-to-square" onClick={() => navigate("category/update")}></i>
+              <i className="fa-solid fa-trash" onClick={() =>handlerMap.handleDelete(_id)}></i>
+              <i className="fa-solid fa-pen-to-square" onClick={() => navigate(`category/${_id}/update`)}></i>
             </div>
           )}
         />

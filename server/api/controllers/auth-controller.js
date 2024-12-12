@@ -54,12 +54,7 @@ class AuthController {
         { expiresIn: process.env.JWT_EXPIRES_IN }
       );
 
-      res.cookie("token", token, {
-        httpOnly: false,
-        secure:true,
-        sameSite: "Lax",
-        maxAge: 1000 * 60 * 60 * 24, // 1 day
-      });
+      setTokenCookie(res , token)
 
       res
         .status(200)
@@ -111,15 +106,19 @@ router.get(
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
-    });
+    setTokenCookie(res , token)
 
     res.redirect(process.env.CLIENT_URL || "http://localhost:3000");
   }
 );
+
+function setTokenCookie(res, token){
+  res.cookie("token", token, {
+    httpOnly: false,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Lax", //in production change to Strict
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+  });
+}
 
 export default router;
