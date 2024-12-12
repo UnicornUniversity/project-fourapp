@@ -1,11 +1,11 @@
-import CategoryForm from "../containers/profile/CategoryForm";
+import CategoryCreateForm from "../containers/profile/ProfileCategoryCreate";
 import ProfileSidebar from "../containers/profile/ProfileSidebar";
 
 function CategoryCreate() {
   return (
     <section className="profileContent">
       <ProfileSidebar />
-      <CategoryForm />
+      <CategoryCreateForm />
     </section>
   );
 }
