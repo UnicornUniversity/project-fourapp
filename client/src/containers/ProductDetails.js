@@ -22,6 +22,7 @@ function ProductDetails() {
       handlerMap.handleGet(productId)
       console.log(product)
       setSelectedProduct(product);
+      console.log(selectedProduct)
     }
   }, [productId]);
 
