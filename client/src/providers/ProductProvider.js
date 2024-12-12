@@ -6,7 +6,7 @@ export const ProductContext = createContext();
 // Provider Component
 export function ProductProvider ({ children }){
   const [products, setProducts] = useState([]);
-  const [product, setProduct] = useState({})
+  const [product, setProduct] = useState()
   const [filters, setFilters] = useState({})
 
 
@@ -39,11 +39,10 @@ handleLoad()
       }
 }
 
-
 async function handleGet(id) {
   try {
     const response = await fetch(
-      `http://localhost:5000/api/products/${id}`, //OUR API ENDPOINT
+      `http://localhost:5000/api/products/${id}`, // OUR API ENDPOINT
       {
         method: "GET",
         headers: {
@@ -52,20 +51,18 @@ async function handleGet(id) {
       }
     );
 
-
-    const serverResponse = await response.json(); //SHOULD BE TOKEN¨
+    const serverResponse = await response.json(); // SHOULD BE TOKEN¨
     if (response.ok) {
-      console.log(serverResponse)
-      setProduct(serverResponse)
-      console.log(product)
-      //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
+      setProduct(serverResponse); // Update state
+      console.log("Server response:", serverResponse); // Log the fetched product directly
     } else {
-      //console.error("Token verification failed:", data); //SOME ERROR
+      console.error("Failed to fetch product:", serverResponse);
     }
   } catch (error) {
-    //console.error("Error sending token to backend:", error);
+    console.error("Error fetching product:", error);
   }
 }
+
 
 const value = {
   filters, products , product, handlerMap:{
