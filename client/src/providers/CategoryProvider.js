@@ -4,6 +4,7 @@ export const CategoryContext = createContext();
 
 function CategoryProvider({children}){
 const [navbarCategories, setNavbarCategories] = useState([])
+const [categories , setCategories] = useState([])
 
 useEffect(() => {
     handleLoad()
@@ -25,6 +26,7 @@ async function handleLoad(){
         const serverResponse = await response.json(); //SHOULD BE TOKEN¨
         if (response.ok) {
             setNavbarCategories(serverResponse.categories)
+            setCategories(serverResponse.categories)
           //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
         } else {
           //console.error("Token verification failed:", data); //SOME ERROR
@@ -47,7 +49,7 @@ async function handleLoadSubCategories(){
 
 
     const value = {
-        navbarCategories,
+        navbarCategories,categories ,
         handlerMap:{
 
         }

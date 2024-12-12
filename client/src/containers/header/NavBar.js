@@ -8,7 +8,6 @@ function Navbar() {
   const {navbarCategories} = useContext(CategoryContext)
   const navigate = useNavigate();
   const token = Cookies.get("token");
-  console.log(token)
 
   return (
     <div className="navbar">
