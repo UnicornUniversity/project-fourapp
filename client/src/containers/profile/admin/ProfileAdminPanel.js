@@ -1,13 +1,13 @@
-import Table from "../../components/table/Table";
-import "../../assets/styles/profile.css";
+import Table from "../../../components/table/Table";
+import "../../../assets/styles/profile.css";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { CategoryContext } from "../../providers/CategoryProvider";
+import { CategoryContext } from "../../../providers/CategoryProvider";
 
 function ProfileAdmin() {
   const navigate = useNavigate();
-  const {categories , handlerMap} = useContext(CategoryContext)
-  console.log(categories)
+  const { categories, handlerMap } = useContext(CategoryContext);
+  console.log(categories);
   /*
     const data = [
       [1, "Product 1", "Category 1", "S, M, L", "$452.85"], // Product Name is at index 1
@@ -46,24 +46,22 @@ function ProfileAdmin() {
   ];
   let categoryData;
 
-  if(categories){
-    categoryData = categories
-  }else{
-    categoryData = [{_id : "null" , name:"test"}] 
+  if (categories) {
+    categoryData = categories;
+  } else {
+    categoryData = [{ _id: "null", name: "test" }];
   }
 
   const headers = ["Product Name", "Category", "Size", "Price USD"];
   const columnKeys = ["name", "category", "sizes", "price"]; // Map header order to object keys
-  const columnKeysCategory = ["_id", "name"]
-  const headersCategory = ["Id", "Name"]
+  const columnKeysCategory = ["_id", "name"];
+  const headersCategory = ["Id", "Name"];
 
   return (
     <div className="profileAdminPanel">
       <div>
         <div>
-          <button
-            onClick={() => navigate("category/create")}
-          >
+          <button onClick={() => navigate("category/create")}>
             Add category
           </button>
         </div>
@@ -73,17 +71,21 @@ function ProfileAdmin() {
           columnKeys={columnKeysCategory}
           renderAction={(_id) => (
             <div>
-              <i className="fa-solid fa-trash" onClick={() =>handlerMap.handleDelete(_id)}></i>
-              <i className="fa-solid fa-pen-to-square" onClick={() => navigate(`category/${_id}/update`)}></i>
+              <i
+                className="fa-solid fa-pen-to-square"
+                onClick={() => navigate(`category/${_id}/update`)}
+              ></i>
+              <i
+                className="fa-solid fa-trash"
+                onClick={() => handlerMap.handleDelete(_id)}
+              ></i>
             </div>
           )}
         />
       </div>
       <div>
         <div>
-          <button
-            onClick={() => navigate("product/create")}
-          >
+          <button onClick={() => navigate("product/create")}>
             Add product
           </button>
         </div>
@@ -93,8 +95,11 @@ function ProfileAdmin() {
           columnKeys={columnKeys}
           renderAction={() => (
             <div>
+              <i
+                className="fa-solid fa-pen-to-square"
+                onClick={() => navigate("product/update")}
+              ></i>
               <i className="fa-solid fa-trash"></i>
-              <i className="fa-solid fa-pen-to-square" onClick={() => navigate("product/update")}></i>
             </div>
           )}
         />

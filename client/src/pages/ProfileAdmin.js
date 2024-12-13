@@ -1,4 +1,4 @@
-import ProfileAdminPanel from "../containers/profile/ProfileAdminPanel";
+import ProfileAdminPanel from "../containers/profile/admin/ProfileAdminPanel";
 import ProfileSidebar from "../containers/profile/ProfileSidebar";
 function ProfileAdmin() {
   return (

@@ -1,4 +1,4 @@
-import ProductDetails from "../containers/ProductDetails";
+import ProductDetails from "../containers/product/ProductDetails";
 
 function Product() {
   return (
@@ -11,4 +11,3 @@ function Product() {
 }
 
 export default Product;
-

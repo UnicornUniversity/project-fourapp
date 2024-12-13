@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import Input from "../../components/input/Input";
-import { CategoryContext } from "../../providers/CategoryProvider";
+import Input from "../../../../components/input/Input";
+import { CategoryContext } from "../../../../providers/CategoryProvider";
 
 function CategoryCreate() {
   const { categories, handlerMap } = useContext(CategoryContext);
@@ -11,7 +11,7 @@ function CategoryCreate() {
     const data = Object.fromEntries(formData.entries());
     console.log("Form Data:", data);
     // Add your submit logic here
-    handlerMap.handleCreate(data)
+    handlerMap.handleCreate(data);
   };
 
   return (
@@ -26,7 +26,7 @@ function CategoryCreate() {
           <label className="inputLabel">Name</label>
         </Input>
         <select name="parentCategoryId" className="categoryFormSelect">
-          <option value={""} >Select Category</option>
+          <option value={""}>Select Category</option>
           {categories.map((category) => (
             <option key={category._id} value={category._id}>
               {category.name}

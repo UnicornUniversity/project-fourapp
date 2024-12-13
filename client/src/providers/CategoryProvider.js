@@ -29,7 +29,7 @@ async function handleGet(id) {
 
     const serverResponse = await response.json(); //SHOULD BE TOKEN¨
     if (response.ok) {
-      console.log(serverResponse)
+      //console.log(serverResponse)
       return serverResponse
       //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
     } else {
