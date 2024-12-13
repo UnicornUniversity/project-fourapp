@@ -13,9 +13,6 @@ function Table({
     <table className={`table ${className}`} {...props}>
       <thead>
         <tr>
-          <th>
-            <input type="checkbox" className="selectAll" />
-          </th>
           {headers.map((header, index) => (
             <th key={index}>{header}</th>
           ))}
@@ -25,9 +22,6 @@ function Table({
       <tbody>
         {data.map((row, rowIndex) => (
           <tr key={rowIndex}>
-            <td>
-              <input type="checkbox" />
-            </td>
             {columnKeys.map((key, keyIndex) => {
               if (key === "sizes") {
                 return (

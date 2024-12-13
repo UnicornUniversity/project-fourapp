@@ -1,4 +1,4 @@
-import CategoryCreateForm from "../containers/profile/ProfileCategoryCreate";
+import CategoryCreateForm from "../containers/profile/admin/category/ProfileCategoryCreate";
 import ProfileSidebar from "../containers/profile/ProfileSidebar";
 
 function CategoryCreate() {

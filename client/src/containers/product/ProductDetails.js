@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Button from "../components/button/Button";
-import { ProductContext } from "../providers/ProductProvider";
-import "../assets/styles/productpage.css";
-import "../assets/styles/global.css";
+import Button from "../../components/button/Button";
+import { ProductContext } from "../../providers/ProductProvider";
+import "../../assets/styles/product.css";
+//import "../../assets/styles/global.css";
 
 function ProductDetails() {
   const { productId } = useParams();
-  const { product , handlerMap } = useContext(ProductContext);
+  const { product, handlerMap } = useContext(ProductContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -15,20 +15,20 @@ function ProductDetails() {
   const [currentImage, setCurrentImage] = useState(0);
   const [showDescription, setShowDescription] = useState(false);
 
-
-
   useEffect(() => {
     if (productId) {
-      handlerMap.handleGet(productId)
-      console.log(product)
+      handlerMap.handleGet(productId);
+      console.log(product);
       setSelectedProduct(product);
-      console.log(selectedProduct)
+      console.log(selectedProduct);
     }
   }, [productId]);
 
   useEffect(() => {
     if (selectedProduct?.variants?.length > 0) {
-      const firstInStockVariant = selectedProduct.variants.find(v => v.stock > 0);
+      const firstInStockVariant = selectedProduct.variants.find(
+        (v) => v.stock > 0
+      );
       if (firstInStockVariant) {
         setSelectedVariant(firstInStockVariant);
         setSelectedSize(firstInStockVariant.size);
@@ -48,31 +48,31 @@ function ProductDetails() {
 
   // Check if a size is available for the current color
   const isSizeAvailable = (size) => {
-    return selectedProduct.variants.some(v => 
-      v.size === size && 
-      v.stock > 0 && 
-      (!selectedColor || v.color === selectedColor)
+    return selectedProduct.variants.some(
+      (v) =>
+        v.size === size &&
+        v.stock > 0 &&
+        (!selectedColor || v.color === selectedColor)
     );
   };
 
   // Check if a color is available for the current size
   const isColorAvailable = (color) => {
-    return selectedProduct.variants.some(v => 
-      v.color === color && 
-      v.stock > 0 && 
-      (!selectedSize || v.size === selectedSize)
+    return selectedProduct.variants.some(
+      (v) =>
+        v.color === color &&
+        v.stock > 0 &&
+        (!selectedSize || v.size === selectedSize)
     );
   };
 
   const handleSizeSelect = (size) => {
     if (!isSizeAvailable(size)) return;
-    
+
     setSelectedSize(size);
     // Find variant with current color and new size
     const newVariant = selectedProduct.variants.find(
-
-      v => v.size === size && v.color === selectedColor && v.stock > 0
-
+      (v) => v.size === size && v.color === selectedColor && v.stock > 0
     );
     if (newVariant) {
       setSelectedVariant(newVariant);
@@ -81,14 +81,16 @@ function ProductDetails() {
 
   const handleColorSelect = (color) => {
     if (!isColorAvailable(color)) return;
-    
+
     setSelectedColor(color);
     setCurrentImage(0); // Reset to first image
-    
+
     // Find variant with new color and current size or any available size
     const newVariant = selectedProduct.variants.find(
-      v => v.color === color && v.stock > 0 && (!selectedSize || v.size === selectedSize)
-
+      (v) =>
+        v.color === color &&
+        v.stock > 0 &&
+        (!selectedSize || v.size === selectedSize)
     );
     if (newVariant) {
       setSelectedVariant(newVariant);
@@ -103,16 +105,14 @@ function ProductDetails() {
     <div className="productContent">
       <div className="productGallery">
         <div className="productMainImage">
-
-          <img 
-            src={currentVariantImages[currentImage]} 
-            alt={`${selectedProduct.name} - ${selectedVariant?.color || ''}`} 
+          <img
+            src={currentVariantImages[currentImage]}
+            alt={`${selectedProduct.name} - ${selectedVariant?.color || ""}`}
           />
         </div>
         <div className="productThumbnails">
           {currentVariantImages.map((image, index) => (
-            <div 
-
+            <div
               key={index}
               className={`thumbnailImage ${
                 currentImage === index ? "active" : ""
@@ -132,49 +132,47 @@ function ProductDetails() {
         <div className="productHeader">
           <h1>{selectedProduct.name}</h1>
           <div className="productPrice">
-
             <span>{selectedProduct.price} $</span>
-
           </div>
         </div>
 
         <div className="variantSection">
           <h3>Size</h3>
           <div className="variantOptions">
-
             {availableSizes.map((size) => {
               const isAvailable = isSizeAvailable(size);
               return (
                 <Button
                   key={size}
-                  className={`variantButton ${selectedSize === size ? 'active' : ''} ${!isAvailable ? 'disabled' : ''}`}
+                  className={`variantButton ${
+                    selectedSize === size ? "active" : ""
+                  } ${!isAvailable ? "disabled" : ""}`}
                   buttonText={size}
                   onClick={() => handleSizeSelect(size)}
                   disabled={!isAvailable}
                 />
               );
             })}
-
           </div>
         </div>
 
         <div className="variantSection">
           <h3>Color</h3>
           <div className="variantOptions">
-
             {availableColors.map((color) => {
               const isAvailable = isColorAvailable(color);
               return (
                 <Button
                   key={color}
-                  className={`variantButton ${selectedColor === color ? 'active' : ''} ${!isAvailable ? 'disabled' : ''}`}
+                  className={`variantButton ${
+                    selectedColor === color ? "active" : ""
+                  } ${!isAvailable ? "disabled" : ""}`}
                   buttonText={color}
                   onClick={() => handleColorSelect(color)}
                   disabled={!isAvailable}
                 />
               );
             })}
-
           </div>
         </div>
 
@@ -185,9 +183,9 @@ function ProductDetails() {
             !selectedVariant || selectedVariant.stock === 0 ? "disabled" : ""
           }`}
           buttonText="Add to basket"
-
-          onClick={() => {/*cart logic */}}
-
+          onClick={() => {
+            /*cart logic */
+          }}
           disabled={!selectedVariant || selectedVariant.stock === 0}
         />
 
