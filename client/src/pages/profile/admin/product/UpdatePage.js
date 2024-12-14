@@ -1,5 +1,5 @@
-import ProductUpdateForm from "../containers/profile/admin/product/ProfileProductUpdate";
-import ProfileSidebar from "../containers/profile/ProfileSidebar";
+import ProductUpdateForm from "../../../../containers/profile/admin/product/UpdateContainer";
+import ProfileSidebar from "../../../../containers/profile/SidebarContainer";
 function ProductUpdate() {
   return (
     <section className="profileContent">

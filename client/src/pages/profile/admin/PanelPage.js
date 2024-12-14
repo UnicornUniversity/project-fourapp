@@ -1,5 +1,5 @@
-import ProfileAdminPanel from "../containers/profile/admin/ProfileAdminPanel";
-import ProfileSidebar from "../containers/profile/ProfileSidebar";
+import ProfileAdminPanel from "../../../containers/profile/admin/PanelContainer";
+import ProfileSidebar from "../../../containers/profile/SidebarContainer";
 function ProfileAdmin() {
   return (
     <div className="profileAdmin">

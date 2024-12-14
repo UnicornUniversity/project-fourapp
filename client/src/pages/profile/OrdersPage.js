@@ -1,4 +1,4 @@
-import ProfileSidebar from "../containers/profile/ProfileSidebar";
+import ProfileSidebar from "../../containers/profile/SidebarContainer";
 function ProfileOrderHistory() {
   return (
     <div className="profileOrderHistory">

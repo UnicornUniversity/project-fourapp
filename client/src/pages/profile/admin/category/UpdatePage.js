@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import CategoryUpdateForm from "../containers/profile/admin/category/ProfileCategoryUpdate";
-import ProfileSidebar from "../containers/profile/ProfileSidebar";
-import { CategoryContext } from "../providers/CategoryProvider";
+import CategoryUpdateForm from "../../../../containers/profile/admin/category/UpdateContainer";
+import ProfileSidebar from "../../../../containers/profile/SidebarContainer";
+import { CategoryContext } from "../../../../providers/CategoryProvider";
 import { useLocation } from "react-router-dom";
 
 function CategoryUpdate() {

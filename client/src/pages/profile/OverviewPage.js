@@ -1,6 +1,6 @@
-import ProfileOverviewForm from "../containers/profile/ProfileOverviewForm";
-import ProfileSidebar from "../containers/profile/ProfileSidebar";
-import "../assets/styles/profile.css";
+import ProfileOverviewForm from "../../containers/profile/OverviewContainer";
+import ProfileSidebar from "../../containers/profile/SidebarContainer";
+import "../../assets/styles/profile.css";
 
 function ProfileOverview() {
   return (
