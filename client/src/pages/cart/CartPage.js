@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../../providers/CartProvider';
-import CartItem from '../../components/cart/CartItem';  // Updated import path
+import CartItem from '../../components/cart/CartItem';
 import Card from '../../components/card/Card';
+import '../../assets/styles/cart.css';  // Add this import
 
 function CartPage() {
   const { cartItems } = useContext(CartContext);
@@ -23,12 +24,12 @@ function CartPage() {
         {cartItems.map(item => (
           <div key={item.id} className="summaryItem">
             <span>{item.title}</span>
-            <span>{item.price} CZK</span>
+            <span>{item.price} $</span>
           </div>
         ))}
         <div className="summaryTotal">
           <strong>Total:</strong>
-          <strong>{calculateTotal()} CZK</strong>
+          <strong>{calculateTotal()} $</strong>
         </div>
         <button className="checkoutButton">Continue to payment</button>
       </Card>

@@ -2,12 +2,13 @@ import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { ProductContext } from "../../providers/ProductProvider";
+import { CartContext } from "../../providers/CartProvider";  // Add this
 import "../../assets/styles/product.css";
-//import "../../assets/styles/global.css";
 
 function ProductDetailContainer() {
   const { productId } = useParams();
   const { product, handlerMap } = useContext(ProductContext);
+  const { addToCart } = useContext(CartContext);  // Add this
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -98,6 +99,26 @@ function ProductDetailContainer() {
     }
   };
 
+  const handleAddToCart = () => {
+    if (!selectedVariant || selectedVariant.stock === 0) return;
+
+    const cartItem = {
+      id: `${selectedProduct._id}-${selectedVariant._id}`,
+      productId: selectedProduct._id,
+      variantId: selectedVariant._id,
+      title: selectedProduct.name,
+      price: selectedProduct.price,
+      color: selectedColor,
+      size: selectedSize,
+      quantity: 1,
+      image: selectedVariant.images[0],
+      stock: selectedVariant.stock
+    };
+
+    addToCart(cartItem);
+    alert('Product added to cart'); 
+  };
+
   // Get current variant's images based on selected color
   const currentVariantImages = selectedVariant?.images || [];
 
@@ -183,9 +204,7 @@ function ProductDetailContainer() {
             !selectedVariant || selectedVariant.stock === 0 ? "disabled" : ""
           }`}
           buttonText="Add to basket"
-          onClick={() => {
-            /*cart logic */
-          }}
+          onClick={handleAddToCart}
           disabled={!selectedVariant || selectedVariant.stock === 0}
         />
 

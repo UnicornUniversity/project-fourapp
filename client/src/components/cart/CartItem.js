@@ -1,13 +1,20 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../../providers/CartProvider';
+import Card from '../../components/card/Card';
 
 function CartItem({ item }) {
   const { removeFromCart, updateQuantity, toggleFavorite } = useContext(CartContext);
 
   return (
-    <div className="cartItem">
+    <Card className="cartItem">
       <div className="cartItemImage">
-        <img src={item.image || '/images/default/image-placeholder.webp'} alt={item.title} />
+        <img 
+          src={item.image || '/images/default/image-placeholder.webp'} 
+          alt={item.title} 
+          onError={(e) => {
+            e.target.src = '/images/default/image-placeholder.webp';
+          }}
+        />
       </div>
       
       <div className="cartItemDetails">
@@ -23,7 +30,7 @@ function CartItem({ item }) {
         
         <div className="cartItemActions">
           <div className="quantityControl">
-            <button onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}>-</button>
+            <button onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}>−</button>
             <span>{item.quantity}</span>
             <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
           </div>
@@ -42,9 +49,9 @@ function CartItem({ item }) {
       </div>
       
       <div className="cartItemPrice">
-        {item.price} CZK
+        {item.price} $
       </div>
-    </div>
+    </Card>
   );
 }
 
