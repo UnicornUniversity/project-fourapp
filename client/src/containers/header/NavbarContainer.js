@@ -50,7 +50,7 @@ import "./../../assets/styles/header.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Navbar() {
+function NavbarContainer() {
   const navigate = useNavigate();
   const token = Cookies.get("token");
 
@@ -105,4 +105,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavbarContainer;

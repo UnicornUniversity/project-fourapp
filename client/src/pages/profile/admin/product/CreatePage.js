@@ -1,13 +1,13 @@
 //import ProductForm from "../containers/profile/ProductForm";
 import ProfileSidebar from "../../../../containers/profile/SidebarContainer";
 import ProductCreateForm from "../../../../containers/profile/admin/product/CreateContainer";
-function ProductCreate() {
+function ProductCreatePage() {
   return (
-    <section className="profileContent">
+    <div>
       <ProfileSidebar />
       <ProductCreateForm />
-    </section>
+    </div>
   );
 }
 
-export default ProductCreate;
+export default ProductCreatePage;

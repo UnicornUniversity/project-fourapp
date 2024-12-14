@@ -2,15 +2,13 @@ import ProfileOverviewForm from "../../containers/profile/OverviewContainer";
 import ProfileSidebar from "../../containers/profile/SidebarContainer";
 import "../../assets/styles/profile.css";
 
-function ProfileOverview() {
+function ProfileOverviewPage() {
   return (
-    <div className="profileOverview">
-      <section className="profileContent">
-        <ProfileSidebar />
-        <ProfileOverviewForm />
-      </section>
+    <div>
+      <ProfileSidebar />
+      <ProfileOverviewForm />
     </div>
   );
 }
 
-export default ProfileOverview;
+export default ProfileOverviewPage;

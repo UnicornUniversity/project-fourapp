@@ -1,6 +1,6 @@
 import LoginCard from "../../containers/auth/LoginContainer";
 
-function Login() {
+function LoginPage() {
   return (
     <div className="login">
       <LoginCard />
@@ -8,4 +8,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginPage;

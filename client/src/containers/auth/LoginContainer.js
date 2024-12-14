@@ -5,7 +5,7 @@ import Card from "../../components/card/Card";
 import "./../../assets/styles/auth.css";
 import Input from "../../components/input/Input";
 
-function LoginCard() {
+function LoginContainer() {
   const { handlerMap } = useContext(UserContext);
 
   const handleSubmit = useCallback(
@@ -79,4 +79,4 @@ function LoginCard() {
   );
 }
 
-export default LoginCard;
+export default LoginContainer;

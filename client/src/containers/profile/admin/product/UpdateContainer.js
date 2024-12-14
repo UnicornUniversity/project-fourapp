@@ -3,7 +3,7 @@ import Input from "../../../../components/input/Input";
 import Accordion from "../../../../components/accordion/Accordion";
 import Table from "../../../../components/table/Table";
 
-function ProductForm({ product }) {
+function ProductUpdateContainer({ product }) {
   // Manage form fields with useState
   const [formData, setFormData] = useState({
     name: product.name || "",
@@ -184,4 +184,4 @@ function ProductForm({ product }) {
   );
 }
 
-export default ProductForm;
+export default ProductUpdateContainer;

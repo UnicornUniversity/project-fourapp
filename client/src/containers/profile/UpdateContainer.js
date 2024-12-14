@@ -1,6 +1,6 @@
 import Input from "../../components/input/Input";
 
-function ProfileUpdateForm() {
+function ProfileUpdateContainer() {
   return (
     <div className="profileUpdateForm">
       <form>
@@ -49,4 +49,4 @@ function ProfileUpdateForm() {
   );
 }
 
-export default ProfileUpdateForm;
+export default ProfileUpdateContainer;

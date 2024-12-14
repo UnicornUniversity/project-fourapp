@@ -1,14 +1,12 @@
 import ProfileUpdateForm from "../../containers/profile/UpdateContainer";
 import ProfileSidebar from "../../containers/profile/SidebarContainer";
-function ProfileUpdate() {
+function ProfileUpdatePage() {
   return (
-    <div className="profileUpdate">
-      <section className="profileContent">
-        <ProfileSidebar />
-        <ProfileUpdateForm />
-      </section>
+    <div>
+      <ProfileSidebar />
+      <ProfileUpdateForm />
     </div>
   );
 }
 
-export default ProfileUpdate;
+export default ProfileUpdatePage;

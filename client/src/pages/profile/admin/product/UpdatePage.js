@@ -1,8 +1,8 @@
 import ProductUpdateForm from "../../../../containers/profile/admin/product/UpdateContainer";
 import ProfileSidebar from "../../../../containers/profile/SidebarContainer";
-function ProductUpdate() {
+function ProductUpdatePage() {
   return (
-    <section className="profileContent">
+    <div>
       <ProfileSidebar />
       <ProductUpdateForm
         product={{
@@ -13,8 +13,8 @@ function ProductUpdate() {
           category: "category",
         }}
       />
-    </section>
+    </div>
   );
 }
 
-export default ProductUpdate;
+export default ProductUpdatePage;

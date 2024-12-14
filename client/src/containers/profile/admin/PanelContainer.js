@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CategoryContext } from "../../../providers/CategoryProvider";
 
-function ProfileAdmin() {
+function AdminPanelContainer() {
   const navigate = useNavigate();
   const { categories, handlerMap } = useContext(CategoryContext);
   console.log(categories);
@@ -108,4 +108,4 @@ function ProfileAdmin() {
   );
 }
 
-export default ProfileAdmin;
+export default AdminPanelContainer;

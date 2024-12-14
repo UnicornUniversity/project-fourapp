@@ -1,13 +1,13 @@
 import CategoryCreateForm from "../../../../containers/profile/admin/category/CreateContainer";
 import ProfileSidebar from "../../../../containers/profile/SidebarContainer";
 
-function CategoryCreate() {
+function CategoryCreatePage() {
   return (
-    <section className="profileContent">
+    <div>
       <ProfileSidebar />
       <CategoryCreateForm />
-    </section>
+    </div>
   );
 }
 
-export default CategoryCreate;
+export default CategoryCreatePage;
