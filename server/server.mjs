@@ -12,6 +12,7 @@ import errorHandler from "./middleware/error-handler.mjs";
 import userRoutes from "./api/controllers/user-controller.js";
 import ordersRouter from "./api/controllers/order-controller.js";
 import requestLogger from "./middleware/request-logger.mjs";
+import auditlogRouter from "./routes/auditlog-router.js"; 
 
 const app = express();
 
@@ -41,8 +42,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/users", userRoutes);
-app.use("/api/orders", ordersRouter); // Přidán router pro objednávky
-app.use("/api/users", userRoutes);
+app.use("/api/orders", ordersRouter); 
+app.use("/api/auditlogs", auditlogRouter); 
 app.use(errorHandler);
 
 // Spuštění serveru
