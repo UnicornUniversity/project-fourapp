@@ -2,13 +2,13 @@ import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { ProductContext } from "../../providers/ProductProvider";
-import { CartContext } from "../../providers/CartProvider";  // Add this
+import { CartContext } from "../../providers/CartProvider";
 import "../../assets/styles/product.css";
 
 function ProductDetailContainer() {
   const { productId } = useParams();
   const { product, handlerMap } = useContext(ProductContext);
-  const { addToCart } = useContext(CartContext);  // Add this
+  const { addToCart } = useContext(CartContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
