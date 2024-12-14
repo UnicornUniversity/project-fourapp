@@ -1,16 +1,7 @@
 import auditLogDao from "../../dao/auditlog-dao.js";
-import { ApiError } from "../../utils/error.mjs";
+import mongoose from "mongoose";
 
 class AuditLogController {
-  static async create(req, res, next) {
-    try {
-      const log = await auditLogDao.create(req.body);
-      res.status(201).json(log);
-    } catch (error) {
-      next(error);
-    }
-  }
-
   static async list(req, res, next) {
     try {
       const logs = await auditLogDao.list();
@@ -22,7 +13,8 @@ class AuditLogController {
 
   static async listByUserId(req, res, next) {
     try {
-      const logs = await auditLogDao.listByUserId(req.params.userId);
+      const { userId } = req.query;
+      const logs = await auditLogDao.listByUserId(userId);
       res.status(200).json(logs);
     } catch (error) {
       next(error);
@@ -31,7 +23,14 @@ class AuditLogController {
 
   static async listByTypeAndId(req, res, next) {
     try {
-      const logs = await auditLogDao.listByTypeOfObjectAndId(req.query.typeOfObject, req.query.objectId);
+      const { typeOfObject, objectId } = req.query;
+
+      // Pokud je `objectId` poskytnuto, validujeme ho
+      if (objectId && !mongoose.Types.ObjectId.isValid(objectId)) {
+        return res.status(400).json({ error: "Invalid objectId format" });
+      }
+
+      const logs = await auditLogDao.listByTypeOfObjectAndId(typeOfObject, objectId);
       res.status(200).json(logs);
     } catch (error) {
       next(error);
@@ -40,8 +39,33 @@ class AuditLogController {
 
   static async listByStatus(req, res, next) {
     try {
-      const logs = await auditLogDao.listByStatus(req.query.status);
+      const { status } = req.query;
+      const logs = await auditLogDao.listByStatus(status);
       res.status(200).json(logs);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async create(req, res, next) {
+    try {
+      const { actionType, typeOfObject, objectId, userId, status, description } = req.body;
+
+      // Validace povinných polí
+      if (!actionType || !typeOfObject || !status) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      const newLog = await auditLogDao.create({
+        actionType,
+        typeOfObject,
+        objectId,
+        userId,
+        status,
+        description,
+      });
+
+      res.status(201).json(newLog);
     } catch (error) {
       next(error);
     }

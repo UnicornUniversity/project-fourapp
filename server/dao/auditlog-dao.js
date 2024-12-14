@@ -1,32 +1,24 @@
 import mongoose from "mongoose";
-import { ApiError } from "../utils/error.mjs"; // Ujistěte se, že cesta je správná
-
-const AuditLogSchema = new mongoose.Schema(
-  {
-    userId: { type: mongoose.Schema.Types.Mixed, required: false },
-    typeOfObject: { type: String, required: true },
-    objectId: { type: mongoose.Schema.Types.ObjectId, required: false },
-    actionType: { type: String, required: true },
-    timestamp: { type: Date, default: Date.now },
-    status: { type: String, enum: ["success", "error"], required: true },
-    previousData: { type: Object, default: null },
-    newData: { type: Object, default: null },
-    description: { type: String, default: "" },
-  },
-  { timestamps: true }
-);
-
-const AuditLog = mongoose.model("AuditLog", AuditLogSchema);
+import { AuditLog } from "../models/Auditlog.mjs";
+import { ApiError } from "../utils/error.mjs";
 
 class auditLogDao {
   static async create(log) {
     try {
+      console.log("Creating AuditLog with data:", log); // Debugging
+
       if (!log.typeOfObject || !log.actionType || !log.status) {
         throw ApiError.badRequest("Missing required fields in log data");
       }
+
+      if (!log.timestamp) {
+        log.timestamp = new Date();
+      }
+
       return await AuditLog.create(log);
     } catch (error) {
-      throw ApiError.badRequest("Failed to create AuditLog", { originalError: error.message });
+      console.error("Error creating AuditLog:", error.message);
+      throw ApiError.internalServerError("Failed to create AuditLog", { originalError: error.message });
     }
   }
 
@@ -34,29 +26,35 @@ class auditLogDao {
     try {
       return await AuditLog.find().sort({ timestamp: -1 });
     } catch (error) {
-      throw ApiError.internal("Failed to fetch AuditLogs", { originalError: error.message });
+      throw ApiError.internalServerError("Failed to fetch AuditLogs", { originalError: error.message });
     }
   }
 
   static async listByUserId(userId) {
     try {
-      if (!mongoose.Types.ObjectId.isValid(userId)) {
-        throw ApiError.badRequest("Invalid userId format");
-      }
       return await AuditLog.find({ userId }).sort({ timestamp: -1 });
     } catch (error) {
-      throw ApiError.internal("Failed to fetch AuditLogs by userId", { originalError: error.message });
+      throw ApiError.internalServerError("Failed to fetch AuditLogs by userId", { originalError: error.message });
     }
   }
 
   static async listByTypeOfObjectAndId(typeOfObject, objectId) {
     try {
-      if (objectId && !mongoose.Types.ObjectId.isValid(objectId)) {
-        throw ApiError.badRequest("Invalid objectId format");
+      const query = { typeOfObject };
+
+      if (objectId) {
+        if (!mongoose.Types.ObjectId.isValid(objectId)) {
+          throw ApiError.badRequest(`Invalid ObjectId format: ${objectId}`);
+        }
+        query.objectId = new mongoose.Types.ObjectId(objectId);
       }
-      return await AuditLog.find({ typeOfObject, objectId }).sort({ timestamp: -1 });
+
+      return await AuditLog.find(query).sort({ timestamp: -1 });
     } catch (error) {
-      throw ApiError.internal("Failed to fetch AuditLogs by type and id", { originalError: error.message });
+      console.error("Error in listByTypeOfObjectAndId:", error.message);
+      throw ApiError.internalServerError("Failed to fetch AuditLogs by type and id", {
+        originalError: error.message,
+      });
     }
   }
 
@@ -67,7 +65,7 @@ class auditLogDao {
       }
       return await AuditLog.find({ status }).sort({ timestamp: -1 });
     } catch (error) {
-      throw ApiError.internal("Failed to fetch AuditLogs by status", { originalError: error.message });
+      throw ApiError.internalServerError("Failed to fetch AuditLogs by status", { originalError: error.message });
     }
   }
 }

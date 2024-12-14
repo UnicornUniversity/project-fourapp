@@ -3,18 +3,18 @@ import { requireParam } from "../../utils/index.mjs";
 import { listProductsQuerySchema } from "../../types/products.mjs";
 import { Types } from "mongoose";
 import logAction from "../../middleware/auditlog-middleware.js";
+import { ApiError } from "../../utils/error.mjs";
 
 export default class ProductController {
   static async create(req, res, next) {
     try {
       const product = await ProductAbl.create(req.body);
 
-      // Logování vytvoření produktu bez autentifikace
       await logAction(
         "create",
         "product",
         product._id,
-        "system", // Pevná hodnota, pokud není potřeba uživatel pak se dá přidat req.user.id aby auditlog přidal usera co udělal změnu
+        req.user?.id || "system",
         null,
         req.body,
         "success",
@@ -23,32 +23,61 @@ export default class ProductController {
 
       res.status(201).json(product);
     } catch (error) {
+      const apiError = ApiError.fromError(error);
+      await logAction(
+        "create",
+        "product",
+        null,
+        req.user?.id || "system",
+        null,
+        req.body,
+        "error",
+        apiError.message
+      )(req, res, next);
       next(error);
     }
   }
 
   static async delete(req, res, next) {
     try {
-      const id = Types.ObjectId.createFromHexString(
-        requireParam("productId", req.params)
-      );
-      const product = await ProductAbl.get(id);
+      const id = requireParam("productId", req.params);
 
-      // Logování před smazáním bez autentifikace
+      // Validate ID
+      if (!Types.ObjectId.isValid(id)) {
+        throw ApiError.badRequest("Invalid product ID");
+      }
+
+      const product = await ProductAbl.get(id);
+      if (!product) {
+        throw ApiError.notFound("Product not found");
+      }
+
+      await ProductAbl.delete(id);
+
       await logAction(
         "delete",
         "product",
         id,
-        "system", // Pevná hodnota, pokud není potřeba uživatel pak se dá přidat req.user.id aby auditlog přidal usera co udělal změnu
+        req.user?.id || "system",
         product,
         null,
         "success",
         "Product deleted successfully"
       )(req, res, next);
 
-      await ProductAbl.delete(id);
       res.status(204).send();
     } catch (error) {
+      const apiError = ApiError.fromError(error);
+      await logAction(
+        "delete",
+        "product",
+        req.params.productId,
+        req.user?.id || "system",
+        null,
+        null,
+        "error",
+        apiError.message
+      )(req, res, next);
       next(error);
     }
   }
@@ -65,18 +94,25 @@ export default class ProductController {
 
   static async update(req, res, next) {
     try {
-      const id = Types.ObjectId.createFromHexString(
-        requireParam("productId", req.params)
-      );
+      const id = requireParam("productId", req.params);
+
+      // Validate ID
+      if (!Types.ObjectId.isValid(id)) {
+        throw ApiError.badRequest("Invalid product ID");
+      }
+
       const previousProduct = await ProductAbl.get(id);
+      if (!previousProduct) {
+        throw ApiError.notFound("Product not found");
+      }
+
       const updatedProduct = await ProductAbl.update(id, req.body);
 
-      // Logování aktualizace produktu bez autentifikace
       await logAction(
         "update",
         "product",
         id,
-        "system", // Pevná hodnota, pokud není potřeba uživatel pak se dá přidat req.user.id aby auditlog přidal usera co udělal změnu
+        req.user?.id || "system",
         previousProduct,
         req.body,
         "success",
@@ -85,16 +121,34 @@ export default class ProductController {
 
       res.status(200).json(updatedProduct);
     } catch (error) {
+      const apiError = ApiError.fromError(error);
+      await logAction(
+        "update",
+        "product",
+        req.params.productId,
+        req.user?.id || "system",
+        null,
+        req.body,
+        "error",
+        apiError.message
+      )(req, res, next);
       next(error);
     }
   }
 
   static async get(req, res, next) {
     try {
-      const id = Types.ObjectId.createFromHexString(
-        requireParam("productId", req.params)
-      );
+      const id = requireParam("productId", req.params);
+
+      // Validate ID
+      if (!Types.ObjectId.isValid(id)) {
+        throw ApiError.badRequest("Invalid product ID");
+      }
+
       const product = await ProductAbl.get(id);
+      if (!product) {
+        throw ApiError.notFound("Product not found");
+      }
 
       res.status(200).json(product);
     } catch (error) {
