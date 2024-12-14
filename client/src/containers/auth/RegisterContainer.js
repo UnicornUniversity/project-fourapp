@@ -59,7 +59,7 @@ function RegisterContainer() {
 
   return (
     <Card className="authCard">
-      <div>
+      <div className="authTitle">
         <h3>Register</h3>
       </div>
 
