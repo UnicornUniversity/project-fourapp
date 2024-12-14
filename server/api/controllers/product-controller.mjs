@@ -2,11 +2,24 @@ import { ProductAbl } from "../../abl/product-abl.mjs";
 import { requireParam } from "../../utils/index.mjs";
 import { listProductsQuerySchema } from "../../types/products.mjs";
 import { Types } from "mongoose";
+import logAction from "../../middleware/auditlog-middleware.js";
 
 export default class ProductController {
   static async create(req, res, next) {
     try {
       const product = await ProductAbl.create(req.body);
+
+      // Logování vytvoření produktu
+      await logAction(
+        "create",
+        "product",
+        product._id,
+        req.user.id,
+        null,
+        req.body,
+        "success",
+        "Product created successfully"
+      )(req, res, next);
 
       res.status(201).json(product);
     } catch (error) {
@@ -19,8 +32,21 @@ export default class ProductController {
       const id = Types.ObjectId.createFromHexString(
         requireParam("productId", req.params)
       );
-      await ProductAbl.delete(id);
+      const product = await ProductAbl.get(id);
 
+      // Logování před smazáním
+      await logAction(
+        "delete",
+        "product",
+        id,
+        req.user.id,
+        product,
+        null,
+        "success",
+        "Product deleted successfully"
+      )(req, res, next);
+
+      await ProductAbl.delete(id);
       res.status(204).send();
     } catch (error) {
       next(error);
@@ -42,7 +68,20 @@ export default class ProductController {
       const id = Types.ObjectId.createFromHexString(
         requireParam("productId", req.params)
       );
+      const previousProduct = await ProductAbl.get(id);
       const updatedProduct = await ProductAbl.update(id, req.body);
+
+      // Logování aktualizace produktu
+      await logAction(
+        "update",
+        "product",
+        id,
+        req.user.id,
+        previousProduct,
+        req.body,
+        "success",
+        "Product updated successfully"
+      )(req, res, next);
 
       res.status(200).json(updatedProduct);
     } catch (error) {
@@ -50,17 +89,15 @@ export default class ProductController {
     }
   }
 
-  static async get(req, res, next){
+  static async get(req, res, next) {
     try {
       const id = Types.ObjectId.createFromHexString(
         requireParam("productId", req.params)
       );
-      const product = await ProductAbl.get(id)
-
-      res.status(200).json(product)
-
+      const product = await ProductAbl.get(id);
+      res.status(200).json(product);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }
