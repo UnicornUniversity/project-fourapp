@@ -6,7 +6,7 @@ import "./../../assets/styles/auth.css";
 //import "./../../assets/styles/tooltip.css"; // Custom styles for the tooltip
 import Input from "../../components/input/Input";
 
-function RegisterCard() {
+function RegisterContainer() {
   const { handlerMap } = useContext(UserContext);
 
   const [errors, setErrors] = useState({ name: "", email: "", password: "" });
@@ -122,4 +122,4 @@ function RegisterCard() {
   );
 }
 
-export default RegisterCard;
+export default RegisterContainer;

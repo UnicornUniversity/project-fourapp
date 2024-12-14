@@ -1,6 +1,6 @@
 import Input from "../../components/input/Input";
 
-function ProfileOverviewForm() {
+function ProfileOverviewContainer() {
   return (
     <div className="profileOverviewForm">
       <form>
@@ -47,4 +47,4 @@ function ProfileOverviewForm() {
   );
 }
 
-export default ProfileOverviewForm;
+export default ProfileOverviewContainer;

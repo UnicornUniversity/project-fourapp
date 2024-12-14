@@ -4,7 +4,7 @@ import ProfileSidebar from "../../../../containers/profile/SidebarContainer";
 import { CategoryContext } from "../../../../providers/CategoryProvider";
 import { useLocation } from "react-router-dom";
 
-function CategoryUpdate() {
+function CategoryUpdatePage() {
   const { handlerMap } = useContext(CategoryContext);
   const location = useLocation();
 
@@ -13,11 +13,11 @@ function CategoryUpdate() {
   const categoryId = pathSegments[pathSegments.indexOf("category") + 1];
 
   return (
-    <section className="profileContent">
+    <div>
       <ProfileSidebar />
       <CategoryUpdateForm category={handlerMap.handleGet(categoryId)} />
-    </section>
+    </div>
   );
 }
 
-export default CategoryUpdate;
+export default CategoryUpdatePage;

@@ -5,7 +5,7 @@ import { ProductContext } from "../../providers/ProductProvider";
 import "../../assets/styles/product.css";
 //import "../../assets/styles/global.css";
 
-function ProductDetails() {
+function ProductDetailContainer() {
   const { productId } = useParams();
   const { product, handlerMap } = useContext(ProductContext);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -208,4 +208,4 @@ function ProductDetails() {
   );
 }
 
-export default ProductDetails;
+export default ProductDetailContainer;

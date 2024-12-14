@@ -1,12 +1,10 @@
 import ProfileSidebar from "../../containers/profile/SidebarContainer";
-function ProfileOrderHistory() {
+function ProfileOrdersPage() {
   return (
     <div className="profileOrderHistory">
-      <section className="profileContent">
-        <ProfileSidebar />
-      </section>
+      <ProfileSidebar />
     </div>
   );
 }
 
-export default ProfileOrderHistory;
+export default ProfileOrdersPage;

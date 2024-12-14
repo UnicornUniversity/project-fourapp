@@ -1,6 +1,6 @@
 import RegisterCard from "../../containers/auth/RegisterContainer";
 
-function Register() {
+function RegisterPage() {
   return (
     <div className="register">
       <RegisterCard />
@@ -8,4 +8,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterPage;

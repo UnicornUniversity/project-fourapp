@@ -2,7 +2,7 @@ import Input from "../../../../components/input/Input";
 import Accordion from "../../../../components/accordion/Accordion";
 import Table from "../../../../components/table/Table";
 
-function ProfileProductCreate() {
+function ProductCreateContainer() {
   const data = [
     {
       id: 1,
@@ -148,4 +148,4 @@ function ProfileProductCreate() {
   );
 }
 
-export default ProfileProductCreate;
+export default ProductCreateContainer;

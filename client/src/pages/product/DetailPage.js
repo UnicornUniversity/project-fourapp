@@ -1,6 +1,6 @@
 import ProductDetails from "../../containers/product/DetailContainer";
 
-function Product() {
+function ProductPage() {
   return (
     <div className="product">
       <main>
@@ -10,4 +10,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default ProductPage;

@@ -1,6 +1,6 @@
 import Products from "./product/ListPage";
 
-function Home() {
+function HomePage() {
   return (
     <div className="home">
       <Products />
@@ -8,4 +8,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

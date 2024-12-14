@@ -1,7 +1,7 @@
 import Button from "../../components/button/Button";
 import { useNavigate } from "react-router-dom";
 
-function ProfileSidebar() {
+function ProfileSidebarContainer() {
   const navigate = useNavigate();
   return (
     <div className="profileSidebar">
@@ -37,4 +37,4 @@ function ProfileSidebar() {
   );
 }
 
-export default ProfileSidebar;
+export default ProfileSidebarContainer;

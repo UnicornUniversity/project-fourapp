@@ -1,8 +1,8 @@
 import { ProductProvider } from "../../providers/ProductProvider";
-import { ProductList } from "../../containers/product/ListContainer";
+import ProductList from "../../containers/product/ListContainer";
 import ProductFilters from "../../containers/product/FiltersContainer";
 
-export function Products() {
+export function ProductListPage() {
   return (
     <div>
       <ProductProvider>
@@ -13,4 +13,4 @@ export function Products() {
   );
 }
 
-export default Products;
+export default ProductListPage;

@@ -1,14 +1,12 @@
 import ProfileAdminPanel from "../../../containers/profile/admin/PanelContainer";
 import ProfileSidebar from "../../../containers/profile/SidebarContainer";
-function ProfileAdmin() {
+function ProfileAdminPanelPage() {
   return (
-    <div className="profileAdmin">
-      <section className="profileContent">
-        <ProfileSidebar />
-        <ProfileAdminPanel />
-      </section>
+    <div>
+      <ProfileSidebar />
+      <ProfileAdminPanel />
     </div>
   );
 }
 
-export default ProfileAdmin;
+export default ProfileAdminPanelPage;

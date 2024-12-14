@@ -2,7 +2,7 @@ import { useContext } from "react";
 import Input from "../../../../components/input/Input";
 import { CategoryContext } from "../../../../providers/CategoryProvider";
 
-function CategoryCreate() {
+function CategoryCreateContainer() {
   const { categories, handlerMap } = useContext(CategoryContext);
 
   const handleSubmit = (event) => {
@@ -45,4 +45,4 @@ function CategoryCreate() {
   );
 }
 
-export default CategoryCreate;
+export default CategoryCreateContainer;

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import Input from "../../../../components/input/Input";
 import { CategoryContext } from "../../../../providers/CategoryProvider";
 
-function ProfileCategoryUpdate({ category }) {
+function CategoryUpdateContainer({ category }) {
   const { categories } = useContext(CategoryContext);
   const [formData, setFormData] = useState({
     name: category.name || "",
@@ -52,7 +52,7 @@ function ProfileCategoryUpdate({ category }) {
   );
 }
 
-export default ProfileCategoryUpdate;
+export default CategoryUpdateContainer;
 /*
 <select name="categoryParentId" className="categoryFormSelect">
           <option value={""}>Select Category</option>
