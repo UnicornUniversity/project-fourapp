@@ -1,0 +1,48 @@
+import { useContext } from "react";
+import Input from "../../../../components/input/Input";
+import { CategoryContext } from "../../../../providers/CategoryProvider";
+
+function CategoryCreateContainer() {
+  const { categories, handlerMap } = useContext(CategoryContext);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+    console.log("Form Data:", data);
+    // Add your submit logic here
+    handlerMap.handleCreate(data);
+  };
+
+  return (
+    <div className="categoryCreateForm">
+      <form onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          className="profileInput"
+          placeholder="Name"
+          name="name"
+        >
+          <label className="inputLabel">Name</label>
+        </Input>
+        <select name="parentCategoryId" className="categoryFormSelect">
+          <option value={""}>Select Category</option>
+          {categories.map((category) => (
+            <option key={category._id} value={category._id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+
+        <Input
+          type="submit"
+          className="profileInput"
+          name="submit"
+          value="Create"
+        />
+      </form>
+    </div>
+  );
+}
+
+export default CategoryCreateContainer;
