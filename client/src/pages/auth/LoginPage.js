@@ -1,8 +1,9 @@
 import LoginCard from "../../containers/auth/LoginContainer";
+import "../../assets/styles/auth.css";
 
 function LoginPage() {
   return (
-    <div className="login">
+    <div className="auth">
       <LoginCard />
     </div>
   );
