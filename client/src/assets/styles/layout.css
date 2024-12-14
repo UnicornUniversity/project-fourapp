@@ -4,3 +4,15 @@
     max-width: 1200px;
     margin: 0 auto;
 }
+
+.profileContent>div {
+    margin: 0 auto;
+    margin-top: 10vh;
+    width: 90%;
+    display: flex;
+    gap: 2vw;
+}
+
+.profileContent>div>div:nth-child(2) {
+    width: 100%;
+}
