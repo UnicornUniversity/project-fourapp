@@ -1,13 +1,13 @@
 import auditLogDao from "../../dao/auditlog-dao.js";
-import { requireParam } from "../../utils/index.mjs";
+import { ApiError } from "../../utils/error.mjs";
 
 class AuditLogController {
   static async create(req, res, next) {
     try {
       const log = await auditLogDao.create(req.body);
       res.status(201).json(log);
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   }
 
@@ -15,41 +15,35 @@ class AuditLogController {
     try {
       const logs = await auditLogDao.list();
       res.status(200).json(logs);
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   }
 
   static async listByUserId(req, res, next) {
     try {
-      const userId = requireParam("userId", req.params);
-      const logs = await auditLogDao.listByUserId(userId);
+      const logs = await auditLogDao.listByUserId(req.params.userId);
       res.status(200).json(logs);
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   }
 
   static async listByTypeAndId(req, res, next) {
     try {
-      const { typeOfObject, objectId } = req.query;
-      const logs = await auditLogDao.listByTypeOfObjectAndId(
-        typeOfObject,
-        objectId
-      );
+      const logs = await auditLogDao.listByTypeOfObjectAndId(req.query.typeOfObject, req.query.objectId);
       res.status(200).json(logs);
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   }
 
   static async listByStatus(req, res, next) {
     try {
-      const status = requireParam("status", req.query);
-      const logs = await auditLogDao.listByStatus(status);
+      const logs = await auditLogDao.listByStatus(req.query.status);
       res.status(200).json(logs);
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   }
 }

@@ -9,12 +9,12 @@ export default class ProductController {
     try {
       const product = await ProductAbl.create(req.body);
 
-      // Logování vytvoření produktu
+      // Logování vytvoření produktu bez autentifikace
       await logAction(
         "create",
         "product",
         product._id,
-        req.user.id,
+        "system", // Pevná hodnota, pokud není potřeba uživatel pak se dá přidat req.user.id aby auditlog přidal usera co udělal změnu
         null,
         req.body,
         "success",
@@ -34,12 +34,12 @@ export default class ProductController {
       );
       const product = await ProductAbl.get(id);
 
-      // Logování před smazáním
+      // Logování před smazáním bez autentifikace
       await logAction(
         "delete",
         "product",
         id,
-        req.user.id,
+        "system", // Pevná hodnota, pokud není potřeba uživatel pak se dá přidat req.user.id aby auditlog přidal usera co udělal změnu
         product,
         null,
         "success",
@@ -71,12 +71,12 @@ export default class ProductController {
       const previousProduct = await ProductAbl.get(id);
       const updatedProduct = await ProductAbl.update(id, req.body);
 
-      // Logování aktualizace produktu
+      // Logování aktualizace produktu bez autentifikace
       await logAction(
         "update",
         "product",
         id,
-        req.user.id,
+        "system", // Pevná hodnota, pokud není potřeba uživatel pak se dá přidat req.user.id aby auditlog přidal usera co udělal změnu
         previousProduct,
         req.body,
         "success",
