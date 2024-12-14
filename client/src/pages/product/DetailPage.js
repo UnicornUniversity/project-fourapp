@@ -1,4 +1,4 @@
-import ProductDetails from "../containers/product/ProductDetails";
+import ProductDetails from "../../containers/product/DetailContainer";
 
 function Product() {
   return (

@@ -1,5 +1,5 @@
-import ProfileUpdateForm from "../containers/profile/ProfileUpdateForm";
-import ProfileSidebar from "../containers/profile/ProfileSidebar";
+import ProfileUpdateForm from "../../containers/profile/UpdateContainer";
+import ProfileSidebar from "../../containers/profile/SidebarContainer";
 function ProfileUpdate() {
   return (
     <div className="profileUpdate">

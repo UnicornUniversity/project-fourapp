@@ -1,5 +1,5 @@
-import CategoryCreateForm from "../containers/profile/admin/category/ProfileCategoryCreate";
-import ProfileSidebar from "../containers/profile/ProfileSidebar";
+import CategoryCreateForm from "../../../../containers/profile/admin/category/CreateContainer";
+import ProfileSidebar from "../../../../containers/profile/SidebarContainer";
 
 function CategoryCreate() {
   return (

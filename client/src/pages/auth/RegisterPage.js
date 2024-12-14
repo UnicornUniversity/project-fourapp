@@ -1,5 +1,4 @@
-import RegisterCard from "../containers/auth/RegisterCard";
-
+import RegisterCard from "../../containers/auth/RegisterContainer";
 
 function Register() {
   return (

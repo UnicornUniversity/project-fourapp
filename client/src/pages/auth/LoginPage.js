@@ -1,4 +1,4 @@
-import LoginCard from "../containers/auth/LoginCard";
+import LoginCard from "../../containers/auth/LoginContainer";
 
 function Login() {
   return (
