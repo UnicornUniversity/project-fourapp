@@ -2,6 +2,7 @@ import express from "express";
 import UserAbl from "../../abl/user-abl.js";
 import { requireParam } from "../../utils/index.mjs";
 import { ApiError } from "../../utils/error.mjs";
+import logAction from "../../middleware/auditlog-middleware.js";
 
 const router = express.Router();
 
@@ -45,20 +46,102 @@ class UserController {
         throw ApiError.badRequest("No data provided for update.");
       }
 
+      const previousUser = await UserAbl.getUser(userId);
       const updatedUser = await UserAbl.updateUser(userId, updatedData);
+
+      await logAction(
+        "update",
+        "user",
+        userId,
+        req.user?.id || "system",
+        previousUser,
+        updatedData,
+        "success",
+        "User updated successfully"
+      )(req, res, next);
+
       res.status(200).json(updatedUser);
     } catch (error) {
-      next(error);
+      const apiError = ApiError.fromError(error);
+      await logAction(
+        "update",
+        "user",
+        req.params.userId,
+        req.user?.id || "system",
+        null,
+        req.body,
+        "error",
+        apiError.message
+      )(req, res, next);
+      res.status(apiError.statusCode).json(apiError.jsonObject());
     }
   }
 
   static async delete(req, res, next) {
     try {
       const userId = requireParam("userId", req.params);
+      const previousUser = await UserAbl.getUser(userId);
+
+      await logAction(
+        "delete",
+        "user",
+        userId,
+        req.user?.id || "system",
+        previousUser,
+        null,
+        "success",
+        "User deleted successfully"
+      )(req, res, next);
+
       await UserAbl.deleteUser(userId);
       res.status(204).send();
     } catch (error) {
-      next(error);
+      const apiError = ApiError.fromError(error);
+      await logAction(
+        "delete",
+        "user",
+        req.params.userId,
+        req.user?.id || "system",
+        null,
+        null,
+        "error",
+        apiError.message
+      )(req, res, next);
+      res.status(apiError.statusCode).json(apiError.jsonObject());
+    }
+  }
+
+  static async register(req, res, next) {
+    try {
+      const newUser = await UserAbl.createUser(req.body);
+
+      await logAction(
+        "create",
+        "user",
+        newUser._id,
+        "system", // Registrace neobsahuje uživatelské ID
+        null,
+        req.body, // Nová data uživatele
+        "success",
+        "User registered successfully"
+      )(req, res, next);
+
+      res.status(201).json({ message: "User registered successfully" });
+    } catch (error) {
+      const apiError = ApiError.fromError(error);
+
+      await logAction(
+        "create",
+        "user",
+        null, // Uživatel nebyl vytvořen, takže není ID
+        "system",
+        null,
+        req.body,
+        "error",
+        apiError.message
+      )(req, res, next);
+
+      res.status(apiError.statusCode).json(apiError.jsonObject());
     }
   }
 
@@ -83,6 +166,7 @@ class UserController {
   }
 }
 
+router.post("/register", UserController.register);
 router.get("/wishlist/:userId", UserController.getWishlist);
 router.get("/cart/:userId", UserController.getCart);
 router.put("/:userId", UserController.update);
