@@ -2,7 +2,6 @@ import React, { useCallback, useContext } from "react";
 import { UserContext } from "../../providers/UserProvider";
 import { Link } from "react-router-dom";
 import Card from "../../components/card/Card";
-import "./../../assets/styles/auth.css";
 import Input from "../../components/input/Input";
 
 function LoginContainer() {
@@ -28,7 +27,7 @@ function LoginContainer() {
 
   return (
     <Card className="authCard">
-      <div>
+      <div className="authTitle">
         <h3>Login</h3>
       </div>
       <form onSubmit={handleSubmit}>

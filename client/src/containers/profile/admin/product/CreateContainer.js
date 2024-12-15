@@ -1,7 +1,8 @@
 import Input from "../../../../components/input/Input";
 import Accordion from "../../../../components/accordion/Accordion";
 import Table from "../../../../components/table/Table";
-
+import "../../../../assets/styles/productForm.css";
+import Checkbox from "../../../../components/input/Checkbox";
 function ProductCreateContainer() {
   const data = [
     {
@@ -61,9 +62,8 @@ function ProductCreateContainer() {
           </textarea>
 
           <div className="productFormCheckSelect">
-            <Input type="checkbox" className="profileInput" name="isOnline">
-              <label className="inputLabel">isOnline</label>
-            </Input>
+            <Checkbox title="isOnline" />
+
             <select name="category">
               <option value="">Select Category</option>
               <option value="1">Test 1</option>

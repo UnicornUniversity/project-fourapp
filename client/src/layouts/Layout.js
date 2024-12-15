@@ -1,5 +1,7 @@
 import NavBar from "../containers/header/NavbarContainer";
+import Footer from "../containers/footer/Footer";
 import "../assets/styles/layout.css";
+import "../assets/styles/global.css";
 
 function Layout({ children }) {
   return (
@@ -7,10 +9,10 @@ function Layout({ children }) {
       <header>
         <NavBar />
       </header>
-      <main>
-        <section className="layoutContent">{children}</section>
-      </main>
-      <footer></footer>
+      <main>{children}</main>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }
