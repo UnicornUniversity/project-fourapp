@@ -69,37 +69,6 @@ class AuditLogController {
       next(error);
     }
   }
-
-  static async create(req, res, next) {
-    try {
-      const {
-        actionType,
-        typeOfObject,
-        objectId,
-        userId,
-        status,
-        description,
-      } = req.body;
-
-      // Validace povinných polí
-      if (!actionType || !typeOfObject || !status) {
-        return res.status(400).json({ error: "Missing required fields" });
-      }
-
-      const newLog = await auditLogDao.create({
-        actionType,
-        typeOfObject,
-        objectId,
-        userId,
-        status,
-        description,
-      });
-
-      res.status(201).json(newLog);
-    } catch (error) {
-      next(error);
-    }
-  }
 }
 
 export default AuditLogController;

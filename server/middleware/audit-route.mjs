@@ -4,6 +4,10 @@ import { ApiError } from "../utils/error.mjs";
 
 export const auditRoute = async (req, res, next) => {
   try {
+    if (req.method === "GET") {
+      return next();
+    }
+
     const invokedBy = req.user?._id;
     if (invokedBy && !mongoose.Types.ObjectId.isValid(invokedBy)) {
       throw ApiError.badRequest("Invalid userId format");
