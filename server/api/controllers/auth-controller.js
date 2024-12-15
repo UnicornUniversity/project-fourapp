@@ -78,6 +78,26 @@ class AuthController {
         .json({ code: err.code || "failedToLogin", message: err.message });
     }
   }
+  
+  // Get user by token
+  static async getUserByToken(req, res) {
+    try {
+      const user = await userDao.findById(req.user.id); // ID je získáno z middleware `authMiddleware`
+      if (!user) {
+        return res.status(404).json({ code: "userNotFound", message: "User not found" });
+      }
+
+      res.status(200).json({
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      });
+    } catch (err) {
+      console.error("Failed to get user by token:", err);
+      res.status(500).json({ code: "failedToGetUser", message: "Internal server error" });
+    }
+  }
 
   // Email validation function
   static validateEmail(email) {
@@ -113,6 +133,7 @@ class AuthController {
 router.post("/register", AuthController.register);
 router.post("/login", AuthController.login);
 router.get("/profile", authMiddleware, AuthController.getUserProfile);
+router.get("/user", authMiddleware, AuthController.getUserByToken);
 
 // Google OAuth routes
 router.get(
