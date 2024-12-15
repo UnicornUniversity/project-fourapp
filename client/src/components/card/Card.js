@@ -1,8 +1,8 @@
 import "./../../assets/styles/global.css";
 
-function Card({ children, className = "", ...props }) {
+function Card({ children, className = "", onClick, ...props }) {
   return (
-    <div className={`card ${className}`} {...props}>
+    <div className={`card ${className}`} {...props} onClick={onClick}>
       {children}
     </div>
   );
