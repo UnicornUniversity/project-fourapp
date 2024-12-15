@@ -50,6 +50,30 @@ function UserProvider({ children }) {
     }
   }
 
+  async function  handleUpdate(_id , body) {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/users/${_id}`, //OUR API ENDPOINT
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            
+          },
+          body:JSON.stringify(body)
+        }
+      );
+      const serverResponse = await response.json();
+      console.log(serverResponse)
+      if (response.ok) {
+        getUser()
+      } else {
+      }
+    } catch (error) {
+
+    }
+  }
+
   async function handleRegister(user) {
     try {
       const response = await fetch(
@@ -130,6 +154,7 @@ function UserProvider({ children }) {
       handleLogin,
       handleGoogleLogin,
       updateUserProfile,
+      handleUpdate,
       setError,
     },
   };

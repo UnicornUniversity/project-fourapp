@@ -6,14 +6,40 @@ export const ProductContext = createContext();
 // Provider Component
 export function ProductProvider ({ children }){
   const [products, setProducts] = useState([]);
+  const [productsAP, setProductsAP] = useState()
   const [product, setProduct] = useState()
   const [filters, setFilters] = useState({})
 
 
 useEffect(() =>{
 handleLoad()
+handleLoadAP()
 },[])
 
+
+async function handleDelete(id) {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/products/${id}`, //OUR API ENDPOINT
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    handleLoadAP()
+    const serverResponse = await response.json(); //SHOULD BE TOKEN¨
+    if (response.ok) {
+      console.log("deleted " + id)
+    } else {
+      //console.error("Token verification failed:", data); //SOME ERROR
+    }
+  } catch (error) {
+    //console.error("Error sending token to backend:", error);
+  }
+}
   async function handleLoad(){
     try {
         const response = await fetch(
@@ -37,6 +63,31 @@ handleLoad()
       } catch (error) {
         //console.error("Error sending token to backend:", error);
       }
+}
+
+async function handleLoadAP(){
+  try {
+      const response = await fetch(
+        "http://localhost:5000/api/products", //OUR API ENDPOINT
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+
+      const serverResponse = await response.json(); //SHOULD BE TOKEN¨
+      if (response.ok) {
+        setProductsAP(serverResponse.products)
+        //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
+      } else {
+        //console.error("Token verification failed:", data); //SOME ERROR
+      }
+    } catch (error) {
+      //console.error("Error sending token to backend:", error);
+    }
 }
 
 async function handleGet(id) {
@@ -65,8 +116,8 @@ async function handleGet(id) {
 
 
 const value = {
-  filters, products , product, handlerMap:{
-    setFilters, handleGet , setProducts
+  filters, products , product, productsAP, handlerMap:{
+    setFilters, handleGet , setProducts ,handleDelete
   }
 }
 

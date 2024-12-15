@@ -4,7 +4,6 @@ import Input from "../../components/input/Input";
 
 function ProfileOverviewContainer() {
   const {user} = useContext(UserContext)
-  console.log(user)
   return (
     <div className="profileOverviewForm">
       <form>
