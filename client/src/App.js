@@ -6,6 +6,7 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import CategoryProvider from "./providers/CategoryProvider";
 import ProfileLayout from "./layouts/ProfileLayout";
+import CartProvider from "./providers/CartProvider"; 
 
 /*---AUTH---*/
 import Login from "./pages/auth/LoginPage";
@@ -15,6 +16,10 @@ import Register from "./pages/auth/RegisterPage";
 /*---PRODUCT---*/
 import ProductDetail from "./pages/product/DetailPage";
 import ProductList from "./pages/product/ListPage";
+/*-------------*/
+
+/*---CART---*/
+import Cart from "./pages/cart/CartPage";
 /*-------------*/
 
 /*---PROFILE---*/
@@ -37,6 +42,7 @@ function App() {
         <UserProvider>
           <CategoryProvider>
             <ProductProvider>
+              <CartProvider>
               <Layout>
                 <Routes>
                   <Route path="/" element={<Home />} />
@@ -48,6 +54,7 @@ function App() {
                     path="/product/:productId"
                     element={<ProductDetail />}
                   />
+                  <Route path="/user/cart" element={<Cart />} />
                 </Routes>
 
                 <ProfileLayout>
@@ -84,6 +91,7 @@ function App() {
                   </Routes>
                 </ProfileLayout>
               </Layout>
+              </CartProvider>
             </ProductProvider>
           </CategoryProvider>
         </UserProvider>

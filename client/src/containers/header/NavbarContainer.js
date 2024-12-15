@@ -99,7 +99,9 @@ function NavbarContainer() {
           className="fa-solid fa-user"
           onClick={() => navigate(token ? "/user/profile" : "/user/login")}
         ></i>
-        <i className="fa-solid fa-bag-shopping"></i>
+        <i className="fa-solid fa-bag-shopping"
+          onClick={() => navigate(token ? "/user/cart" : "/user/login")}
+        ></i>
       </div>
     </div>
   );

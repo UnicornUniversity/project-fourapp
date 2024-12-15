@@ -1,10 +1,14 @@
+.auth {
+    display: flex;
+    justify-content: center;
+}
+
 .authCard {
-    margin: 0 auto;
     position: absolute;
-    top: 40%;
+    top: 50%;
     left: 50%;
-    padding: 1%;
     transform: translate(-50%, -50%);
+    padding: 1%;
     text-align: center;
 }
 
@@ -12,6 +16,11 @@
     display: flex;
     flex-direction: column;
     gap: 2vh;
+}
+
+.authTitle {
+    margin-bottom: 10%;
+    margin-top: 5%;
 }
 
 .authInput {
