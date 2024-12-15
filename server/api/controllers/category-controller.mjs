@@ -93,7 +93,7 @@ export default class CategoryController {
         )(req, res, () => {});
         throw ApiError.notFound("Category not found");
       }
-
+      
       await logAction(
         "delete",
         "category",

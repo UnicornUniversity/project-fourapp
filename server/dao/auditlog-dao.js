@@ -5,8 +5,7 @@ import { ApiError } from "../utils/error.mjs";
 class auditLogDao {
   static async create(log) {
     try {
-      console.log("Creating AuditLog with data:", log); // Debugging
-
+      
       if (!log.typeOfObject || !log.actionType || !log.status) {
         throw ApiError.badRequest("Missing required fields in log data");
       }
