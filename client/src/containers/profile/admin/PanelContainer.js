@@ -7,7 +7,6 @@ import { CategoryContext } from "../../../providers/CategoryProvider";
 function AdminPanelContainer() {
   const navigate = useNavigate();
   const { categories, handlerMap } = useContext(CategoryContext);
-  console.log(categories);
   /*
     const data = [
       [1, "Product 1", "Category 1", "S, M, L", "$452.85"], // Product Name is at index 1
@@ -73,7 +72,10 @@ function AdminPanelContainer() {
             <div>
               <i
                 className="fa-solid fa-pen-to-square"
-                onClick={() => navigate(`category/${_id}/update`)}
+                onClick={() => {
+                  navigate(`category/${_id}/update`)
+                  handlerMap.handleGet(_id)
+                }}
               ></i>
               <i
                 className="fa-solid fa-trash"

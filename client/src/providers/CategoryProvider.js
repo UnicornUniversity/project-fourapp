@@ -6,6 +6,7 @@ export const CategoryContext = createContext();
 function CategoryProvider({children}){
 const [navbarCategories, setNavbarCategories] = useState([])
 const [categories , setCategories] = useState([])
+const [category , setCategory] = useState({});
 
 useEffect(() => {
     handleLoad()
@@ -26,11 +27,36 @@ async function handleGet(id) {
       }
     );
 
+    const serverResponse = await response.json(); //SHOULD BE TOKEN
+    if (response.ok) {
+      console.log(serverResponse);
+      setCategory(serverResponse);
+    } else {
+      //console.error("Token verification failed:", data); //SOME ERROR
+    }
+  } catch (error) {
+    //console.error("Error sending token to backend:", error);
+  }
+}
+
+async function  handleUpdate(id, body) {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/categories/${id}`, //OUR API ENDPOINT
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body:JSON.stringify(body)
+      }
+    );
+
 
     const serverResponse = await response.json(); //SHOULD BE TOKEN¨
     if (response.ok) {
-      //console.log(serverResponse)
-      return serverResponse
+        setNavbarCategories(serverResponse.categories)
+        setCategories(serverResponse.categories)
       //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
     } else {
       //console.error("Token verification failed:", data); //SOME ERROR
@@ -40,6 +66,7 @@ async function handleGet(id) {
   }
 }
 
+// Add this useEffect to log the updated category whenever it changes
 async function handleLoad(){
     try {
         const response = await fetch(
@@ -78,7 +105,7 @@ async function handleDelete(id) {
       }
     );
 
-    handleLoad( )
+    handleLoad()
     const serverResponse = await response.json(); //SHOULD BE TOKEN¨
     if (response.ok) {
       console.log("deleted " + id)
@@ -130,11 +157,13 @@ async function handleLoadSubCategories(){
 
 
     const value = {
-        navbarCategories,categories ,
+        navbarCategories,categories , category,
         handlerMap:{
           handleDelete,
           handleCreate,
-          handleGet
+          handleGet,
+          handleUpdate,
+          handleLoad
         }
     }
 
