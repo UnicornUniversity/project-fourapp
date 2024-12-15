@@ -86,4 +86,8 @@ export const productsDao = {
       total: await Product.countDocuments(query),
     };
   },
+
+  async getLatest(limit = 5) {
+    return await Product.find({}).sort({ createdAt: -1 }).limit(limit);
+  },
 };

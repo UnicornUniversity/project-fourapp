@@ -333,3 +333,15 @@
 }
 
 /*--------------------------*/
+.recentContainer {
+    width: 95%;
+    margin: 0 auto;
+    display:flex;
+    flex-direction: column;
+    row-gap: 2vh;
+}
+
+.recentContainer>div:nth-child(2) {
+    display: flex;
+    gap: 2vw;
+}

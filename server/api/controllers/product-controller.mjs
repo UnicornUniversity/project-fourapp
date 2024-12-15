@@ -50,17 +50,25 @@ export default class ProductController {
     }
   }
 
-  static async get(req, res, next){
+  static async get(req, res, next) {
     try {
       const id = Types.ObjectId.createFromHexString(
         requireParam("productId", req.params)
       );
-      const product = await ProductAbl.get(id)
+      const product = await ProductAbl.get(id);
 
-      res.status(200).json(product)
-
+      res.status(200).json(product);
     } catch (error) {
-      next(error)
+      next(error);
+    }
+  }
+
+  static async getLatest(req, res, next) {
+    try {
+      const latestProducts = await ProductAbl.getLatest();
+      res.status(200).json({ products: latestProducts });
+    } catch (error) {
+      next(error);
     }
   }
 }
