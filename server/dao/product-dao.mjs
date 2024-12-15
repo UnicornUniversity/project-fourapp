@@ -88,6 +88,6 @@ export const productsDao = {
   },
 
   async getLatest(limit = 5) {
-    return await Product.find({}).sort({ _id: -1 }).limit(limit);
+    return await Product.find({}).sort({ createdAt: -1 }).limit(limit);
   },
 };
