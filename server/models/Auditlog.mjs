@@ -10,7 +10,6 @@ const auditLogSchema = new Schema(
     query: { type: Object, required: false },
     params: { type: Object, required: false },
     body: { type: Object, required: false },
-    response: { type: Object, required: false },
   },
   { timestamps: true }
 );

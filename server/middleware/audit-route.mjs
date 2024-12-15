@@ -23,7 +23,6 @@ export const auditRoute = async (req, res, next) => {
         headers: req.headers,
         query: req.query,
         params: req.params,
-        response: res.data,
       });
     });
 
