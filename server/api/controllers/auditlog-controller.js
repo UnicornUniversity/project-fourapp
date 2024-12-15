@@ -11,9 +11,10 @@ class AuditLogController {
       const limitNumber = parseInt(limit, 10);
 
       if (pageNumber < 1 || limitNumber < 1) {
-        return res
+        res
           .status(400)
           .json({ error: "Page and limit must be positive integers." });
+        return;
       }
 
       const logs = await auditLogDao.getPagedLogs(pageNumber, limitNumber);
@@ -49,7 +50,10 @@ class AuditLogController {
         return res.status(400).json({ error: "Invalid objectId format" });
       }
 
-      const logs = await auditLogDao.listByTypeOfObjectAndId(typeOfObject, objectId);
+      const logs = await auditLogDao.listByTypeOfObjectAndId(
+        typeOfObject,
+        objectId
+      );
       res.status(200).json(logs);
     } catch (error) {
       next(error);
@@ -68,7 +72,14 @@ class AuditLogController {
 
   static async create(req, res, next) {
     try {
-      const { actionType, typeOfObject, objectId, userId, status, description } = req.body;
+      const {
+        actionType,
+        typeOfObject,
+        objectId,
+        userId,
+        status,
+        description,
+      } = req.body;
 
       // Validace povinných polí
       if (!actionType || !typeOfObject || !status) {

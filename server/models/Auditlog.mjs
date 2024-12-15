@@ -2,17 +2,17 @@ import { model, Schema } from "mongoose";
 
 const auditLogSchema = new Schema(
   {
-    userId: { type: Schema.Types.Mixed, required: false }, // Povolit jak ObjectId, tak String
-    typeOfObject: { type: String, required: true },
-    objectId: { type: Schema.Types.ObjectId, required: false },
-    actionType: { type: String, required: true },
-    timestamp: { type: Date, default: Date.now },
-    status: { type: String, enum: ["success", "error"], required: true },
-    previousData: { type: Object, default: null },
-    newData: { type: Object, default: null },
-    description: { type: String, default: "" },
+    invokedBy: { type: Schema.Types.ObjectId, required: false },
+    method: { type: String, required: true },
+    path: { type: String, required: true },
+    status: { type: String, required: true },
+    headers: { type: Object, required: false },
+    query: { type: Object, required: false },
+    params: { type: Object, required: false },
+    body: { type: Object, required: false },
+    response: { type: Object, required: false },
   },
-  { timestamps: true } // Automaticky přidává createdAt a updatedAt
+  { timestamps: true }
 );
 
 export const AuditLog = model("AuditLog", auditLogSchema);
