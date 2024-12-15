@@ -1,11 +1,13 @@
 import "./../../assets/styles/footer.css";
-
+import Logo from "../../assets/images/fourapp-logo.png";
+import { useNavigate } from "react-router-dom";
 function Footer() {
+  const navigate = useNavigate();
   return (
     <section className="footer">
       <div>
-        <div className="footerColumnContainer">
-          <h3>LOGO</h3>
+        <div className="footerColumnContainer footerLogoContainer">
+          <img onClick={() => navigate("/")} src={Logo} alt="Logo" />
         </div>
         <div className="footerColumnContainer">
           <h3>Learn more</h3>

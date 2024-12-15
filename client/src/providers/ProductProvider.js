@@ -80,10 +80,10 @@ export function ProductProvider({ children }) {
       );
 
       const serverResponse = await response.json();
-      console.log(serverResponse);
+      //console.log(serverResponse);
       if (response.ok) {
         setRecentProducts(serverResponse); // Update state
-        console.log(recentProducts);
+        //console.log(recentProducts);
         //console.log("Server response:", serverResponse); // Log the fetched product directly
       } else {
         //console.error("Failed to fetch product:", serverResponse);

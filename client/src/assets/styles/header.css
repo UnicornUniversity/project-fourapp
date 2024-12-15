@@ -26,6 +26,12 @@
     text-decoration: none;
 }
 
+.navbarLogoContainer>img {
+    max-height:50%;
+    max-width: 50px;
+    object-fit: contain;
+}
+
 /* Dropdown button */
 .dropdown .dropbtn {
     border: none;

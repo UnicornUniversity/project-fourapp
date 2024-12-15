@@ -100,7 +100,7 @@ function RecentContainer() {
                 ) : (
                     <></>
                 )}
-            </div>s
+            </div>  
         </section>
     );
 }
