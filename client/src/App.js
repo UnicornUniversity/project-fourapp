@@ -6,7 +6,8 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import CategoryProvider from "./providers/CategoryProvider";
 import ProfileLayout from "./layouts/ProfileLayout";
-import CartProvider from "./providers/CartProvider"; 
+import CartProvider from "./providers/CartProvider";
+import WishlistProvider from "./providers/WishlistProvider"; 
 
 /*---AUTH---*/
 import Login from "./pages/auth/LoginPage";
@@ -26,6 +27,8 @@ import Cart from "./pages/cart/CartPage";
 import ProfileOverview from "./pages/profile/OverviewPage";
 import ProfileOrders from "./pages/profile/OrdersPage";
 import ProfileUpdate from "./pages/profile/UpdatePage";
+import ProfileWishlist from "./pages/profile/WishlistPage";
+
 /*-ADMIN-*/
 import ProfileAdminPanel from "./pages/profile/admin/PanelPage";
 import CategoryCreate from "./pages/profile/admin/category/CreatePage";
@@ -43,6 +46,7 @@ function App() {
           <CategoryProvider>
             <ProductProvider>
               <CartProvider>
+                <WishlistProvider>
               <Layout>
                 <Routes>
                   <Route path="/" element={<Home />} />
@@ -84,6 +88,7 @@ function App() {
                       path="/user/profile/orders"
                       element={<ProfileOrders />}
                     />
+                     <Route path="/user/profile/wishlist" element={<ProfileWishlist />} />
                     <Route
                       path="/user/profile/admin"
                       element={<ProfileAdminPanel />}
@@ -91,6 +96,7 @@ function App() {
                   </Routes>
                 </ProfileLayout>
               </Layout>
+              </WishlistProvider>
               </CartProvider>
             </ProductProvider>
           </CategoryProvider>
