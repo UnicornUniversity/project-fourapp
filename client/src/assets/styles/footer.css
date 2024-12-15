@@ -57,3 +57,10 @@
 .footerSocialsContainer i {
     cursor: pointer;
 }
+
+.footerLogoContainer>img {
+    max-height: 50%;
+    max-width: 50px;
+    object-fit: contain;
+    cursor: pointer;
+}

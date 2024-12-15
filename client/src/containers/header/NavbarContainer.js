@@ -49,6 +49,7 @@ export default Navbar;
 import "./../../assets/styles/header.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import Logo from "../../assets/images/fourapp-logo.png";
 
 function NavbarContainer() {
   const navigate = useNavigate();
@@ -56,8 +57,8 @@ function NavbarContainer() {
 
   return (
     <div className="navbar">
-      <div>
-        <h3 onClick={() => navigate("/")}>Logo</h3>
+      <div className="navbarLogoContainer">
+        <img onClick={() => navigate("/")} src={Logo} alt="Logo" />
       </div>
       <div>
         <div class="dropdown">
