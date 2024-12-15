@@ -8,5 +8,6 @@ router.get("/", ProductController.list);
 router.get("/:productId", ProductController.get);
 router.put("/:productId", ProductController.update);
 router.delete("/:productId", ProductController.delete);
+router.get("/latest", ProductController.getLatest);
 
 export default router;
