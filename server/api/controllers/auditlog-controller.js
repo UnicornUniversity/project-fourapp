@@ -4,8 +4,27 @@ import mongoose from "mongoose";
 class AuditLogController {
   static async list(req, res, next) {
     try {
-      const logs = await auditLogDao.list();
-      res.status(200).json(logs);
+      const { page = 1, limit = 10 } = req.query;
+
+      // Validace query parametrů
+      const pageNumber = parseInt(page, 10);
+      const limitNumber = parseInt(limit, 10);
+
+      if (pageNumber < 1 || limitNumber < 1) {
+        return res
+          .status(400)
+          .json({ error: "Page and limit must be positive integers." });
+      }
+
+      const logs = await auditLogDao.getPagedLogs(pageNumber, limitNumber);
+
+      res.status(200).json({
+        message: "Audit logs retrieved successfully",
+        data: logs.data,
+        total: logs.total,
+        page: pageNumber,
+        limit: limitNumber,
+      });
     } catch (error) {
       next(error);
     }

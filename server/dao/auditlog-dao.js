@@ -5,7 +5,6 @@ import { ApiError } from "../utils/error.mjs";
 class auditLogDao {
   static async create(log) {
     try {
-      
       if (!log.typeOfObject || !log.actionType || !log.status) {
         throw ApiError.badRequest("Missing required fields in log data");
       }
@@ -17,7 +16,9 @@ class auditLogDao {
       return await AuditLog.create(log);
     } catch (error) {
       console.error("Error creating AuditLog:", error.message);
-      throw ApiError.internalServerError("Failed to create AuditLog", { originalError: error.message });
+      throw ApiError.internalServerError("Failed to create AuditLog", {
+        originalError: error.message,
+      });
     }
   }
 
@@ -25,7 +26,9 @@ class auditLogDao {
     try {
       return await AuditLog.find().sort({ timestamp: -1 });
     } catch (error) {
-      throw ApiError.internalServerError("Failed to fetch AuditLogs", { originalError: error.message });
+      throw ApiError.internalServerError("Failed to fetch AuditLogs", {
+        originalError: error.message,
+      });
     }
   }
 
@@ -33,7 +36,9 @@ class auditLogDao {
     try {
       return await AuditLog.find({ userId }).sort({ timestamp: -1 });
     } catch (error) {
-      throw ApiError.internalServerError("Failed to fetch AuditLogs by userId", { originalError: error.message });
+      throw ApiError.internalServerError("Failed to fetch AuditLogs by userId", {
+        originalError: error.message,
+      });
     }
   }
 
@@ -64,7 +69,31 @@ class auditLogDao {
       }
       return await AuditLog.find({ status }).sort({ timestamp: -1 });
     } catch (error) {
-      throw ApiError.internalServerError("Failed to fetch AuditLogs by status", { originalError: error.message });
+      throw ApiError.internalServerError("Failed to fetch AuditLogs by status", {
+        originalError: error.message,
+      });
+    }
+  }
+
+  static async getPagedLogs(page, limit) {
+    try {
+      const skip = (page - 1) * limit;
+
+      // Počet záznamů
+      const total = await AuditLog.countDocuments();
+
+      // Data s limitem a stránkováním
+      const data = await AuditLog.find()
+        .sort({ timestamp: -1 })
+        .skip(skip)
+        .limit(limit);
+
+      return { data, total };
+    } catch (error) {
+      console.error("Error fetching paged AuditLogs:", error.message);
+      throw ApiError.internalServerError("Failed to fetch paged AuditLogs", {
+        originalError: error.message,
+      });
     }
   }
 }
