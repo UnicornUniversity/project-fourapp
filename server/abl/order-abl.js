@@ -100,7 +100,7 @@ class OrderAbl {
       status: "processing",
     });
   }
-
+  
   // Přidání platební metody
   static async addPaymentMethod(id, payment_method) {
     return await orderDao.updatePaymentMethod(id, payment_method);

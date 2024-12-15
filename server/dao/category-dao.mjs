@@ -34,7 +34,7 @@ export const categoriesDao = {
 
     return await Category.findByIdAndDelete(id);
   },
-
+  
   async getByParentCategory(parentCategoryId) {
     return await Category.find({ parentCategoryId });
   },
