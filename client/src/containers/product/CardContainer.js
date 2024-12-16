@@ -62,7 +62,7 @@ export function ProductCardContainer({ product }) {
             key={index}
             className="productCardColor"
             style={{
-              "background-color": v.color.toLowerCase(),
+              "background-color": v.color,
             }}
           ></span>
         ))}
