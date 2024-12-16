@@ -51,7 +51,7 @@
     background-color: white;
     z-index: 999;
     padding-bottom: 1rem;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
 .dropdown-container {
