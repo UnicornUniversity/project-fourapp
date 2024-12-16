@@ -24,7 +24,11 @@ export class ProductAbl {
   static async list(filters) {
     return await productsDao.listByFilter(filters);
   }
-  static async get(id){
-    return await productsDao.get(id)
+  static async get(id) {
+    return await productsDao.get(id);
+  }
+
+  static async getLatest() {
+    return await productsDao.getLatest();
   }
 }
