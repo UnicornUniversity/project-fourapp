@@ -36,6 +36,28 @@ class UserController {
     }
   }
 
+  static async addItemToCart(req, res, next) {
+    try {
+      const userId = req.user.id; // Předpokládá middleware pro autentizaci
+      const { productId, variantId, quantity } = req.body;
+  
+      if (!productId || !variantId) {
+        throw ApiError.badRequest("Product ID and Variant ID are required");
+      }
+  
+      const updatedCart = await UserAbl.addItemToCart(
+        userId,
+        productId,
+        variantId,
+        quantity || 1
+      );
+  
+      res.status(200).json(updatedCart);
+    } catch (error) {
+      next(ApiError.fromError(error));
+    }
+  }
+  
   static async update(req, res, next) {
     try {
       const userId = requireParam("userId", req.params);
@@ -103,5 +125,6 @@ router.get("/:userId", UserController.get);
 router.delete("/:userId", UserController.delete);
 router.get("/", UserController.list);
 router.get("/search", UserController.searchByFilters);
+router.post("/cart/add-item", UserController.addItemToCart);
 
 export default router;

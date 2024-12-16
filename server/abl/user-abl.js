@@ -57,6 +57,11 @@ class UserAbl {
     }
     return users;
   }
+
+    static async addItemToCart(userId, productId, variantId, quantity) {
+      return await userDao.addItemToCart(userId, productId, variantId, quantity);
+    }
+
 }
 
 export default UserAbl;
