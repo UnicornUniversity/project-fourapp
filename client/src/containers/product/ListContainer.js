@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../providers/ProductProvider";
 import ProductFilters from "../product/FiltersContainer"
 import ProductCard from "./CardContainer";
@@ -6,6 +6,7 @@ import "../../assets/styles/product.css";
 
 function ProductListContainer() {
   const { products } = useContext(ProductContext);
+  const [filtersSettings ,setFilterSetting] = useState()
 
   function getMinMaxPrice(products) {
     let minPrice = Infinity;
@@ -62,15 +63,18 @@ function getColors(products) {
 
 useEffect(()=>{
 if(products){
-  console.log(getMinMaxPrice(products))
-  console.log(getColors(products))
-  console.log(getSizes(products))
+  setFilterSetting({
+    ...getMinMaxPrice(products),
+    ...getColors(products),
+    ...getSizes(products)
+  })
+  console.log(filtersSettings)
 }
 },[products])
 
   return (
     <div>
-      <ProductFilters />
+      <ProductFilters filtersSettings={filtersSettings}/>
       <div className="productList">
         {products ? (
           products.map((product) => (
