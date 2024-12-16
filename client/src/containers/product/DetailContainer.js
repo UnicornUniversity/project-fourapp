@@ -2,27 +2,35 @@ import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../../components/button/Button";
 import { ProductContext } from "../../providers/ProductProvider";
+import { CartContext } from "../../providers/CartProvider";
+import { WishlistContext } from "../../providers/WishlistProvider";
 import "../../assets/styles/product.css";
-//import "../../assets/styles/global.css";
 
 function ProductDetailContainer() {
   const { productId } = useParams();
   const { product, handlerMap } = useContext(ProductContext);
+  const { addToCart } = useContext(CartContext);
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useContext(WishlistContext);
+  
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
   const [showDescription, setShowDescription] = useState(false);
+  const [notification, setNotification] = useState({ show: false, message: "" });
 
   useEffect(() => {
     if (productId) {
       handlerMap.handleGet(productId);
-      console.log(product);
-      setSelectedProduct(product);
-      console.log(selectedProduct);
     }
   }, [productId]);
+
+  useEffect(() => {
+    if (product) {
+      setSelectedProduct(product);
+    }
+  }, [product]);
 
   useEffect(() => {
     if (selectedProduct?.variants?.length > 0) {
@@ -39,14 +47,21 @@ function ProductDetailContainer() {
 
   if (!selectedProduct) return <div>Product not found</div>;
 
+  const showNotification = (message) => {
+    setNotification({ show: true, message });
+    setTimeout(() => {
+      setNotification({ show: false, message: "" });
+    }, 3000);
+  };
+
   const availableSizes = [
     ...new Set(selectedProduct.variants.map((v) => v.size)),
   ];
+  
   const availableColors = [
     ...new Set(selectedProduct.variants.map((v) => v.color)),
   ];
 
-  // Check if a size is available for the current color
   const isSizeAvailable = (size) => {
     return selectedProduct.variants.some(
       (v) =>
@@ -56,7 +71,6 @@ function ProductDetailContainer() {
     );
   };
 
-  // Check if a color is available for the current size
   const isColorAvailable = (color) => {
     return selectedProduct.variants.some(
       (v) =>
@@ -70,7 +84,6 @@ function ProductDetailContainer() {
     if (!isSizeAvailable(size)) return;
 
     setSelectedSize(size);
-    // Find variant with current color and new size
     const newVariant = selectedProduct.variants.find(
       (v) => v.size === size && v.color === selectedColor && v.stock > 0
     );
@@ -83,9 +96,8 @@ function ProductDetailContainer() {
     if (!isColorAvailable(color)) return;
 
     setSelectedColor(color);
-    setCurrentImage(0); // Reset to first image
+    setCurrentImage(0);
 
-    // Find variant with new color and current size or any available size
     const newVariant = selectedProduct.variants.find(
       (v) =>
         v.color === color &&
@@ -98,11 +110,62 @@ function ProductDetailContainer() {
     }
   };
 
-  // Get current variant's images based on selected color
+  const handleAddToCart = () => {
+    if (!selectedVariant || selectedVariant.stock === 0) return;
+
+    const cartItem = {
+      id: `${selectedProduct._id}-${selectedVariant._id}`,
+      productId: selectedProduct._id,
+      variantId: selectedVariant._id,
+      title: selectedProduct.name,
+      price: selectedProduct.price,
+      color: selectedColor,
+      size: selectedSize,
+      quantity: 1,
+      image: selectedVariant.images[0],
+      stock: selectedVariant.stock
+    };
+
+    addToCart(cartItem);
+    showNotification("Product added to cart");
+  };
+
+  const handleWishlistToggle = () => {
+    if (!selectedVariant) return;
+
+    const itemId = `${selectedProduct._id}-${selectedVariant._id}`;
+    const isItemInWishlist = isInWishlist(itemId);
+
+    const wishlistItem = {
+      id: itemId,
+      productId: selectedProduct._id,
+      variantId: selectedVariant._id,
+      title: selectedProduct.name,
+      price: selectedProduct.price,
+      color: selectedColor,
+      size: selectedSize,
+      image: selectedVariant.images[0]
+    };
+
+    if (isItemInWishlist) {
+      removeFromWishlist(itemId);
+      showNotification("Product removed from wishlist");
+    } else {
+      addToWishlist(wishlistItem);
+      showNotification("Product added to wishlist");
+    }
+  };
+
   const currentVariantImages = selectedVariant?.images || [];
 
   return (
     <div className="productContent">
+      {notification.show && (
+        <div className="notification">
+          {notification.message}
+        </div>
+      )}
+
       <div className="productGallery">
         <div className="productMainImage">
           <img
@@ -114,9 +177,7 @@ function ProductDetailContainer() {
           {currentVariantImages.map((image, index) => (
             <div
               key={index}
-              className={`thumbnailImage ${
-                currentImage === index ? "active" : ""
-              }`}
+              className={`thumbnailImage ${currentImage === index ? "active" : ""}`}
               onClick={() => setCurrentImage(index)}
             >
               <img
@@ -176,18 +237,33 @@ function ProductDetailContainer() {
           </div>
         </div>
 
-        <div className="stockInfo">In stock: {selectedVariant?.stock || 0}</div>
+        <div className="stockInfo">
+          In stock: {selectedVariant?.stock || 0}
+        </div>
 
-        <Button
-          className={`addToBasketButton ${
-            !selectedVariant || selectedVariant.stock === 0 ? "disabled" : ""
-          }`}
-          buttonText="Add to basket"
-          onClick={() => {
-            /*cart logic */
-          }}
-          disabled={!selectedVariant || selectedVariant.stock === 0}
-        />
+        <div className="productActions">
+          <Button
+            className={`addToBasketButton ${
+              !selectedVariant || selectedVariant.stock === 0 ? "disabled" : ""
+            }`}
+            buttonText="Add to basket"
+            onClick={handleAddToCart}
+            disabled={!selectedVariant || selectedVariant.stock === 0}
+          />
+          
+          <Button
+            className={`wishlistButton ${
+              isInWishlist(`${selectedProduct._id}-${selectedVariant?._id}`) ? "active" : ""
+            }`}
+            onClick={handleWishlistToggle}
+            disabled={!selectedVariant}
+            buttonText={isInWishlist(`${selectedProduct._id}-${selectedVariant?._id}`)
+              ? "Remove from Wishlist"
+              : "Add to Wishlist"}
+          >
+            <i className={`fa-${isInWishlist(`${selectedProduct._id}-${selectedVariant?._id}`) ? "solid" : "regular"} fa-heart`} />
+          </Button>
+        </div>
 
         {selectedProduct.description && (
           <div className="productAccordion">

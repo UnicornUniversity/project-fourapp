@@ -27,6 +27,13 @@ function ProfileSidebarContainer() {
         <i className="fa-solid fa-list"></i>
       </Button>
       <Button
+        onClick={() => navigate("/user/profile/wishlist")}
+        buttonText="Wishlist"
+        className="profileSidebarButton"
+        >
+        <i className="fa-solid fa-heart"></i>
+      </Button>
+      <Button
         onClick={() => navigate("/user/profile/admin")}
         buttonText="Admin"
         className="profileSidebarButton"
