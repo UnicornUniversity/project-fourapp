@@ -29,7 +29,6 @@ function CategoryProvider({ children }) {
             );
             const serverResponse = await response.json(); // SHOULD BE TOKEN
             if (response.ok) {
-                console.log(serverResponse);
                 setCategory(serverResponse);
             } else {
                 // console.error("Token verification failed:", data); // SOME ERROR
@@ -117,7 +116,6 @@ function CategoryProvider({ children }) {
 
     async function handleCreate(category) {
         const body = JSON.stringify(category);
-        console.log(body);
         try {
             const response = await fetch(
                 `http://localhost:5000/api/categories`, // OUR API ENDPOINT
@@ -170,6 +168,7 @@ function CategoryProvider({ children }) {
         navbarCategories,
         categories,
         categoryTree,
+        category,
         handlerMap: {
             handleDelete,
             handleCreate,

@@ -4,6 +4,7 @@ import { CategoryContext } from "../../../../providers/CategoryProvider";
 import { useNavigate } from "react-router-dom";
 
 function CategoryUpdateContainer({ category }) {
+  console.log(category)
   const { categories , handlerMap } = useContext(CategoryContext);
   const [formData, setFormData] = useState({
     name: category.name || "",
