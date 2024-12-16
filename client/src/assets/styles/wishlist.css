@@ -1,0 +1,159 @@
+/* Wishlist Layout */
+.wishlistItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Empty State */
+.emptyState {
+  padding: 3rem;
+  text-align: center;
+  background: white;
+  width: 100%;
+}
+
+.emptyStateContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.emptyStateContent i {
+  font-size: 2rem;
+  color: #666;
+}
+
+.emptyStateContent p {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+/* Wishlist Item */
+.wishlistItem {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  gap: 1.5rem;
+  background: white;
+  cursor: pointer;
+  width: 100%;
+}
+
+.wishlistItemImage {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+}
+
+.wishlistItemImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.wishlistItemDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.wishlistItemDetails h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-family: 'InterSemibold', sans-serif;
+}
+
+.wishlistItemOptions {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.colorDot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.wishlistItemPrice {
+  font-weight: bold;
+  font-family: 'InterSemibold', sans-serif;
+  font-size: 1.1rem;
+}
+
+/* Actions */
+.wishlistItemActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.wishlistItemActions .buttonWrapper {
+  flex-shrink: 0;
+}
+
+.moveToCartButton.button {
+  background: black;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.removeButton.button {
+  background: none;
+  padding: 0.5rem;
+  color: #666;
+}
+
+.removeButton.button:hover {
+  color: #dc2626;
+}
+
+/* Content Header */
+.contentHeader {
+  margin-bottom: 1rem;
+}
+
+.contentHeader h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-family: 'InterSemibold', sans-serif;
+}
+
+.contentHeader p {
+  color: #666;
+}
+
+.wishlistItem {
+    flex-direction: row;
+    padding: 0.75rem;
+}
+
+.wishlistItemImage {
+    width: 80px;
+    height: 80px;
+}
+
+.wishlistItemOptions {
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.wishlistItemActions {
+    flex-direction: row;
+}

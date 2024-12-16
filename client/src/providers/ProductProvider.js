@@ -4,7 +4,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 export const ProductContext = createContext();
 
 // Provider Component
-export function ProductProvider ({ children }){
+export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [productsAP, setProductsAP] = useState()
   const [product, setProduct] = useState()
@@ -42,15 +42,15 @@ async function handleDelete(id) {
 }
   async function handleLoad(){
     try {
-        const response = await fetch(
-          "http://localhost:5000/api/products", //OUR API ENDPOINT
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+      const response = await fetch(
+        "http://localhost:5000/api/products", //OUR API ENDPOINT
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
 
         const serverResponse = await response.json(); //SHOULD BE TOKEN¨
@@ -90,29 +90,54 @@ async function handleLoadAP(){
     }
 }
 
-async function handleGet(id) {
-  try {
-    const response = await fetch(
-      `http://localhost:5000/api/products/${id}`, // OUR API ENDPOINT
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+  async function handleGet(id) {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/products/${id}`, // OUR API ENDPOINT
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    const serverResponse = await response.json(); // SHOULD BE TOKEN¨
-    if (response.ok) {
-      setProduct(serverResponse); // Update state
-      console.log("Server response:", serverResponse); // Log the fetched product directly
-    } else {
-      console.error("Failed to fetch product:", serverResponse);
+      const serverResponse = await response.json(); // SHOULD BE TOKEN¨
+      if (response.ok) {
+        setProduct(serverResponse); // Update state
+        console.log("Server response:", serverResponse); // Log the fetched product directly
+      } else {
+        console.error("Failed to fetch product:", serverResponse);
+      }
+    } catch (error) {
+      console.error("Error fetching product:", error);
     }
-  } catch (error) {
-    console.error("Error fetching product:", error);
   }
-}
+  async function handleGetRecent() {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/products/latest`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const serverResponse = await response.json();
+      //console.log(serverResponse);
+      if (response.ok) {
+        setRecentProducts(serverResponse); // Update state
+        //console.log(recentProducts);
+        //console.log("Server response:", serverResponse); // Log the fetched product directly
+      } else {
+        //console.error("Failed to fetch product:", serverResponse);
+      }
+    } catch (error) {
+      console.error("Error fetching latest products:", error);
+    }
+  }
 
 
 const value = {

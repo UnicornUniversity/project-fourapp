@@ -49,6 +49,7 @@ export default Navbar;
 import "./../../assets/styles/header.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import Logo from "../../assets/images/fourapp-logo.png";
 
 function NavbarContainer() {
   const navigate = useNavigate();
@@ -56,40 +57,64 @@ function NavbarContainer() {
 
   return (
     <div className="navbar">
-      <div>
-        <h3 onClick={() => navigate("/")}>Logo</h3>
+      <div className="navbarLogoContainer">
+        <img onClick={() => navigate("/")} src={Logo} alt="Logo" />
       </div>
       <div>
         <div class="dropdown">
           <button class="dropbtn">Dropdown</button>
           <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
           </div>
         </div>
         <div class="dropdown">
           <button class="dropbtn">Dropdown</button>
           <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
           </div>
         </div>
         <div class="dropdown">
           <button class="dropbtn">Dropdown</button>
           <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
           </div>
         </div>
         <div class="dropdown">
           <button class="dropbtn">Dropdown</button>
           <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
+            <a href="#" onClick={() => navigate("/men")}>
+              Link 1
+            </a>
           </div>
         </div>
       </div>
