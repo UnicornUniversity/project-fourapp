@@ -1,4 +1,10 @@
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -19,12 +25,16 @@ export default () => {
   return (
     <Swiper
       // install Swiper modules
-      modules={[Navigation, Pagination, Scrollbar, A11y]}
+      modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
       spaceBetween={50}
       slidesPerView={1}
       navigation
       loop={true}
       pagination={{ clickable: true }}
+      autoplay={{
+        delay: 5000, // 3 seconds delay between slides
+        disableOnInteraction: false, // Continue autoplay after user interaction
+      }}
     >
       {images.map((image, index) => (
         <SwiperSlide key={index}>
