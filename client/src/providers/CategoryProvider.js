@@ -9,10 +9,13 @@ import { useNavigate } from "react-router-dom";
 
 export const CategoryContext = createContext();
 
-function CategoryProvider({ children }) {
-  const [navbarCategories, setNavbarCategories] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [categoryTree, setCategoryTree] = useState([]);
+
+function CategoryProvider({children}){
+const [navbarCategories, setNavbarCategories] = useState([])
+const [categories , setCategories] = useState([])
+const [category , setCategory] = useState({});
+const [categoryTree, setCategoryTree] = useState([]);
+
 
   useEffect(() => {
     handleLoad();
@@ -41,12 +44,51 @@ function CategoryProvider({ children }) {
       } else {
         //console.error("Token verification failed:", data); //SOME ERROR
       }
+
+    );
+
+    const serverResponse = await response.json(); //SHOULD BE TOKEN
+    if (response.ok) {
+      console.log(serverResponse);
+      setCategory(serverResponse);
+    } else {
+      //console.error("Token verification failed:", data); //SOME ERROR
+    }
+  } catch (error) {
+    //console.error("Error sending token to backend:", error);
+  }
+}
+
+async function  handleUpdate(id, body) {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/categories/${id}`, //OUR API ENDPOINT
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body:JSON.stringify(body)
+      }
+    );
+
+
+    const serverResponse = await response.json(); //SHOULD BE TOKEN¨
+    if (response.ok) {
+        setNavbarCategories(serverResponse.categories)
+        setCategories(serverResponse.categories)
+      //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
+    } else {
+      //console.error("Token verification failed:", data); //SOME ERROR
     } catch (error) {
       //console.error("Error sending token to backend:", error);
+
     }
   }
 
-  async function handleLoad() {
+
+// Add this useEffect to log the updated category whenever it changes
+async function handleLoad(){
     try {
       const response = await fetch(
         "http://localhost:5000/api/categories", //OUR API ENDPOINT
@@ -66,8 +108,31 @@ function CategoryProvider({ children }) {
       } else {
         //console.error("Token verification failed:", data); //SOME ERROR
       }
+
+}
+
+async function handleDelete(id) {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/categories/${id}`, //OUR API ENDPOINT
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    handleLoad()
+    const serverResponse = await response.json(); //SHOULD BE TOKEN¨
+    if (response.ok) {
+      console.log("deleted " + id)
+    } else {
+      //console.error("Token verification failed:", data); //SOME ERROR
+
     } catch (error) {
       //console.error("Error sending token to backend:", error);
+
     }
   }
 
@@ -121,6 +186,7 @@ function CategoryProvider({ children }) {
       //console.error("Error sending token to backend:", error);
     }
   }
+
 
   async function handleGetCategoryTree(category_id) {
     try {

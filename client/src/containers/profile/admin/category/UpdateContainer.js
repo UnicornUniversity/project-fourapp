@@ -1,16 +1,33 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Input from "../../../../components/input/Input";
 import { CategoryContext } from "../../../../providers/CategoryProvider";
+import { useNavigate } from "react-router-dom";
 
 function CategoryUpdateContainer({ category }) {
-  const { categories } = useContext(CategoryContext);
+  const { categories , handlerMap } = useContext(CategoryContext);
   const [formData, setFormData] = useState({
     name: category.name || "",
-    parentCategoryId: category.categoryId,
+    parentCategoryId: category.parentCategoryId || "", // Ensure this is set correctly
   });
-  const handleSubmit = (event) => {};
 
-  console.log(category);
+  const navigate = useNavigate();
+
+  // Update formData when category prop changes
+  useEffect(() => {
+    setFormData({
+      name: category.name || "",
+      parentCategoryId: category.parentCategoryId || "", // Ensure this is set correctly
+    });
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Handle form submission logic here
+    console.log("Form submitted with data:", formData);
+    handlerMap.handleUpdate(category._id ,formData)
+    navigate("/user/profile/admin")
+    handlerMap.handleLoad();
+  };
 
   return (
     <div className="categoryCreateForm">
@@ -30,7 +47,7 @@ function CategoryUpdateContainer({ category }) {
           className="categoryFormSelect"
           value={formData.parentCategoryId} // Set value to parentCategoryId
           onChange={(e) =>
-            setFormData({ ...formData, categoryParentId: e.target.value })
+            setFormData({ ...formData, parentCategoryId: e.target.value }) // Corrected key
           }
         >
           <option value="">Select Category</option>
@@ -45,7 +62,7 @@ function CategoryUpdateContainer({ category }) {
           type="submit"
           className="profileInput"
           name="submit"
-          value="Create"
+          value="Update"
         />
       </form>
     </div>

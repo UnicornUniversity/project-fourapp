@@ -5,10 +5,7 @@ import ProductFilters from "../../containers/product/FiltersContainer";
 export function ProductListPage() {
   return (
     <div>
-      <ProductProvider>
-        <ProductFilters />
         <ProductList />
-      </ProductProvider>
     </div>
   );
 }
