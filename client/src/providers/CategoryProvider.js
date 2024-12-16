@@ -120,7 +120,7 @@ function CategoryProvider({ children }) {
         console.log(body);
         try {
             const response = await fetch(
-                `http://localhost:5000/api/categories/`, // OUR API ENDPOINT
+                `http://localhost:5000/api/categories`, // OUR API ENDPOINT
                 {
                     method: "POST",
                     headers: {
