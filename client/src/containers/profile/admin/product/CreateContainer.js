@@ -1,7 +1,6 @@
 import Input from "../../../../components/input/Input";
 import Accordion from "../../../../components/accordion/Accordion";
 import Table from "../../../../components/table/Table";
-import "../../../../assets/styles/productForm.css";
 import Checkbox from "../../../../components/input/Checkbox";
 function ProductCreateContainer() {
   const data = [

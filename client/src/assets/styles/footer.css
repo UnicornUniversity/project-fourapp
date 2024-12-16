@@ -60,7 +60,7 @@
 
 .footerLogoContainer>img {
     max-height: 50%;
-    max-width: 50px;
+    max-width: 80px;
     object-fit: contain;
     cursor: pointer;
 }
