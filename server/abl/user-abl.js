@@ -18,6 +18,10 @@ class UserAbl {
     return wishlist;
   }
 
+  static async addItemToWishlist(userId, productId, variantId) {
+    return await userDao.addItemToWishlist(userId, productId, variantId);
+  }  
+
   static async getCart(userId) {
     const cart = await userDao.cartByUserId(userId);
     if (!cart || cart.length === 0) {

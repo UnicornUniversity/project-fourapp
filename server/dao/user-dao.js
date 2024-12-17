@@ -41,6 +41,25 @@ class userDao {
     return user.wishlist_array;
   }
 
+  static async addItemToWishlist(userId, productId, variantId) {
+    const user = await User.findById(userId);
+    if (!user) throw ApiError.notFound("User not found");
+  
+    const exists = user.wishlist_array.some(
+      (item) =>
+        item.productId.toString() === productId && item.variantId === variantId
+    );
+  
+    if (exists) {
+      throw ApiError.badRequest("Item already exists in wishlist");
+    }
+  
+    user.wishlist_array.push({ productId, variantId });
+    await user.save();
+  
+    return user.wishlist_array;
+  }  
+
   static async cartByUserId(id) {
     const user = await User.findById(id, "cart_array");
     if (!user) {

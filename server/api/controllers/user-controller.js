@@ -27,6 +27,27 @@ class UserController {
     }
   }
 
+  static async addItemToWishlist(req, res, next) {
+    try {
+      const userId = req.user.id; // Middleware pro ověření uživatele
+      const { productId, variantId } = req.body;
+  
+      if (!productId || !variantId) {
+        throw ApiError.badRequest("Product ID and Variant ID are required");
+      }
+  
+      const updatedWishlist = await UserAbl.addItemToWishlist(
+        userId,
+        productId,
+        variantId
+      );
+  
+      res.status(200).json(updatedWishlist);
+    } catch (error) {
+      next(ApiError.fromError(error));
+    }
+  }
+  
   static async getCart(req, res, next) {
     try {
       const userId = requireParam("userId", req.params);
@@ -197,5 +218,6 @@ router.delete("/:userId", UserController.delete);
 router.get("/", UserController.list);
 router.get("/search", UserController.searchByFilters);
 router.post("/cart/add-item", UserController.addItemToCart);
+router.post("/wishlist/add-item", UserController.addItemToWishlist);
 
 export default router;
