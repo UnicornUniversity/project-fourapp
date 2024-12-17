@@ -8,174 +8,9 @@ import { useState } from "react";
 
 function NavbarContainer() {
   const token = Cookies.get("token");
-  const { categoryTree } = useContext(CategoryContext);
+  const { categoryAllTree } = useContext(CategoryContext);
   //console.log(categoryTree);
   const navigate = useNavigate();
-
-  const c = [
-    {
-      _id: "675f4db6e94fa1370cbe9e99",
-      name: "Everyone",
-      parentCategoryId: null,
-      __v: 0,
-      subCategories: [
-        {
-          _id: "675f4e0fe94fa1370cbe9ea1",
-          name: "Tops",
-          parentCategoryId: "675f4db6e94fa1370cbe9e99",
-          __v: 0,
-          subCategories: [
-            {
-              _id: "675f4e0fe94fa1377cbe9ea1",
-              name: "Shirts",
-              parentCategoryId: "675f4e0fe94fa1370cbe9ea1",
-              __v: 0,
-              subCategories: [],
-            },
-            {
-              _id: "675f4e0fe94fa1370cbe5ea1",
-              name: "Hoodies",
-              parentCategoryId: "675f4e0fe94fa1370cbe9ea1",
-              __v: 0,
-              subCategories: [],
-            },
-            {
-              _id: "675f4e0fe94fa1370cbe9eq1",
-              name: "Sweaters",
-              parentCategoryId: "675f4e0fe94fa1370cbe9ea1",
-              __v: 0,
-              subCategories: [],
-            },
-          ],
-        },
-        {
-          _id: "675f4e14e94fa1370cbe9ea3",
-          name: "Bottoms",
-          parentCategoryId: "675f4db6e94fa1370cbe9e99",
-          __v: 0,
-          subCategories: [
-            {
-              _id: "675f4e0fe94fa1377cbe9ea1",
-              name: "Pants",
-              parentCategoryId: "675f4e14e94fa1370cbe9ea3",
-              __v: 0,
-              subCategories: [],
-            },
-            {
-              _id: "675f4e0fe54fa1370cbe5ea1",
-              name: "Trousers",
-              parentCategoryId: "675f4a4e94fa1370cbe9ea3",
-              __v: 0,
-              subCategories: [],
-            },
-            {
-              _id: "675f4e0fe94fa1370cbe9eq1",
-              name: "BOMBA",
-              parentCategoryId: "675f4b14e94fa1370cbe9ea3",
-              __v: 0,
-              subCategories: [],
-            },
-          ],
-        },
-        {
-          _id: "675f4e1ce94fa1370cbe9ea5",
-          name: "Accessories",
-          parentCategoryId: "675f4db6e94fa1370cbe9e99",
-          __v: 0,
-          subCategories: [
-            {
-              _id: "666f4e0fe94fa1377cbe9ea1",
-              name: "Rings",
-              parentCategoryId: "675f4e14e94fa1370cbe9ea3",
-              __v: 0,
-              subCategories: [],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      _id: "1",
-      name: "Men",
-      parentCategoryId: null,
-      __v: 0,
-      subCategories: [
-        {
-          _id: "2",
-          name: "Tops",
-          parentCategoryId: "1",
-          __v: 0,
-          subCategories: [
-            {
-              _id: "3",
-              name: "Shirts",
-              parentCategoryId: "2",
-              __v: 0,
-              subCategories: [],
-            },
-            {
-              _id: "4",
-              name: "Hoodies",
-              parentCategoryId: "2",
-              __v: 0,
-              subCategories: [],
-            },
-            {
-              _id: "5",
-              name: "HIHIHI",
-              parentCategoryId: "2",
-              __v: 0,
-              subCategories: [],
-            },
-          ],
-        },
-        {
-          _id: "6",
-          name: "Bottoms",
-          parentCategoryId: "1",
-          __v: 0,
-          subCategories: [
-            {
-              _id: "7",
-              name: "Pants",
-              parentCategoryId: "6",
-              __v: 0,
-              subCategories: [],
-            },
-            {
-              _id: "8",
-              name: "Trousers",
-              parentCategoryId: "6",
-              __v: 0,
-              subCategories: [],
-            },
-            {
-              _id: "9",
-              name: "BOMBA",
-              parentCategoryId: "6",
-              __v: 0,
-              subCategories: [],
-            },
-          ],
-        },
-        {
-          _id: "10",
-          name: "Accessories",
-          parentCategoryId: "1",
-          __v: 0,
-          subCategories: [
-            {
-              _id: "11",
-              name: "Rings",
-              parentCategoryId: "10",
-              __v: 0,
-              subCategories: [],
-            },
-          ],
-        },
-      ],
-    },
-  ];
 
   const [openDropdown, setOpenDropdown] = useState(null); // Tracks which dropdown is open
   const location = useLocation(); // React Router hook to get the current URL
@@ -202,8 +37,8 @@ function NavbarContainer() {
         <img onClick={() => navigate("/")} src={Logo} alt="Logo" />
       </div>
       <ul className="menu">
-        {c
-          ? c.map((category) => (
+        {categoryAllTree
+          ? categoryAllTree.map((category) => (
               <li
                 key={category._id}
                 onMouseEnter={() => handleCategoryHover(category._id)} // Open dropdown on category hover
@@ -215,14 +50,18 @@ function NavbarContainer() {
                   }`}
                 >
                   <div className="dropdown-container">
-                    {category.subCategories.map((subCategory) => (
-                      <div className="column" key={subCategory._id}>
-                        <h4>{subCategory.name}</h4>
-                        {subCategory.subCategories.map((subSubCategory) => (
-                          <a key={subSubCategory._id}>{subSubCategory.name}</a>
-                        ))}
-                      </div>
-                    ))}
+                    {category.subcategories ? (
+                      category.subcategories.map((subcategory) => (
+                        <div className="column" key={subcategory._id}>
+                          <h4>{subcategory.name}</h4>
+                          {subcategory.subcategories.map((subcategory) => (
+                            <a key={subcategory._id}>{subcategory.name}</a>
+                          ))}
+                        </div>
+                      ))
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </li>
