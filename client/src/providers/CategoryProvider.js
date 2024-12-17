@@ -174,6 +174,7 @@ function CategoryProvider({ children }) {
             handleCreate,
             handleGet,
             handleGetCategoryTree,
+            handleLoad,
             handleUpdate, // Added handleUpdate to the handlerMap
         },
     };

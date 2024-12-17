@@ -12,7 +12,7 @@ export function ProductProvider({ children }) {
   useEffect(() => {
     handleLoad();
     handleLoadAP();
-  }, []);
+  }, [filters]);
 
   async function handleDelete(id) {
     try {
@@ -34,8 +34,24 @@ export function ProductProvider({ children }) {
   }
 
   async function handleLoad() {
+    // Construct the query parameters conditionally
+    const queryParams = new URLSearchParams();
+
+    if (filters.minPrice != null) {
+      queryParams.append('minPrice', filters.minPrice);
+    }
+    if (filters.maxPrice != null) {
+      queryParams.append('maxPrice', filters.maxPrice);
+    }
+    if (filters.colors && filters.colors.length > 0) {
+      queryParams.append('colors[]', filters.colors.join(',')); // Join colors array into a comma-separated string
+    }
+    if (filters.sizes && filters.sizes.length > 0) {
+      queryParams.append('sizes[]', filters.sizes.join(',')); // Join sizes array into a comma-separated string
+    }
+
     try {
-      const response = await fetch("http://localhost:5000/api/products", {
+      const response = await fetch(`http://localhost:5000/api/products?${queryParams.toString()}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -44,12 +60,12 @@ export function ProductProvider({ children }) {
 
       const serverResponse = await response.json();
       if (response.ok) {
-        setProducts(serverResponse.products);
+        setProducts(serverResponse.products); // Assuming setProducts is defined in your component
       }
     } catch (error) {
-      console.error("Error sending token to backend:", error);
+      console.error("Error fetching products:", error);
     }
-  }
+  };
 
   async function handleLoadAP() {
     try {
