@@ -55,4 +55,17 @@ export const categoriesDao = {
 
     return tree;
   },
+
+  async getAllCategoriesTree() {
+    // Fetch all top-level categories (assuming they have a parentId of null or similar)
+    const topLevelCategories = await Category.find({ parentCategoryId: null });
+
+    // Build the tree for each top-level category
+    const tree = await Promise.all(
+        topLevelCategories.map(async (category) => await this.getCategoryTree(category._id))
+    );
+
+    return tree;
+}
+
 };

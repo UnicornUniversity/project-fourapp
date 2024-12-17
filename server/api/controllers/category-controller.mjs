@@ -88,4 +88,13 @@ export default class CategoryController {
       next(error);
     }
   }
+
+  static async getCategoriesTree(req, res, next){
+    try {
+      const tree = await CategoryAbl.getAllCategoriesTree();
+      res.status(200).json(tree);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

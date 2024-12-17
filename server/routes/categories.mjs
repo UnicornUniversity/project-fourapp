@@ -5,6 +5,7 @@ const router = new Router();
 
 router.post("/", CategoryController.create);
 router.get("/", CategoryController.list);
+router.get("/alltree" , CategoryController.getCategoriesTree);
 router.get("/:categoryId", CategoryController.get);
 router.put("/:categoryId", CategoryController.update);
 router.delete("/:categoryId", CategoryController.delete);

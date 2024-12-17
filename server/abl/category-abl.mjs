@@ -61,4 +61,12 @@ export class CategoryAbl {
       throw ApiError.fromError(error, "Failed to get category tree");
     }
   }
+
+  static async getAllCategoriesTree(){
+    try {
+      return await categoriesDao.getAllCategoriesTree();
+    } catch (error) {
+      throw ApiError.fromError(error, "Failed to get categories tree");
+    }
+  }
 }
