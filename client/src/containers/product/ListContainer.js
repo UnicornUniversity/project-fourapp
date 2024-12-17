@@ -1,80 +1,72 @@
 import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../providers/ProductProvider";
-import ProductFilters from "../product/FiltersContainer"
+import ProductFilters from "../product/FiltersContainer";
 import ProductCard from "./CardContainer";
 import "../../assets/styles/product.css";
 
 function ProductListContainer() {
   const { products } = useContext(ProductContext);
-  const [filtersSettings ,setFilterSetting] = useState()
+  const [filtersSettings, setFilterSetting] = useState();
+  const [filtersInitialized, setFiltersInitialized] = useState(false); // New state to track initialization
 
   function getMinMaxPrice(products) {
     let minPrice = Infinity;
     let maxPrice = -Infinity;
 
     products.forEach(product => {
-        if (product.price < minPrice) {
-            minPrice = product.price;
-        }
-        if (product.price > maxPrice) {
-            maxPrice = product.price;
-        }
+      if (product.price < minPrice) {
+        minPrice = product.price;
+      }
+      if (product.price > maxPrice) {
+        maxPrice = product.price;
+      }
     });
 
     return {
-        minPrice: minPrice === Infinity ? null : minPrice,
-        maxPrice: maxPrice === -Infinity ? null : maxPrice
+      minPrice: minPrice === Infinity ? null : minPrice,
+      maxPrice: maxPrice === -Infinity ? null : maxPrice
     };
-}
+  }
 
-function getSizes(products) {
-  // Initialize a Set to store unique sizes
-  const sizes = new Set();
+  function getSizes(products) {
+    const sizes = new Set();
 
-  // Loop through each product
-  products.forEach(product => {
-      // Loop through each variant of the product
+    products.forEach(product => {
       product.variants.forEach(variant => {
-          // Add the size to the Set
-          sizes.add(variant.size);
+        sizes.add(variant.size);
       });
-  });
+    });
 
-  // Convert the Set to an array and return it
-  return Array.from(sizes);
-}
+    return Array.from(sizes);
+  }
 
-function getColors(products) {
-  // Initialize a Set to store unique colors
-  const colors = new Set();
+  function getColors(products) {
+    const colors = new Set();
 
-  // Loop through each product
-  products.forEach(product => {
-      // Loop through each variant of the product
+    products.forEach(product => {
       product.variants.forEach(variant => {
-          // Add the color to the Set
-          colors.add(variant.color);
+        colors.add(variant.color);
       });
-  });
+    });
 
-  // Convert the Set to an array and return it
-  return Array.from(colors);
-}
+    return Array.from(colors);
+  }
 
-useEffect(()=>{
-if(products){
-  setFilterSetting({
-    ...getMinMaxPrice(products),
-    ...getColors(products),
-    ...getSizes(products)
-  })
-  console.log(filtersSettings)
-}
-},[products])
+  useEffect(() => {
+    if (products && products.length > 0 && !filtersInitialized) {
+      setFilterSetting({
+        ...getMinMaxPrice(products),
+        colors: getColors(products),
+        sizes: getSizes(products)
+      });
+      setFiltersInitialized(true); // Mark filters as initialized
+      console.log("Filters set:", filtersSettings);
+    }
+  }, [products, filtersInitialized]); // Run effect when products change
 
   return (
     <div>
-      <ProductFilters filtersSettings={filtersSettings}/>
+      {filtersSettings ? <ProductFilters filtersSettings={filtersSettings} /> : <></>}
       <div className="productList">
         {products ? (
           products.map((product) => (
@@ -87,4 +79,5 @@ if(products){
     </div>
   );
 }
+
 export default ProductListContainer;
