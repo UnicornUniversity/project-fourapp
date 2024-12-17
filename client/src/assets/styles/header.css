@@ -17,6 +17,7 @@
     max-height: 50%;
     max-width: 50px;
     object-fit: contain;
+    cursor: pointer;
 }
 
 .menu {

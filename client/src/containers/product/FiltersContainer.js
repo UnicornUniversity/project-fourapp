@@ -1,5 +1,6 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { ProductContext } from "../../providers/ProductProvider";
+import Popup from "reactjs-popup"; // Import the popup component
 
 function ProductFiltersContainer({ filtersSettings }) {
   const { filters, handlerMap } = useContext(ProductContext);
@@ -13,6 +14,13 @@ function ProductFiltersContainer({ filtersSettings }) {
     minPrice: filtersSettings.minPrice,
     maxPrice: filtersSettings.maxPrice, // Set a default max price
   });
+
+  // State to manage visibility of dropdowns
+  const [isSizeOpen, setIsSizeOpen] = useState(false);
+  const [isColorOpen, setIsColorOpen] = useState(false);
+
+  const sizeButtonRef = useRef(null); // Ref for size filter button
+  const colorButtonRef = useRef(null); // Ref for color filter button
 
   const toggleFilter = (filterType, filter) => {
     setSelectedFilters((prevFilters) => {
@@ -53,7 +61,9 @@ function ProductFiltersContainer({ filtersSettings }) {
 
   const removeFilter = (filterType, filter) => {
     setSelectedFilters((prevFilters) => {
-      const updatedFilters = prevFilters[filterType].filter((f) => f !== filter); // Remove the specified filter
+      const updatedFilters = prevFilters[filterType].filter(
+        (f) => f !== filter
+      ); // Remove the specified filter
 
       // Call setFilters with the updated filters
       handlerMap.setFilters({
@@ -119,60 +129,147 @@ function ProductFiltersContainer({ filtersSettings }) {
         </label>
         <button onClick={resetPriceFilters}>Reset Price</button>
       </div>
+
+      {/* Size Filter Button with ReactJS Popup */}
       <div className="filterButton">
-        {filtersSettings ? (
-          <div>
+        <button
+          ref={sizeButtonRef}
+          onClick={() => setIsSizeOpen((prev) => !prev)} // Toggle size filter dropdown
+          style={{ padding: "10px", cursor: "pointer" }}
+        >
+          Size
+        </button>
+
+        <Popup
+          open={isSizeOpen}
+          onClose={() => setIsSizeOpen(false)} // Close the popup when clicking outside
+          position="bottom left" // Position of the dropdown relative to the button
+          closeOnDocumentClick // Close the popup when clicking outside
+          contentStyle={{
+            backgroundColor: "#fff",
+            border: "1px solid #ccc",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+            padding: "10px",
+            width: "200px", // Set a fixed width for the dropdown
+            position: "absolute", // Use absolute positioning for control
+            top: `${
+              sizeButtonRef.current
+                ? sizeButtonRef.current.getBoundingClientRect().bottom
+                : 0
+            }px`, // Ensure dropdown appears below the button
+            left: `${
+              sizeButtonRef.current
+                ? sizeButtonRef.current.getBoundingClientRect().left
+                : 0
+            }px`, // Align to the left of the button
+            zIndex: 10,
+          }}
+        >
+          <ul style={{ listStyle: "none", padding: "0", margin: "0" }}>
             {filtersSettings.sizes.map((size) => (
-              <div
-                onClick={() => toggleFilter("sizes", size)} // Specify filter type
+              <li
                 key={size}
+                onClick={() => toggleFilter("sizes", size)} // Filter toggle logic here
                 style={{
+                  padding: "8px 12px",
                   cursor: "pointer",
-                  backgroundColor: selectedFilters.sizes.includes(size) ? "lightblue" : "transparent", // Highlight selected size
+                  backgroundColor: selectedFilters.sizes.includes(size)
+                    ? "lightblue"
+                    : "transparent",
                 }}
               >
                 {size}
-              </div>
+              </li>
             ))}
-          </div>
-        ) : (
-          <></>
-        )}
+          </ul>
+        </Popup>
       </div>
+
+      {/* Color Filter Button with ReactJS Popup */}
       <div className="filterButton">
-        {filtersSettings ? (
-          <div>
+        <button
+          ref={colorButtonRef}
+          onClick={() => setIsColorOpen((prev) => !prev)} // Toggle color filter dropdown
+          style={{ padding: "10px", cursor: "pointer" }}
+        >
+          Color
+        </button>
+
+        <Popup
+          open={isColorOpen}
+          onClose={() => setIsColorOpen(false)} // Close the popup when clicking outside
+          position="bottom left" // Position of the dropdown relative to the button
+          closeOnDocumentClick // Close the popup when clicking outside
+          contentStyle={{
+            backgroundColor: "#fff",
+            border: "1px solid #ccc",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+            padding: "10px",
+            width: "200px", // Set a fixed width for the dropdown
+            position: "absolute", // Use absolute positioning for control
+            top: `${
+              colorButtonRef.current
+                ? colorButtonRef.current.getBoundingClientRect().bottom
+                : 0
+            }px`, // Ensure dropdown appears below the button
+            left: `${
+              colorButtonRef.current
+                ? colorButtonRef.current.getBoundingClientRect().left
+                : 0
+            }px`, // Align to the left of the button
+            zIndex: 10,
+          }}
+        >
+          <ul style={{ listStyle: "none", padding: "0", margin: "0" }}>
             {filtersSettings.colors.map((color) => (
-              <div
-                onClick={() => toggleFilter("colors", color)} // Specify filter type
+              <li
                 key={color}
+                onClick={() => toggleFilter("colors", color)} // Filter toggle logic here
                 style={{
+                  padding: "8px 12px",
                   cursor: "pointer",
-                  backgroundColor: selectedFilters.colors.includes(color) ? " lightblue" : "transparent", // Highlight selected color
+                  backgroundColor: selectedFilters.colors.includes(color)
+                    ? "lightblue"
+                    : "transparent",
                 }}
               >
                 {color}
-              </div>
+              </li>
             ))}
-          </div>
-        ) : (
-          <></>
-        )}
+          </ul>
+        </Popup>
       </div>
+
       <div>
         <h3>Selected Filters:</h3>
         <div>
-          Colors: {selectedFilters.colors.length > 0 ? selectedFilters.colors.map(color => (
-            <span key={color}>
-              {color} <button onClick={() => removeFilter("colors", color)}>X</button>
-            </span>
-          )).reduce((prev, curr) => [prev, ', ', curr]) : "None"}
+          Colors:{" "}
+          {selectedFilters.colors.length > 0
+            ? selectedFilters.colors
+                .map((color) => (
+                  <span key={color}>
+                    {color}{" "}
+                    <button onClick={() => removeFilter("colors", color)}>
+                      X
+                    </button>
+                  </span>
+                ))
+                .reduce((prev, curr) => [prev, ", ", curr])
+            : "None"}
           <br />
-          Sizes: {selectedFilters.sizes.length > 0 ? selectedFilters.sizes.map(size => (
-            <span key={size}>
-              {size} <button onClick={() => removeFilter("sizes", size)}>X</button>
-            </span>
-          )).reduce((prev, curr) => [prev, ', ', curr]) : "None"}
+          Sizes:{" "}
+          {selectedFilters.sizes.length > 0
+            ? selectedFilters.sizes
+                .map((size) => (
+                  <span key={size}>
+                    {size}{" "}
+                    <button onClick={() => removeFilter("sizes", size)}>
+                      X
+                    </button>
+                  </span>
+                ))
+                .reduce((prev, curr) => [prev, ", ", curr])
+            : "None"}
           <br />
           Price Range: ${selectedFilters.minPrice} - ${selectedFilters.maxPrice}
         </div>
