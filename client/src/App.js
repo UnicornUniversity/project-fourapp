@@ -7,6 +7,7 @@ import Layout from "./layouts/Layout";
 import CategoryProvider from "./providers/CategoryProvider";
 import ProfileLayout from "./layouts/ProfileLayout";
 import CartProvider from "./providers/CartProvider";
+import OrderProvider from "./providers/OrderProvider";
 import WishlistProvider from "./providers/WishlistProvider"; 
 
 /*---AUTH---*/
@@ -46,6 +47,7 @@ function App() {
           <CategoryProvider>
             <ProductProvider>
               <CartProvider>
+                <OrderProvider>
                 <WishlistProvider>
               <Layout>
                 <Routes>
@@ -84,10 +86,7 @@ function App() {
                       path="/user/profile/update"
                       element={<ProfileUpdate />}
                     />
-                    <Route
-                      path="/user/profile/orders"
-                      element={<ProfileOrders />}
-                    />
+                     <Route path="/user/profile/orders" element={<ProfileOrders />} />
                      <Route path="/user/profile/wishlist" element={<ProfileWishlist />} />
                     <Route
                       path="/user/profile/admin"
@@ -97,6 +96,7 @@ function App() {
                 </ProfileLayout>
               </Layout>
               </WishlistProvider>
+              </OrderProvider>
               </CartProvider>
             </ProductProvider>
           </CategoryProvider>
