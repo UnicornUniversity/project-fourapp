@@ -2,6 +2,7 @@ import { ProductAbl } from "../../abl/product-abl.mjs";
 import { requireParam } from "../../utils/index.mjs";
 import { listProductsQuerySchema } from "../../types/products.mjs";
 import { Types } from "mongoose";
+import { ApiError } from "../../utils/error.mjs";
 
 export default class ProductController {
   static async create(req, res, next) {
@@ -16,9 +17,18 @@ export default class ProductController {
 
   static async delete(req, res, next) {
     try {
-      const id = Types.ObjectId.createFromHexString(
-        requireParam("productId", req.params)
-      );
+      const id = requireParam("productId", req.params);
+
+      // Validate ID
+      if (!Types.ObjectId.isValid(id)) {
+        throw ApiError.badRequest("Invalid product ID");
+      }
+
+      const product = await ProductAbl.get(id);
+      if (!product) {
+        throw ApiError.notFound("Product not found");
+      }
+
       await ProductAbl.delete(id);
 
       res.status(204).send();
@@ -39,9 +49,18 @@ export default class ProductController {
 
   static async update(req, res, next) {
     try {
-      const id = Types.ObjectId.createFromHexString(
-        requireParam("productId", req.params)
-      );
+      const id = requireParam("productId", req.params);
+
+      // Validate ID
+      if (!Types.ObjectId.isValid(id)) {
+        throw ApiError.badRequest("Invalid product ID");
+      }
+
+      const previousProduct = await ProductAbl.get(id);
+      if (!previousProduct) {
+        throw ApiError.notFound("Product not found");
+      }
+
       const updatedProduct = await ProductAbl.update(id, req.body);
 
       res.status(200).json(updatedProduct);
@@ -52,10 +71,17 @@ export default class ProductController {
 
   static async get(req, res, next) {
     try {
-      const id = Types.ObjectId.createFromHexString(
-        requireParam("productId", req.params)
-      );
+      const id = requireParam("productId", req.params);
+
+      // Validate ID
+      if (!Types.ObjectId.isValid(id)) {
+        throw ApiError.badRequest("Invalid product ID");
+      }
+
       const product = await ProductAbl.get(id);
+      if (!product) {
+        throw ApiError.notFound("Product not found");
+      }
 
       res.status(200).json(product);
     } catch (error) {
