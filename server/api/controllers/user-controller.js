@@ -120,11 +120,11 @@ class UserController {
 router.post("/register", UserController.register);
 router.get("/wishlist/:userId", UserController.getWishlist);
 router.get("/cart/:userId", UserController.getCart);
+router.get("/search", UserController.searchByFilters);
 router.put("/:userId", UserController.update);
 router.get("/:userId", UserController.get);
 router.delete("/:userId", UserController.delete);
 router.get("/", UserController.list);
-router.get("/search", UserController.searchByFilters);
 router.post("/cart/add-item", UserController.addItemToCart);
 
 export default router;
