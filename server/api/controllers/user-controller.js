@@ -85,10 +85,10 @@ class UserController {
 
 router.get("/wishlist/:userId", UserController.getWishlist);
 router.get("/cart/:userId", UserController.getCart);
+router.get("/search", UserController.searchByFilters);
 router.put("/:userId", UserController.update);
 router.get("/:userId", UserController.get);
 router.delete("/:userId", UserController.delete);
 router.get("/", UserController.list);
-router.get("/search", UserController.searchByFilters);
 
 export default router;

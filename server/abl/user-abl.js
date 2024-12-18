@@ -51,12 +51,24 @@ class UserAbl {
   }
 
   static async searchByFilters(filters) {
-    const users = await userDao.searchByFilter(filters);
+    const query = {};
+    
+    if (filters.name) {
+      query.name = { $regex: filters.name, $options: "i" };
+    }
+    if (filters.phonenumber) {
+      query.phone_number = { $regex: filters.phone_number, $options: "i" };
+    }
+    if (filters.email) {
+      query.email = { $regex: filters.email, $options: "i" };
+    }
+  
+    const users = await userDao.searchByFilter(query);
     if (!users || users.length === 0) {
       throw ApiError.notFound("No users found with the given filters");
     }
     return users;
-  }
+  }  
 }
 
 export default UserAbl;

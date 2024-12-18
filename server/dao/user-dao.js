@@ -7,8 +7,8 @@ class userDao {
   }
 
   static async getByEmail(email) {
-    return await User.findOne({ email });
-  }
+    return await User.findOne({ email }).select("+password");
+  }  
 
   static async existsByEmail(email) {
     const user = await User.findOne({ email });
