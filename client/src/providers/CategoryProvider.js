@@ -1,15 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  handleGet,
-  handleUpdate,
-  handleLoad,
-  handleDelete,
-  handleCreate,
-  handleGetCategoryTree,
-  handleGetCategoryAllTree,
-} from "../features/categories/api";
-
 export const CategoryContext = createContext();
 
 function CategoryProvider({ children }) {
@@ -25,7 +15,6 @@ function CategoryProvider({ children }) {
   }, []); // Only run once on mount
 
   useEffect(() => {
-
     handleGetCategoryAllTree(); // Update categoryAllTree whenever categories change
   }, [categories]); // Run whenever categories change
 
@@ -200,7 +189,7 @@ function CategoryProvider({ children }) {
       // console.error("Error sending token to backend:", error);
     }
   }
-/*
+  /*
     handleLoad().then((response) => {
       setNavbarCategories(response.categories);
       setCategories(response.categories);
