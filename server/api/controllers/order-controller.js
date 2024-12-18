@@ -89,6 +89,15 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.get("/", async (req, res, next) => {
+  try {
+    const orders = await OrderAbl.listOrders();
+    res.status(200).json(orders);
+  } catch (error) {
+    const apiError = ApiError.fromError(error);
+    res.status(apiError.statusCode).json(apiError.jsonObject());
+  }
+});
 
 router.post("/:id/complete", async (req, res, next) => {
   const { id } = req.params;
