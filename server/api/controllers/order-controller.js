@@ -91,4 +91,14 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
+router.get("/", async (req, res, next) => {
+  try {
+    const orders = await OrderAbl.listOrders();
+    res.status(200).json(orders);
+  } catch (error) {
+    const apiError = ApiError.fromError(error);
+    res.status(apiError.statusCode).json(apiError.jsonObject());
+  }
+});
+
 export default router;
