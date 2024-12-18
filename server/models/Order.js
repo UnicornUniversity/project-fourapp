@@ -11,7 +11,7 @@ const orderSchema = new Schema({
       quantity: { type: Number, required: true },
     },
   ],
-  //Je potřeba při testování mít Billing adress a Shipping adress na flase jinak je nefunkční
+  //Je potřeba při testování mít Billing adress a Shipping adress na false jinak je nefunkční
   billing_address: {
     street: { type: String, required: false},
     city: { type: String, required: false },

@@ -9,7 +9,7 @@ const userSchema = new Schema({
     },
     unique: true,
   },
-  password: { type: String },
+  password: { type: String, select: false },
   google_id: { type: String },
   phone_number: { type: String },
   role: { type: String, default: "Customer" },

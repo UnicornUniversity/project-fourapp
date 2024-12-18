@@ -7,5 +7,5 @@ router.post("/", OrderController.create);
 router.post("/:id/complete", OrderController.complete);
 router.patch("/:id/payment", OrderController.addPaymentMethod);
 router.get("/filter", OrderController.filterByUser);
-
+router.get("/", OrderController.list);
 export default router;

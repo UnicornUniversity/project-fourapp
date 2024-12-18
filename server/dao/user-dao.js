@@ -7,8 +7,8 @@ class userDao {
   }
 
   static async getByEmail(email) {
-    return await User.findOne({ email });
-  }
+    return await User.findOne({ email }).select("+password");
+  }  
 
   static async existsByEmail(email) {
     const user = await User.findOne({ email });
@@ -40,7 +40,26 @@ class userDao {
     }
     return user.wishlist_array;
   }
-
+  
+  static async addItemToWishlist(userId, productId, variantId) {
+    const user = await User.findById(userId);
+    if (!user) throw ApiError.notFound("User not found");
+  
+    const exists = user.wishlist_array.some(
+      (item) =>
+        item.productId.toString() === productId && item.variantId === variantId
+    );
+  
+    if (exists) {
+      throw ApiError.badRequest("Item already exists in wishlist");
+    }
+  
+    user.wishlist_array.push({ productId, variantId });
+    await user.save();
+  
+    return user.wishlist_array;
+  }
+  
   static async cartByUserId(id) {
     const user = await User.findById(id, "cart_array");
     if (!user) {
@@ -63,6 +82,26 @@ class userDao {
       throw ApiError.notFound("User not found or update failed");
     }
     return updatedUser;
+  
+  }
+  static async addItemToCart(userId, productId, variantId, quantity = 1) {
+    const user = await User.findById(userId);
+    if (!user) throw ApiError.notFound("User not found");
+  
+    const existingItem = user.cart_array.find(
+      (item) =>
+        item.productId.toString() === productId &&
+        item.variantId === variantId
+    );
+  
+    if (existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      user.cart_array.push({ productId, variantId, quantity });
+    }
+  
+    await user.save();
+    return user.cart_array;
   }
 
   static async list({ limit = 10, page = 0 } = {}) {
