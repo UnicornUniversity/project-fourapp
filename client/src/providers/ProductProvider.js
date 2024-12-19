@@ -14,6 +14,7 @@ export function ProductProvider({ children }) {
   useEffect(() => {
     handleLoad();
     handleLoadAP();
+    handleGetRecent();
   }, [filters]);
 
   async function handleDelete(id) {

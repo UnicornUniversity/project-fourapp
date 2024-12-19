@@ -26,6 +26,27 @@ class UserController {
     }
   }
 
+  static async addItemToWishlist(req, res, next) {
+    try {
+      const userId = req.user.id; // Middleware pro ověření uživatele
+      const { productId, variantId } = req.body;
+  
+      if (!productId || !variantId) {
+        throw ApiError.badRequest("Product ID and Variant ID are required");
+      }
+  
+      const updatedWishlist = await UserAbl.addItemToWishlist(
+        userId,
+        productId,
+        variantId
+      );
+  
+      res.status(200).json(updatedWishlist);
+    } catch (error) {
+      next(ApiError.fromError(error));
+    }
+  }
+  
   static async getCart(req, res, next) {
     try {
       const userId = requireParam("userId", req.params);
@@ -36,6 +57,28 @@ class UserController {
     }
   }
 
+  static async addItemToCart(req, res, next) {
+    try {
+      const userId = req.user.id; // Předpokládá middleware pro autentizaci
+      const { productId, variantId, quantity } = req.body;
+  
+      if (!productId || !variantId) {
+        throw ApiError.badRequest("Product ID and Variant ID are required");
+      }
+  
+      const updatedCart = await UserAbl.addItemToCart(
+        userId,
+        productId,
+        variantId,
+        quantity || 1
+      );
+  
+      res.status(200).json(updatedCart);
+    } catch (error) {
+      next(ApiError.fromError(error));
+    }
+  }
+  
   static async update(req, res, next) {
     try {
       const userId = requireParam("userId", req.params);
@@ -46,6 +89,7 @@ class UserController {
       }
 
       const updatedUser = await UserAbl.updateUser(userId, updatedData);
+
       res.status(200).json(updatedUser);
     } catch (error) {
       next(error);
@@ -55,8 +99,19 @@ class UserController {
   static async delete(req, res, next) {
     try {
       const userId = requireParam("userId", req.params);
+
       await UserAbl.deleteUser(userId);
       res.status(204).send();
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async register(req, res, next) {
+    try {
+      await UserAbl.createUser(req.body);
+
+      res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
       next(error);
     }
@@ -83,12 +138,15 @@ class UserController {
   }
 }
 
+router.post("/register", UserController.register);
 router.get("/wishlist/:userId", UserController.getWishlist);
 router.get("/cart/:userId", UserController.getCart);
+router.get("/search", UserController.searchByFilters);
 router.put("/:userId", UserController.update);
 router.get("/:userId", UserController.get);
 router.delete("/:userId", UserController.delete);
 router.get("/", UserController.list);
-router.get("/search", UserController.searchByFilters);
+router.post("/cart/add-item", UserController.addItemToCart);
+router.post("/wishlist/add-item", UserController.addItemToWishlist);
 
 export default router;

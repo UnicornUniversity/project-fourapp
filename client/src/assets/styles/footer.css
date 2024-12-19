@@ -1,6 +1,7 @@
 .footer {
     width: 95%;
     margin: 0 auto;
+    margin-top: 10vh;
 }
 
 .footer>div:nth-child(1) {
