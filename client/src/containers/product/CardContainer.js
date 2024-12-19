@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import Card from "../../components/card/Card";
-
 import React from "react";
 
 export function ProductCardContainer({ product }) {
@@ -15,6 +14,9 @@ export function ProductCardContainer({ product }) {
   };
 
   const navigate = useNavigate();
+
+  // Get unique colors using a Set
+  const uniqueColors = Array.from(new Set(product.variants.map(v => v.color)));
 
   return (
     <Card
@@ -57,12 +59,12 @@ export function ProductCardContainer({ product }) {
 
       {/* Colors */}
       <div className="productCardColorContainer">
-        {product.variants.map((v, index) => (
+        {uniqueColors.map((color, index) => (
           <span
             key={index}
             className="productCardColor"
             style={{
-              "background-color": v.color,
+              backgroundColor: color,
             }}
           ></span>
         ))}
