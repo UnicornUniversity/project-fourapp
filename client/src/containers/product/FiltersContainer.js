@@ -4,8 +4,6 @@ import Popup from "reactjs-popup"; // Import the popup component
 
 function ProductFiltersContainer({ filtersSettings }) {
   const { filters, handlerMap } = useContext(ProductContext);
-  console.log(filters);
-  console.log(filtersSettings);
 
   // Initialize state to hold selected filters for colors, sizes, minPrice, and maxPrice
   const [selectedFilters, setSelectedFilters] = useState({

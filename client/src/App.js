@@ -52,7 +52,7 @@ function App() {
               <Layout>
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/product/list/" element={<ProductList />} />
+                  <Route path="/product/list/:categoryId" element={<ProductList />} />
                   <Route path="/user/login" element={<Login />} />
 
                   <Route path="/user/register" element={<Register />} />

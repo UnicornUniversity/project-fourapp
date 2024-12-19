@@ -3,10 +3,12 @@ import { ProductContext } from "../../providers/ProductProvider";
 import ProductFilters from "../product/FiltersContainer";
 import ProductCard from "./CardContainer";
 import "../../assets/styles/product.css";
+import { useParams } from "react-router-dom";
 
 function ProductListContainer() {
-  const { products } = useContext(ProductContext);
+  const { products, handlerMap } = useContext(ProductContext);
   const [filtersSettings, setFilterSetting] = useState();
+  const {categoryId} = useParams()
   const [filtersInitialized, setFiltersInitialized] = useState(false); // New state to track initialization
 
   function getMinMaxPrice(products) {
@@ -63,6 +65,14 @@ function ProductListContainer() {
       console.log("Filters set:", filtersSettings);
     }
   }, [products, filtersInitialized]); // Run effect when products change
+
+  useEffect(() => {
+    // Update filters while keeping existing ones
+    handlerMap.setFilters(prevFilters => ({
+      ...prevFilters,
+      category: categoryId, // Update or add the category filter
+    }));
+  }, [categoryId]);
 
   return (
     <div>

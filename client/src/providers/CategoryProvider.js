@@ -14,9 +14,10 @@ function CategoryProvider({ children }) {
     handleLoad(); // Load categories on mount
   }, []); // Only run once on mount
 
-  useEffect(() => {
-    handleGetCategoryAllTree(); // Update categoryAllTree whenever categories change
-  }, [categories]); // Run whenever categories change
+  useEffect(() =>{
+    handleGetCategoryAllTree();
+  },[categories])
+
 
   async function handleGet(id) {
     try {
