@@ -23,6 +23,10 @@ function NavbarContainer() {
     setOpenDropdown(null); // Close the dropdown when leaving the navbar
   };
 
+  const handleNavigate = (category) =>{
+    navigate(`/product/list/${category._id}`)
+  }
+
   // Close the dropdown when the URL changes
   useEffect(() => {
     setOpenDropdown(null);
@@ -43,7 +47,7 @@ function NavbarContainer() {
                 key={category._id}
                 onMouseEnter={() => handleCategoryHover(category._id)} // Open dropdown on category hover
               >
-                <a>{category.name}</a>
+                <a onClick={() => handleNavigate(category)}>{category.name}</a>
                 <div
                   className={`dropdown ${
                     openDropdown === category._id ? "show" : ""
@@ -53,9 +57,9 @@ function NavbarContainer() {
                     {category.subcategories ? (
                       category.subcategories.map((subcategory) => (
                         <div className="column" key={subcategory._id}>
-                          <h4>{subcategory.name}</h4>
+                          <h4 onClick={() => handleNavigate(subcategory)}>{subcategory.name}</h4>
                           {subcategory.subcategories.map((subcategory) => (
-                            <a key={subcategory._id}>{subcategory.name}</a>
+                            <a onClick={() => handleNavigate(subcategory)} key={subcategory._id}>{subcategory.name}</a>
                           ))}
                         </div>
                       ))

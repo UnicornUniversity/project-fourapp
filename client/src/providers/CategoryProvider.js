@@ -14,8 +14,11 @@ function CategoryProvider({ children }) {
 
   useEffect(() => {
     handleLoad();
+  }, []);
+
+  useEffect(() =>{
     handleGetCategoryAllTree();
-  }, [categories]);
+  },[categories])
 
   async function handleGet(id) {
     try {

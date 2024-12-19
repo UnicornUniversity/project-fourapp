@@ -7,7 +7,9 @@ export function ProductProvider({ children }) {
   const [productsAP, setProductsAP] = useState();
   const [recentProducts, setRecentProducts] = useState();
   const [product, setProduct] = useState();
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({
+    category:""
+  });
 
   useEffect(() => {
     handleLoad();
@@ -43,6 +45,10 @@ export function ProductProvider({ children }) {
     if (filters.maxPrice != null) {
       queryParams.append('maxPrice', filters.maxPrice);
     }
+    if(filters.category){
+      console.log(filters.category)
+      queryParams.append('categories[0]', filters.category)
+    }
     if (filters.colors && filters.colors.length > 0) {
       queryParams.append('colors[]', filters.colors.join(',')); // Join colors array into a comma-separated string
     }
@@ -60,6 +66,7 @@ export function ProductProvider({ children }) {
 
       const serverResponse = await response.json();
       if (response.ok) {
+        console.log(serverResponse)
         setProducts(serverResponse.products); // Assuming setProducts is defined in your component
       }
     } catch (error) {
