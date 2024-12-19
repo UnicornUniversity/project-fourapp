@@ -146,6 +146,7 @@
     object-fit: cover;
     width: 100%;
     height: 100%;
+
     position: absolute;
     /* Makes the image fill the wrapper */
     top: 0;

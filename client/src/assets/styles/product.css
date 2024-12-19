@@ -249,32 +249,32 @@
     background: #ccc;
 }
 
-  .productActions .button {
+.productActions .button {
     width: 100%;
     justify-content: center;
     padding: 1rem;
     transition: all 0.2s ease-in-out;
-  }
-  
+}
+
 .wishlistButton {
     background: white;
     border: 1px solid black;
     cursor: pointer;
-  }
-  
-  .wishlistButton.active {
+}
+
+.wishlistButton.active {
     background: black;
     color: white;
-  }
-  
-  .wishlistButton:disabled {
+}
+
+.wishlistButton:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     background: #ccc;
-  }
-  
-  /* Notification */
-  .notification {
+}
+
+/* Notification */
+.notification {
     position: fixed;
     top: 2rem;
     right: 1rem;
@@ -286,7 +286,7 @@
     -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     animation: slideIn 0.3s ease-out;
-  }
+}
 
 .addToBasketButton {
     width: 100%;
@@ -336,7 +336,7 @@
 .recentContainer {
     width: 95%;
     margin: 0 auto;
-    display:flex;
+    display: flex;
     flex-direction: column;
     row-gap: 2vh;
 }

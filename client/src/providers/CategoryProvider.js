@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 export const CategoryContext = createContext();
 
 function CategoryProvider({ children }) {
@@ -11,14 +10,14 @@ function CategoryProvider({ children }) {
   const [categoryAllTree, setCategoryAllTree] = useState([]);
 
   const navigate = useNavigate();
-
   useEffect(() => {
-    handleLoad();
-  }, []);
+    handleLoad(); // Load categories on mount
+  }, []); // Only run once on mount
 
   useEffect(() =>{
     handleGetCategoryAllTree();
   },[categories])
+
 
   async function handleGet(id) {
     try {
@@ -34,32 +33,6 @@ function CategoryProvider({ children }) {
       const serverResponse = await response.json(); // SHOULD BE TOKEN
       if (response.ok) {
         setCategory(serverResponse);
-      } else {
-        // console.error("Token verification failed:", data); // SOME ERROR
-      }
-    } catch (error) {
-      // console.error("Error sending token to backend:", error);
-    }
-  }
-
-  async function handleUpdate(id, body) {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/categories/${id}`, // OUR API ENDPOINT
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-
-      const serverResponse = await response.json(); // SHOULD BE TOKEN
-      if (response.ok) {
-        setNavbarCategories(serverResponse.categories);
-        setCategories(serverResponse.categories);
-        // console.log("Token verified successfully:", data); // SAVE TOKEN TO LOCAL BROWSER STORAGE ?
       } else {
         // console.error("Token verification failed:", data); // SOME ERROR
       }
@@ -94,6 +67,34 @@ function CategoryProvider({ children }) {
     }
   }
 
+  async function handleUpdate(id, body) {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/categories/${id}`, // OUR API ENDPOINT
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        }
+      );
+      handleLoad();
+      const serverResponse = await response.json(); // SHOULD BE TOKEN
+      if (response.ok) {
+        setNavbarCategories(serverResponse.categories);
+        /*await handleLoad();*/
+        setCategories(serverResponse.categories);
+
+        // console.log("Token verified successfully:", data); // SAVE TOKEN TO LOCAL BROWSER STORAGE ?
+      } else {
+        // console.error("Token verification failed:", data); // SOME ERROR
+      }
+    } catch (error) {
+      // console.error("Error sending token to backend:", error);
+    }
+  }
+
   async function handleDelete(id) {
     try {
       const response = await fetch(
@@ -108,6 +109,7 @@ function CategoryProvider({ children }) {
 
       handleLoad();
       const serverResponse = await response.json(); // SHOULD BE TOKEN
+
       if (response.ok) {
         console.log("deleted " + id);
       } else {
@@ -132,9 +134,10 @@ function CategoryProvider({ children }) {
         }
       );
 
-      handleLoad();
+      /*handleLoad();*/
       const serverResponse = await response.json(); // SHOULD BE TOKEN
       if (response.ok) {
+        await handleLoad();
         navigate("/user/profile/admin");
       } else {
         // console.error("Token verification failed:", data); // SOME ERROR
@@ -187,6 +190,17 @@ function CategoryProvider({ children }) {
       // console.error("Error sending token to backend:", error);
     }
   }
+  /*
+    handleLoad().then((response) => {
+      setNavbarCategories(response.categories);
+      setCategories(response.categories);
+    });
+
+    handleGetCategoryAllTree().then((response) => {
+      setCategoryAllTree(response);
+    });
+  }, []);
+*/
 
   const value = {
     navbarCategories,
@@ -201,7 +215,6 @@ function CategoryProvider({ children }) {
       handleGetCategoryTree,
       handleLoad,
       handleUpdate,
-      // Added handleUpdate to the handlerMap
     },
   };
 
