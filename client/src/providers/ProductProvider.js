@@ -8,7 +8,7 @@ export function ProductProvider({ children }) {
   const [recentProducts, setRecentProducts] = useState();
   const [product, setProduct] = useState();
   const [filters, setFilters] = useState({
-    category:""
+    category: ""
   });
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export function ProductProvider({ children }) {
     if (filters.maxPrice != null) {
       queryParams.append('maxPrice', filters.maxPrice);
     }
-    if(filters.category){
+    if (filters.category) {
       console.log(filters.category)
       queryParams.append('categories[0]', filters.category)
     }
@@ -131,6 +131,42 @@ export function ProductProvider({ children }) {
       console.error("Error fetching latest products:", error);
     }
   }
+  async function handleCreate({ product }) {
+    try {
+      const response = await fetch("http://localhost:5000/api/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(product)
+      });
+
+      const serverResponse = await response.json();
+      if (response.ok) {
+        await handleLoad();
+      }
+    } catch (error) {
+      console.error("Error creating product:", error);
+    }
+  }
+  async function handleAddVariant(product_id, variant) {
+    try {
+      const response = await fetch("http://localhost:5000/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(variant)
+      });
+
+      const serverResponse = await response.json();
+      if (response.ok) {
+        await handleLoad();
+      }
+    } catch (error) {
+      console.error("Error creating product:", error);
+    }
+  }
 
   const value = {
     filters,
@@ -143,6 +179,7 @@ export function ProductProvider({ children }) {
       handleGet,
       setProducts,
       handleDelete,
+      handleCreate
     },
   };
 
