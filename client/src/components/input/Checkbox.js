@@ -10,7 +10,7 @@ function Checkbox({ value, title = "" }) {
           className="hidden-xs-up"
           checked={value}
         />
-        <label for="cbx" className="cbx"></label>
+        <label htmlFor="cbx" className="cbx"></label>
       </div>
       <p>{title}</p>
     </div>
