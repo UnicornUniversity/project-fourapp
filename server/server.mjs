@@ -9,11 +9,11 @@ import cookieParser from "cookie-parser";
 import { env } from "./utils/env.mjs";
 import productsRouter from "./routes/products.mjs";
 import errorHandler from "./middleware/error-handler.mjs";
-import userRoutes from "./api/controllers/user-controller.js";
-import ordersRouter from "./api/controllers/order-controller.js";
 import requestLogger from "./middleware/request-logger.mjs";
 import auditlogRouter from "./routes/auditlog-router.js";
 import { auditRoute } from "./middleware/audit-route.mjs";
+import userRouter from "./routes/users.mjs";
+import ordersRouter from "./routes/orders.mjs";
 
 const app = express();
 
@@ -43,7 +43,7 @@ try {
 app.use("/api/auth", authRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/products", productsRouter);
-app.use("/api/users", userRoutes);
+app.use("/api/users", userRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/auditlogs", auditlogRouter);
 app.use(errorHandler);
