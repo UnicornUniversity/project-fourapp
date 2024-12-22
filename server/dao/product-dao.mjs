@@ -90,4 +90,15 @@ export const productsDao = {
   async getLatest(limit = 5) {
     return await Product.find({}).sort({ createdAt: -1 }).limit(limit);
   },
+
+  async addVariant(productId, variantData) {
+    const product = await productsDao.get(productId);
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    product.variants.push(variantData);
+    return await productsDao.update(productId, product);
+  },
 };
