@@ -15,6 +15,21 @@ export default class ProductController {
     }
   }
 
+  static async addVariant(req, res, next) {
+    try {
+      const productId = requireParam("productId", req.params);
+
+      if (!Types.ObjectId.isValid(productId)) {
+        throw ApiError.badRequest("Invalid product ID");
+      }
+
+      const updatedProduct = await ProductAbl.addVariant(productId, req.body);
+      res.status(201).json(updatedProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async delete(req, res, next) {
     try {
       const id = requireParam("productId", req.params);

@@ -4,6 +4,7 @@ import ProductController from "../api/controllers/product-controller.mjs";
 const router = new Router();
 
 router.post("/", ProductController.create);
+router.post("/:productId/variants", ProductController.addVariant);
 router.get("/", ProductController.list);
 router.get("/latest", ProductController.getLatest);
 router.get("/:productId", ProductController.get);
