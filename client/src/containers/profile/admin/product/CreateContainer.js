@@ -4,16 +4,17 @@ import Accordion from "../../../../components/accordion/Accordion";
 import Table from "../../../../components/table/Table";
 import Checkbox from "../../../../components/input/Checkbox";
 import { CategoryContext } from "../../../../providers/CategoryProvider"; // Assuming you have this context
-
+import { ProductContext } from "../../../../providers/ProductProvider";
 function ProductCreateContainer() {
   const { categories } = useContext(CategoryContext); // Get categories from context
-
+  const { handlerMap } = useContext(ProductContext);
   const [formData, setFormData] = useState({
     name: "",
     price: "", // Initialize as an empty string
     description: "",
     isOnline: false, // Default to false
     category: "",
+    categories: [],
     variants: [], // Initialize variants array in formData
   });
 
@@ -32,22 +33,24 @@ function ProductCreateContainer() {
 
   const handleSubmitProduct = async (event) => {
     event.preventDefault();
-
-    // Create a FormData object to send product data and images
-    const productData = new FormData();
-    productData.append("name", formData.name);
-    productData.append("price", formData.price);
-    productData.append("description", formData.description);
-    productData.append("isOnline", formData.isOnline);
-    productData.append("category", formData.category);
-
-    // Append images to FormData
-    for (const image of variantForm.images) {
-      productData.append("images", image); // Assuming images are file objects
-    }
-    console.log(productData);
-    console.log("Product created successfully");
-    setIsProductCreated(true); // Set product as created
+    const formData = new FormData(event.target);
+    let productData = Object.fromEntries(formData.entries());
+    productData.price = Number(productData.price);
+    productData.isOnline = formData.get("isOnline") === "on";
+    const selectedCategory = productData.category;
+    productData.categories = selectedCategory ? [selectedCategory] : [];
+    delete productData.category;
+    productData.variants = [];
+    handlerMap.handleCreate(productData);
+    setIsProductCreated(true);
+    setFormData({
+      name: "",
+      price: "",
+      description: "",
+      isOnline: false,
+      category: "",
+      variants: [],
+    });
   };
 
   const handleAddVariant = (event) => {
