@@ -131,7 +131,7 @@ export function ProductProvider({ children }) {
       console.error("Error fetching latest products:", error);
     }
   }
-  async function handleCreate({ product }) {
+  async function handleCreate(product) {
     try {
       const response = await fetch("http://localhost:5000/api/products", {
         method: "POST",
@@ -140,9 +140,8 @@ export function ProductProvider({ children }) {
         },
         body: JSON.stringify(product)
       });
-
       const serverResponse = await response.json();
-      if (response.ok) {
+      if (serverResponse.ok) {
         await handleLoad();
       }
     } catch (error) {
