@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
 export const ProductContext = createContext();
 
@@ -8,7 +8,7 @@ export function ProductProvider({ children }) {
   const [recentProducts, setRecentProducts] = useState();
   const [product, setProduct] = useState();
   const [filters, setFilters] = useState({
-    category: ""
+    category: "",
   });
 
   useEffect(() => {
@@ -41,39 +41,42 @@ export function ProductProvider({ children }) {
     const queryParams = new URLSearchParams();
 
     if (filters.minPrice != null) {
-      queryParams.append('minPrice', filters.minPrice);
+      queryParams.append("minPrice", filters.minPrice);
     }
     if (filters.maxPrice != null) {
-      queryParams.append('maxPrice', filters.maxPrice);
+      queryParams.append("maxPrice", filters.maxPrice);
     }
     if (filters.category) {
-      console.log(filters.category)
-      queryParams.append('categories[0]', filters.category)
+      console.log(filters.category);
+      queryParams.append("categories[0]", filters.category);
     }
     if (filters.colors && filters.colors.length > 0) {
-      queryParams.append('colors[]', filters.colors.join(',')); // Join colors array into a comma-separated string
+      queryParams.append("colors[]", filters.colors.join(",")); // Join colors array into a comma-separated string
     }
     if (filters.sizes && filters.sizes.length > 0) {
-      queryParams.append('sizes[]', filters.sizes.join(',')); // Join sizes array into a comma-separated string
+      queryParams.append("sizes[]", filters.sizes.join(",")); // Join sizes array into a comma-separated string
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/products?${queryParams.toString()}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/products?${queryParams.toString()}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const serverResponse = await response.json();
       if (response.ok) {
-        console.log(serverResponse)
+        //console.log(serverResponse)
         setProducts(serverResponse.products); // Assuming setProducts is defined in your component
       }
     } catch (error) {
       console.error("Error fetching products:", error);
     }
-  };
+  }
 
   async function handleLoadAP() {
     try {
@@ -105,7 +108,7 @@ export function ProductProvider({ children }) {
       const serverResponse = await response.json();
       if (response.ok) {
         setProduct(serverResponse);
-        console.log("Server response:", serverResponse);
+        // console.log("Server response:", serverResponse);
       } else {
         console.error("Failed to fetch product:", serverResponse);
       }
@@ -116,12 +119,15 @@ export function ProductProvider({ children }) {
 
   async function handleGetRecent() {
     try {
-      const response = await fetch("http://localhost:5000/api/products/latest", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/products/latest",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const serverResponse = await response.json();
       if (response.ok) {
@@ -138,7 +144,7 @@ export function ProductProvider({ children }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(product)
+        body: JSON.stringify(product),
       });
       const serverResponse = await response.json();
       if (serverResponse.ok) {
@@ -155,7 +161,7 @@ export function ProductProvider({ children }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(variant)
+        body: JSON.stringify(variant),
       });
 
       const serverResponse = await response.json();
@@ -178,15 +184,13 @@ export function ProductProvider({ children }) {
       handleGet,
       setProducts,
       handleDelete,
-      handleCreate
+      handleCreate,
     },
   };
 
   return (
-    <ProductContext.Provider value={value}>
-      {children}
-    </ProductContext.Provider>
+    <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
   );
-};
+}
 
 export default ProductProvider;
