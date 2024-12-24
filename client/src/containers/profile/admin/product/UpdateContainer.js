@@ -1,61 +1,66 @@
-import { useState } from "react";
+/*import React, { useState, useContext, useEffect } from "react";
 import Input from "../../../../components/input/Input";
 import Accordion from "../../../../components/accordion/Accordion";
+import Button from "../../../../components/button/Button";
 import Table from "../../../../components/table/Table";
+import Checkbox from "../../../../components/input/Checkbox";
+import { CategoryContext } from "../../../../providers/CategoryProvider";
+import { ProductContext } from "../../../../providers/ProductProvider";
+import { useParams } from "react-router-dom";
 
-function ProductUpdateContainer({ product }) {
-  // Manage form fields with useState
+function ProductUpdateContainer() {
+  const { categories } = useContext(CategoryContext);
+  const { handlerMap } = useContext(ProductContext);
+  const product = "X";
+  // State for product details and variants
   const [formData, setFormData] = useState({
     name: product.name || "",
     price: product.price || "",
     description: product.description || "",
     isOnline: product.isOnline || false,
-    category: product.category || "",
+    categories: product.categories || [],
+    variants: product.variants || [],
   });
 
-  const data = [
-    {
-      id: 1,
-      name: "Variety 1",
-      size: "XL",
-      color: "#FFFFF",
-      stock: 4,
-    },
-    {
-      id: 2,
-      name: "Variety 2",
-      size: "XL",
-      color: "#FFFFF",
-      stock: 4,
-    },
-    {
-      id: 36,
-      name: "Variety 3",
-      size: "XL",
-      color: "#FFFFF",
-      stock: 4,
-    },
-  ];
+  const [variantForm, setVariantForm] = useState({
+    name: "",
+    size: "",
+    color: "",
+    stock: "",
+    images: [],
+  });
 
-  const headers = ["Variety", "Size", "Color", "Stock"];
-  const columnKeys = ["name", "size", "color", "stock"];
+  const headers = ["Variety", "Size", "Color", "Stock", "Images"];
+  const columnKeys = ["name", "size", "color", "stock", "images"];
 
-  // Handle product form submission
-  const handleSubmitProduct = (event) => {
-    event.preventDefault();
-    console.log("Product data submitted", formData);
+  // Update the product
+  const handleUpdateProduct = () => {
+    const updatedProductData = {
+      ...formData,
+      price: Number(formData.price),
+    };
+    handlerMap.handleUpdate(product._id, updatedProductData);
+    console.log("Updated product:", updatedProductData);
   };
 
-  // Handle variety form submission
-  const handleSubmitVariety = (event) => {
+  // Add a new variant
+  const handleAddVariant = (event) => {
     event.preventDefault();
-    //console.log("Variety data submitted", varietyData);
+    const updatedVariants = [...formData.variants, variantForm];
+    setFormData({ ...formData, variants: updatedVariants });
+    setVariantForm({ name: "", size: "", color: "", stock: "", images: [] });
+  };
+
+  // Remove a variant by index
+  const handleRemoveVariant = (index) => {
+    const updatedVariants = formData.variants.filter((_, i) => i !== index);
+    setFormData({ ...formData, variants: updatedVariants });
   };
 
   return (
-    <div className="productForm">
-      <Accordion accordionTitle="Product">
-        <form onSubmit={handleSubmitProduct}>
+    <div className="productUpdateContainer">
+      <Accordion accordionTitle="Product" className="productAccordion">
+        <form>
           <Input
             type="text"
             className="profileInput"
@@ -72,9 +77,12 @@ function ProductUpdateContainer({ product }) {
             placeholder="Price"
             name="price"
             value={formData.price}
-            onChange={(e) =>
-              setFormData({ ...formData, price: e.target.value })
-            }
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d*\.?\d*$/.test(value)) {
+                setFormData({ ...formData, price: value });
+              }
+            }}
           >
             <label className="inputLabel">Price</label>
           </Input>
@@ -90,98 +98,135 @@ function ProductUpdateContainer({ product }) {
           </textarea>
 
           <div className="productFormCheckSelect">
-            <Input
-              type="checkbox"
-              className="profileInput"
-              name="isOnline"
+            <Checkbox
+              title="isOnline"
               checked={formData.isOnline}
               onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  isOnline: e.target.checked,
-                })
+                setFormData({ ...formData, isOnline: e.target.checked })
               }
-            >
-              <label className="inputLabel">isOnline</label>
-            </Input>
+            />
             <select
               name="category"
-              value={formData.category}
+              value={formData.categories[0] || ""}
               onChange={(e) =>
-                setFormData({ ...formData, category: e.target.value })
+                setFormData({ ...formData, categories: [e.target.value] })
               }
             >
               <option value="">Select Category</option>
-              <option value="1">Test 1</option>
-              <option value="2">Test 2</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+              ))}
             </select>
           </div>
-          <Input
-            type="submit"
-            className="profileInput"
-            name="submit"
-            value="Create product"
-          />
         </form>
       </Accordion>
 
-      <Accordion accordionTitle="Varieties">
-        <Table
-          data={data}
-          headers={headers}
-          columnKeys={columnKeys}
-          renderAction={() => (
-            <div>
-              <i className="fa-solid fa-trash"></i>
-            </div>
-          )}
-        />
-
-        <form onSubmit={handleSubmitVariety}>
+      <Accordion accordionTitle="Varieties" className="varietyAccordion">
+        {formData.variants.length > 0 ? (
+          <Table
+            className="varietyTable"
+            data={formData.variants.map((variant) => ({
+              ...variant,
+              images: variant.images.map((image) => image.name).join(", "), // Display file names
+            }))}
+            headers={headers}
+            columnKeys={columnKeys}
+            renderAction={(variant, index) => (
+              <div>
+                <i
+                  className="fa-solid fa-trash"
+                  onClick={() => handleRemoveVariant(index)}
+                ></i>
+              </div>
+            )}
+          />
+        ) : (
+          <p>No variants added yet.</p>
+        )}
+        <form onSubmit={handleAddVariant}>
           <Input
             type="text"
             className="profileInput"
-            placeholder="Variety name"
-            name="varietyName"
+            placeholder="Variant Name"
+            name="variantName"
+            value={variantForm.name}
+            onChange={(e) =>
+              setVariantForm({ ...variantForm, name: e.target.value })
+            }
           >
-            <label className="inputLabel">Variety name</label>
+            <label className="inputLabel">Variant Name</label>
           </Input>
           <Input
             type="text"
             className="profileInput"
             placeholder="Size"
-            name="varietySize"
+            name="size"
+            value={variantForm.size}
+            onChange={(e) =>
+              setVariantForm({ ...variantForm, size: e.target.value })
+            }
           >
-            <label className="inputLabel">Variety size</label>
+            <label className="inputLabel">Size</label>
           </Input>
           <Input
-            type="color"
+            type="text"
             className="profileInput"
-            placeholder="Variety color"
-            name="varietyColor"
+            placeholder="Color"
+            name="color"
+            value={variantForm.color}
+            onChange={(e) =>
+              setVariantForm({ ...variantForm, color: e.target.value })
+            }
           >
-            <label className="inputLabel">Variety color</label>
+            <label className="inputLabel">Color</label>
           </Input>
-
           <Input
-            type="number"
+            type="text"
             className="profileInput"
-            placeholder="Variety stock"
-            name="varietyStock"
+            placeholder="Stock"
+            name="stock"
+            value={variantForm.stock}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d*$/.test(value)) {
+                setVariantForm({ ...variantForm, stock: value });
+              }
+            }}
           >
-            <label className="inputLabel">Variety stock</label>
+            <label className="inputLabel">Stock</label>
           </Input>
-
+          <Input
+            type="file"
+            className="profileInput"
+            placeholder="Upload Images"
+            name="images"
+            multiple
+            onChange={(e) => {
+              const files = Array.from(e.target.files);
+              setVariantForm({ ...variantForm, images: files });
+            }}
+          >
+            <label className="inputLabel">Upload Images</label>
+          </Input>
           <Input
             type="submit"
             className="profileInput"
-            name="submit"
-            value="Create variety"
+            name="addVariant"
+            value="Add Variant"
           />
         </form>
       </Accordion>
+
+      <Button
+        className="profileInput"
+        buttonText="Update"
+        onClick={() => handleUpdateProduct()}
+      />
     </div>
   );
 }
 
 export default ProductUpdateContainer;
+*/

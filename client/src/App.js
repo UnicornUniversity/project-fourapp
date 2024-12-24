@@ -8,7 +8,7 @@ import CategoryProvider from "./providers/CategoryProvider";
 import ProfileLayout from "./layouts/ProfileLayout";
 import CartProvider from "./providers/CartProvider";
 import OrderProvider from "./providers/OrderProvider";
-import WishlistProvider from "./providers/WishlistProvider"; 
+import WishlistProvider from "./providers/WishlistProvider";
 
 /*---AUTH---*/
 import Login from "./pages/auth/LoginPage";
@@ -48,55 +48,67 @@ function App() {
             <ProductProvider>
               <CartProvider>
                 <OrderProvider>
-                <WishlistProvider>
-              <Layout>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/product/list/:categoryId" element={<ProductList />} />
-                  <Route path="/user/login" element={<Login />} />
+                  <WishlistProvider>
+                    <Layout>
+                      <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route
+                          path="/product/list/:categoryId"
+                          element={<ProductList />}
+                        />
+                        <Route path="/user/login" element={<Login />} />
 
-                  <Route path="/user/register" element={<Register />} />
-                  <Route
-                    path="/product/:productId"
-                    element={<ProductDetail />}
-                  />
-                  <Route path="/user/cart" element={<Cart />} />
-                </Routes>
+                        <Route path="/user/register" element={<Register />} />
+                        <Route
+                          path="/product/:productId"
+                          element={<ProductDetail />}
+                        />
+                        <Route path="/user/cart" element={<Cart />} />
+                      </Routes>
 
-                <ProfileLayout>
-                  <Routes>
-                    <Route
-                      path="/user/profile/admin/category/create"
-                      element={<CategoryCreate />}
-                    />
-                    <Route
-                      path="/user/profile/admin/product/create"
-                      element={<ProductCreate />}
-                    />
-                    <Route
-                      path="/user/profile/admin/product/update"
-                      element={<ProductUpdate />}
-                    />
-                    <Route
-                      path="/user/profile/admin/category/:id/update"
-                      element={<CategoryUpdate />}
-                    />
-                    <Route path="/user/profile" element={<ProfileOverview />} />
-                    <Route
-                      path="/user/profile/update"
-                      element={<ProfileUpdate />}
-                    />
-                     <Route path="/user/profile/orders" element={<ProfileOrders />} />
-                     <Route path="/user/profile/wishlist" element={<ProfileWishlist />} />
-                    <Route
-                      path="/user/profile/admin"
-                      element={<ProfileAdminPanel />}
-                    />
-                  </Routes>
-                </ProfileLayout>
-              </Layout>
-              </WishlistProvider>
-              </OrderProvider>
+                      <ProfileLayout>
+                        <Routes>
+                          <Route
+                            path="/user/profile/admin/category/create"
+                            element={<CategoryCreate />}
+                          />
+                          <Route
+                            path="/user/profile/admin/product/create"
+                            element={<ProductCreate />}
+                          />
+                          <Route
+                            path="/user/profile/admin/product/:id/update"
+                            element={<ProductUpdate />}
+                          />
+                          <Route
+                            path="/user/profile/admin/category/:id/update"
+                            element={<CategoryUpdate />}
+                          />
+                          <Route
+                            path="/user/profile"
+                            element={<ProfileOverview />}
+                          />
+                          <Route
+                            path="/user/profile/update"
+                            element={<ProfileUpdate />}
+                          />
+                          <Route
+                            path="/user/profile/orders"
+                            element={<ProfileOrders />}
+                          />
+                          <Route
+                            path="/user/profile/wishlist"
+                            element={<ProfileWishlist />}
+                          />
+                          <Route
+                            path="/user/profile/admin"
+                            element={<ProfileAdminPanel />}
+                          />
+                        </Routes>
+                      </ProfileLayout>
+                    </Layout>
+                  </WishlistProvider>
+                </OrderProvider>
               </CartProvider>
             </ProductProvider>
           </CategoryProvider>

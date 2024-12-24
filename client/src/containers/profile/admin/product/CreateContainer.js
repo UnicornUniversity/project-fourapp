@@ -1,21 +1,22 @@
 import React, { useState, useContext } from "react";
 import Input from "../../../../components/input/Input";
 import Accordion from "../../../../components/accordion/Accordion";
+import Button from "../../../../components/button/Button";
 import Table from "../../../../components/table/Table";
 import Checkbox from "../../../../components/input/Checkbox";
-import { CategoryContext } from "../../../../providers/CategoryProvider"; // Assuming you have this context
+import { CategoryContext } from "../../../../providers/CategoryProvider";
 import { ProductContext } from "../../../../providers/ProductProvider";
+
 function ProductCreateContainer() {
-  const { categories } = useContext(CategoryContext); // Get categories from context
+  const { categories } = useContext(CategoryContext);
   const { handlerMap } = useContext(ProductContext);
   const [formData, setFormData] = useState({
     name: "",
-    price: "", // Initialize as an empty string
+    price: 0,
     description: "",
-    isOnline: false, // Default to false
-    category: "",
+    isOnline: false,
     categories: [],
-    variants: [], // Initialize variants array in formData
+    variants: [],
   });
 
   const [variantForm, setVariantForm] = useState({
@@ -23,69 +24,47 @@ function ProductCreateContainer() {
     size: "",
     color: "",
     stock: 0,
-    images: [], // Initialize images array
+    images: [],
   });
 
-  const [isProductCreated, setIsProductCreated] = useState(false); // Track if product is created
+  const [isProductCreated, setIsProductCreated] = useState(false);
 
   const headers = ["Variety", "Size", "Color", "Stock", "Images"];
-  const columnKeys = ["name", "size", "color", "stock", "images"]; // Map header order to keys
+  const columnKeys = ["name", "size", "color", "stock", "images"];
 
   const handleSubmitProduct = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     let productData = Object.fromEntries(formData.entries());
-    productData.price = Number(productData.price);
     productData.isOnline = formData.get("isOnline") === "on";
     const selectedCategory = productData.category;
     productData.categories = selectedCategory ? [selectedCategory] : [];
-    delete productData.category;
     productData.variants = [];
-    handlerMap.handleCreate(productData);
     setIsProductCreated(true);
-    setFormData({
-      name: "",
-      price: "",
-      description: "",
-      isOnline: false,
-      category: "",
-      variants: [],
-    });
   };
 
   const handleAddVariant = (event) => {
     event.preventDefault();
-    // Add the new variant to the variants array in formData
     const updatedVariants = [...formData.variants, variantForm];
     setFormData({ ...formData, variants: updatedVariants });
 
-    // Log the updated formData
-    console.log("Updated formData with variants:", {
-      ...formData,
-      variants: updatedVariants,
-    });
-
-    // Clear the variant form
     setVariantForm({ name: "", size: "", color: "", stock: 0, images: [] });
   };
 
-  const handlePriceChange = (e) => {
-    const value = e.target.value;
-    // Allow only numbers and set the price
-    if (/^\d*\.?\d*$/.test(value) || value === "") {
-      setFormData({ ...formData, price: value });
-    }
-  };
-
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    setVariantForm({ ...variantForm, images: files }); // Store the file objects for upload
+  const handleCreateProduct = () => {
+    const productData = {
+      ...formData,
+      price: Number(formData.price),
+      categories: formData.category ? [formData.category] : [],
+    };
+    delete productData.category;
+    handlerMap.handleCreate(productData);
   };
 
   return (
-    <div className="profileProductCreate">
+    <div className="productCreateContainer">
       <Accordion accordionTitle="Product" className="productAccordion">
-        {!isProductCreated ? ( // Only show the product creation form if the product is not created
+        {!isProductCreated ? (
           <form onSubmit={handleSubmitProduct}>
             <Input
               type="text"
@@ -105,7 +84,12 @@ function ProductCreateContainer() {
               placeholder="Price"
               name="price"
               value={formData.price}
-              onChange={handlePriceChange} // Use the custom price change handler
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (/^\d*\.?\d*$/.test(value) || value === "") {
+                  setFormData({ ...formData, price: value });
+                }
+              }} // Use the custom price change handler
             >
               <label className="inputLabel">Price</label>
             </Input>
@@ -221,26 +205,31 @@ function ProductCreateContainer() {
               <label className="inputLabel">Color</label>
             </Input>
             <Input
-              type="number"
+              type="text" // Change type to text
               className="profileInput"
               placeholder="Stock"
               name="stock"
               value={variantForm.stock}
-              onChange={(e) =>
-                setVariantForm({ ...variantForm, stock: e.target.value })
-              }
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (/^\d*$/.test(value)) {
+                  // Allow only numbers
+                  setVariantForm({ ...variantForm, stock: value });
+                }
+              }}
             >
               <label className="inputLabel">Stock</label>
             </Input>
+
             <Input
               type="file"
               className="profileInput"
               placeholder="Upload Images"
               name="images"
               multiple
-              onChange={handleImageChange}
+              //onChange={handleImageChange}
             >
-              <label className="inputLabel">Upload Images</label>
+              <label className="inputLabel"> Upload Images</label>
             </Input>
             <Input
               type="submit"
@@ -251,6 +240,11 @@ function ProductCreateContainer() {
           </form>
         )}
       </Accordion>
+      <Button
+        className="profileInput"
+        buttonText="Create"
+        onClick={() => handleCreateProduct()}
+      />
     </div>
   );
 }

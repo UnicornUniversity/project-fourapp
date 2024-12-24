@@ -1,8 +1,8 @@
 import "./../../assets/styles/global.css";
 
-function Checkbox({ value, title = "" }) {
+function Checkbox({ value, title = "", onChange }) {
   return (
-    <div className="checkboxWrapper">
+    <div className="checkboxWrapper" onChange={onChange}>
       <div>
         <input
           type="checkbox"
