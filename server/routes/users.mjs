@@ -1,5 +1,6 @@
 import express from "express";
 import { UserController } from "../api/controllers/user-controller.js";
+import authMiddleware from "../middleware/auth-middleware.js";
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.put("/:userId", UserController.update);
 router.get("/:userId", UserController.get);
 router.delete("/:userId", UserController.delete);
 router.get("/", UserController.list);
-router.post("/cart/add-item", UserController.addItemToCart);
+router.post("/cart/add-item",authMiddleware ,UserController.addItemToCart);
 router.post("/wishlist/add-item", UserController.addItemToWishlist);
 
 export default router;

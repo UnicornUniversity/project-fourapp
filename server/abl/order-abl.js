@@ -8,6 +8,7 @@ class OrderAbl {
   // Vytvoření objednávky
   static async createOrder(user_id) {
     const user = await userDao.findById(user_id);
+    console.log(user , user_id , 1)
     if (!user) throw ApiError.notFound("User not found");
 
     const cart = user.cart_array || [];

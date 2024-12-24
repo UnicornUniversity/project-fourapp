@@ -78,6 +78,7 @@ function ProductListContainer() {
     <div>
       {filtersSettings ? <ProductFilters filtersSettings={filtersSettings} /> : <></>}
       <div className="productList">
+        {console.log(products)}
         {products ? (
           products.map((product) => (
             <ProductCard key={product._id} product={product} />
