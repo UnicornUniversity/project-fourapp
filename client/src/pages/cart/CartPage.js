@@ -3,9 +3,18 @@ import { CartContext } from '../../providers/CartProvider';
 import CartItem from '../../components/cart/CartItem';
 import Card from '../../components/card/Card';
 import '../../assets/styles/cart.css';
+import { useNavigate } from 'react-router-dom';
+import { OrderContext } from '../../providers/OrderProvider';
 
 function CartPage() {
   const { cartItems } = useContext(CartContext);
+  const {createOrder} = useContext(OrderContext)
+  const navigate = useNavigate()
+
+  function handleShipping(){
+    createOrder()
+    navigate('/shipping')
+  }
   
   const calculateTotal = () => {
     return cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -31,7 +40,7 @@ function CartPage() {
           <strong>Total:</strong>
           <strong>{calculateTotal()} $</strong>
         </div>
-        <button className="checkoutButton">Continue to payment</button>
+        <button onClick={handleShipping} className="checkoutButton">Continue to payment</button>
       </Card>
     </div>
   );

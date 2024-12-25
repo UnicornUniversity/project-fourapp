@@ -36,6 +36,8 @@ import CategoryCreate from "./pages/profile/admin/category/CreatePage";
 import ProductCreate from "./pages/profile/admin/product/CreatePage";
 import CategoryUpdate from "./pages/profile/admin/category/UpdatePage";
 import ProductUpdate from "./pages/profile/admin/product/UpdatePage";
+import { Shipping } from "./pages/order/Shipping";
+import { Overview } from "./pages/order/Overview";
 /*-------*/
 /*-------------*/
 
@@ -57,14 +59,15 @@ function App() {
                           element={<ProductList />}
                         />
                         <Route path="/user/login" element={<Login />} />
-
-                        <Route path="/user/register" element={<Register />} />
-                        <Route
-                          path="/product/:productId"
-                          element={<ProductDetail />}
-                        />
-                        <Route path="/user/cart" element={<Cart />} />
-                      </Routes>
+                  <Route path="/user/register" element={<Register />} />
+                  <Route
+                    path="/product/:productId"
+                    element={<ProductDetail />}
+                  />
+                  <Route path="/user/cart" element={<Cart />} />
+                  <Route path="/Shipping" element={<Shipping/>} />
+                  <Route path="/Overview" element={<Overview />} />
+                </Routes>
 
                       <ProfileLayout>
                         <Routes>

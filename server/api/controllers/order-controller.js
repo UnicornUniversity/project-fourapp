@@ -5,7 +5,7 @@ import { ApiError } from "../../utils/error.mjs";
 export class OrderController {
   static async create(req, res, next) {
     try {
-      const userId = req.user?._id;
+      const userId = req.user?.id;
 
       const user = await userDao.findById(userId);
       if (!user) {
