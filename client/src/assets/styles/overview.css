@@ -1,0 +1,51 @@
+.shippingPage {
+    padding: 20px;
+}
+.overViewContainer{
+    padding: 2rem;
+}
+.productRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc; /* Optional: adds a separator between products */
+    padding: 0.5rem 2rem
+}
+
+.productImage {
+    width: 50px; /* Adjust size as needed */
+    height: auto;
+    margin-right: 15px;
+}
+
+.productDetails {
+    flex-grow: 1;
+    display: flex;
+    gap: 3rem;
+}
+
+.customerInfo {
+    margin-top: 20px;
+}
+
+.shippingLabel {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block; /* Ensures labels are on their own line */
+}
+
+.shippingInput {
+    width: 100%; /* Full width for inputs */
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.colorSquare {
+    width: 20px; /* Adjust size as needed */
+    height: 20px; /* Adjust size as needed */
+    display: inline-block; /* Ensures it stays inline with text */
+    margin-right: 10px; /* Space between the square and the text */
+    border: 1px solid #ccc; /* Optional: adds a border around the square */
+}

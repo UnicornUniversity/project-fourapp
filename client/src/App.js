@@ -37,6 +37,7 @@ import ProductCreate from "./pages/profile/admin/product/CreatePage";
 import CategoryUpdate from "./pages/profile/admin/category/UpdatePage";
 import ProductUpdate from "./pages/profile/admin/product/UpdatePage";
 import { Shipping } from "./pages/order/Shipping";
+import { Overview } from "./pages/order/Overview";
 /*-------*/
 /*-------------*/
 
@@ -63,6 +64,7 @@ function App() {
                   />
                   <Route path="/user/cart" element={<Cart />} />
                   <Route path="/Shipping" element={<Shipping/>} />
+                  <Route path="/Overview" element={<Overview />} />
                 </Routes>
 
                 <ProfileLayout>
