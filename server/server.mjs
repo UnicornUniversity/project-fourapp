@@ -14,8 +14,13 @@ import auditlogRouter from "./routes/auditlog-router.js";
 import { auditRoute } from "./middleware/audit-route.mjs";
 import userRouter from "./routes/users.mjs";
 import ordersRouter from "./routes/orders.mjs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(express.json());
@@ -29,6 +34,8 @@ app.use(passport.initialize());
 app.use(cookieParser());
 app.use(requestLogger);
 app.use(auditRoute);
+
+app.use('/images', express.static(path.join(__dirname, 'assets/images')));
 
 // Připojení k databázi
 try {
