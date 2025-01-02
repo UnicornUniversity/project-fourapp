@@ -9,7 +9,7 @@ export function ProductsPanelContainer() {
   const navigate = useNavigate();
 
   function transformComplexData(complexData) {
-    console.log(complexData);
+    //console.log(complexData);
     return complexData.map((product) => {
       return {
         _id: product._id, // Use _id as id
@@ -21,7 +21,7 @@ export function ProductsPanelContainer() {
     });
   }
 
-  console.log(productsAP);
+  //console.log(productsAP);
 
   if (productsAP) {
     const transformedData = transformComplexData(productsAP);
