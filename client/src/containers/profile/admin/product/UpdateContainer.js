@@ -1,4 +1,4 @@
-/*import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Input from "../../../../components/input/Input";
 import Accordion from "../../../../components/accordion/Accordion";
 import Button from "../../../../components/button/Button";
@@ -11,17 +11,20 @@ import { useParams } from "react-router-dom";
 function ProductUpdateContainer() {
   const { categories } = useContext(CategoryContext);
   const { handlerMap } = useContext(ProductContext);
-  const product = "X";
+  const { id: productId } = useParams(); // Destructure the id parameter from URL
+
   // State for product details and variants
+  const [product, setProduct] = useState(null);
   const [formData, setFormData] = useState({
-    name: product.name || "",
-    price: product.price || "",
-    description: product.description || "",
-    isOnline: product.isOnline || false,
-    categories: product.categories || [],
-    variants: product.variants || [],
+    name: "",
+    price: "",
+    description: "",
+    isOnline: false,
+    categories: [],
+    variants: [],
   });
 
+  const [isFormInitialized, setIsFormInitialized] = useState(false); // Track if formData is initialized
   const [variantForm, setVariantForm] = useState({
     name: "",
     size: "",
@@ -33,13 +36,40 @@ function ProductUpdateContainer() {
   const headers = ["Variety", "Size", "Color", "Stock", "Images"];
   const columnKeys = ["name", "size", "color", "stock", "images"];
 
+  // Fetch product data when the component mounts
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const productData = await handlerMap.handleGet(productId);
+        setProduct(productData);
+
+        // Initialize formData only if not already done
+        if (!isFormInitialized) {
+          setFormData({
+            name: productData.name || "",
+            price: productData.price || "",
+            description: productData.description || "",
+            isOnline: productData.isOnline || false,
+            categories: productData.categories || [],
+            variants: productData.variants || [],
+          });
+          setIsFormInitialized(true); // Mark as initialized
+        }
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
+    };
+
+    fetchProduct();
+  }, [productId, handlerMap, isFormInitialized]); // Add isFormInitialized as a dependency
+
   // Update the product
   const handleUpdateProduct = () => {
     const updatedProductData = {
       ...formData,
       price: Number(formData.price),
     };
-    handlerMap.handleUpdate(product._id, updatedProductData);
+    handlerMap.handleUpdate(updatedProductData, productId);
     console.log("Updated product:", updatedProductData);
   };
 
@@ -56,6 +86,10 @@ function ProductUpdateContainer() {
     const updatedVariants = formData.variants.filter((_, i) => i !== index);
     setFormData({ ...formData, variants: updatedVariants });
   };
+
+  if (!product) {
+    return <p>Loading product data...</p>;
+  }
 
   return (
     <div className="productUpdateContainer">
@@ -222,11 +256,10 @@ function ProductUpdateContainer() {
       <Button
         className="profileInput"
         buttonText="Update"
-        onClick={() => handleUpdateProduct()}
+        onClick={handleUpdateProduct}
       />
     </div>
   );
 }
 
 export default ProductUpdateContainer;
-*/

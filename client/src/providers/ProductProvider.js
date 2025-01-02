@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ProductContext = createContext();
 
@@ -10,6 +11,7 @@ export function ProductProvider({ children }) {
   const [filters, setFilters] = useState({
     category: "",
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleLoad();
@@ -27,7 +29,7 @@ export function ProductProvider({ children }) {
       });
 
       handleLoadAP();
-      const serverResponse = await response.json();
+      //const serverResponse = await response.json();
       if (response.ok) {
         console.log("deleted " + id);
       }
@@ -108,6 +110,7 @@ export function ProductProvider({ children }) {
       const serverResponse = await response.json();
       if (response.ok) {
         setProduct(serverResponse);
+        return serverResponse;
         // console.log("Server response:", serverResponse);
       } else {
         console.error("Failed to fetch product:", serverResponse);
@@ -116,7 +119,24 @@ export function ProductProvider({ children }) {
       console.error("Error fetching product:", error);
     }
   }
-
+  async function handleUpdate(product, id) {
+    try {
+      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(product),
+      });
+      handleLoad();
+      const serverResponse = await response.json();
+      if (serverResponse.ok) {
+        await handleLoad();
+      }
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
+  }
   async function handleGetRecent() {
     try {
       const response = await fetch(
@@ -147,13 +167,15 @@ export function ProductProvider({ children }) {
         body: JSON.stringify(product),
       });
       const serverResponse = await response.json();
-      if (serverResponse.ok) {
+      if (response.ok) {
+        navigate("/user/profile/admin");
         await handleLoad();
       }
     } catch (error) {
       console.error("Error creating product:", error);
     }
   }
+
   async function handleAddVariant(product_id, variant) {
     try {
       const response = await fetch("http://localhost:5000/api", {
@@ -185,6 +207,7 @@ export function ProductProvider({ children }) {
       setProducts,
       handleDelete,
       handleCreate,
+      handleUpdate,
     },
   };
 
