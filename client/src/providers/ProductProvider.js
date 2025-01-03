@@ -176,25 +176,6 @@ export function ProductProvider({ children }) {
     }
   }
 
-  async function handleAddVariant(product_id, variant) {
-    try {
-      const response = await fetch("http://localhost:5000/api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(variant),
-      });
-
-      const serverResponse = await response.json();
-      if (response.ok) {
-        await handleLoad();
-      }
-    } catch (error) {
-      console.error("Error creating product:", error);
-    }
-  }
-
   const value = {
     filters,
     products,
