@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const ProductContext = createContext();
 
@@ -9,15 +9,16 @@ export function ProductProvider({ children }) {
   const [recentProducts, setRecentProducts] = useState();
   const [product, setProduct] = useState();
   const [filters, setFilters] = useState({
-    category: "",
   });
+  const [category, setCategory] = useState("")
   const navigate = useNavigate();
 
   useEffect(() => {
     handleLoad();
     handleLoadAP();
     handleGetRecent();
-  }, [filters]);
+    console.log(category)
+  }, [filters , category]);
 
   async function handleDelete(id) {
     try {
@@ -42,24 +43,35 @@ export function ProductProvider({ children }) {
     // Construct the query parameters conditionally
     const queryParams = new URLSearchParams();
 
+    // Add minPrice if it exists
     if (filters.minPrice != null) {
         queryParams.append("minPrice", filters.minPrice);
     }
+
+    // Add maxPrice if it exists
     if (filters.maxPrice != null) {
         queryParams.append("maxPrice", filters.maxPrice);
     }
-    if (filters.category) {
-        console.log(filters.category);
-        queryParams.append("categories[0]", filters.category);
+
+    // Add category if it exists
+    if (category) {
+        queryParams.append("categories[]", category);
     }
+
+    // Add colors if they exist
     if (filters.colors && filters.colors.length > 0) {
-        queryParams.append("colors[]", filters.colors.join(",")); // Join colors array into a comma-separated string
+        // Append each color as a separate query parameter
+        filters.colors.forEach((color) => queryParams.append("colors[]", color));
     }
+
+    // Add sizes if they exist
     if (filters.sizes && filters.sizes.length > 0) {
-        queryParams.append("sizes[]", filters.sizes.join(",")); // Join sizes array into a comma-separated string
+        // Append each size as a separate query parameter
+        filters.sizes.forEach((size) => queryParams.append("sizes[]", size));
     }
 
     try {
+        // Fetch products from the backend
         const response = await fetch(
             `http://localhost:5000/api/products?${queryParams.toString()}`,
             {
@@ -70,14 +82,22 @@ export function ProductProvider({ children }) {
             }
         );
 
+        // Parse the response
         const serverResponse = await response.json();
+
         if (response.ok) {
             // Filter out products that have no variants or isOnline is false
-            const filteredProducts = serverResponse.products.filter(product => 
-                product.variants && product.variants.length > 0 && product.isOnline !== false
+            const filteredProducts = serverResponse.products.filter(
+                (product) =>
+                    product.variants &&
+                    product.variants.length > 0 &&
+                    product.isOnline !== false
             );
 
+            // Update the products state
             setProducts(filteredProducts); // Assuming setProducts is defined in your component
+        } else {
+            console.error("Error fetching products:", serverResponse);
         }
     } catch (error) {
         console.error("Error fetching products:", error);
@@ -197,6 +217,7 @@ export function ProductProvider({ children }) {
     recentProducts,
     product,
     productsAP,
+    category,
     handlerMap: {
       setFilters,
       handleGet,
@@ -204,6 +225,7 @@ export function ProductProvider({ children }) {
       handleDelete,
       handleCreate,
       handleUpdate,
+      setCategory
     },
   };
 
