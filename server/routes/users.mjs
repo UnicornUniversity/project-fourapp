@@ -13,6 +13,6 @@ router.get("/:userId", UserController.get);
 router.delete("/:userId", UserController.delete);
 router.get("/", UserController.list);
 router.post("/cart/add-item",authMiddleware ,UserController.addItemToCart);
-router.post("/wishlist/add-item", UserController.addItemToWishlist);
+router.post("/wishlist/add-item",authMiddleware, UserController.addItemToWishlist);
 
 export default router;
