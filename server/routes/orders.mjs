@@ -9,5 +9,6 @@ router.post("/", authMiddleware, OrderController.create);
 router.delete("/:id", OrderController.deleteOrder);
 router.post("/:id/complete", OrderController.completeOrder);
 router.patch("/:id/payment", OrderController.addPaymentMethod);
+router.get("/user/:userId", authMiddleware, OrderController.getUserOrders);
 
 export default router;
