@@ -4,6 +4,7 @@ import {
   productVariantSchema,
 } from "../types/products.mjs";
 import { productsDao } from "../dao/product-dao.mjs";
+import { ApiError } from "../utils/error.mjs";
 
 export class ProductAbl {
   static async create(data) {
@@ -37,5 +38,23 @@ export class ProductAbl {
 
   static async getLatest() {
     return await productsDao.getLatest();
+  }
+
+  static async updateVariantImages(productId, variantId, imageUrls) {
+    const product = await productsDao.get(productId);
+
+    if (!product) {
+      throw ApiError.notFound("Product not found");
+    }
+
+    const variant = product.variants.id(variantId);
+    if (!variant) {
+      throw ApiError.notFound("Variant not found");
+    }
+
+    // Update variant images
+    variant.images = imageUrls;
+
+    return await productsDao.update(productId, product);
   }
 }
