@@ -83,14 +83,24 @@
   font-size: 14px;
 }
 
-.statusShipped {
+.orderStatus.statusShipped {
   background-color: #e8f5e9;
   color: #2e7d32;
 }
 
-.statusProcessing {
+.orderStatus.statusProcessing {
   background-color: #e3f2fd;
   color: #1976d2;
+}
+
+.orderStatus.statusCompleted {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.orderStatus.statusCancelled {
+  background-color: #ffebee;
+  color: #c62828;
 }
 
 .orderDate {
@@ -98,13 +108,8 @@
   font-size: 14px;
 }
 
-.orderSections {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.orderSection {
+.orderProductsHeader,
+.shippingAddressHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -112,7 +117,14 @@
   background-color: #f8f8f8;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 12px;
+}
+
+.orderProductsHeader h4,
+.shippingAddressHeader h4 {
+  margin: 0;
   font-size: 14px;
+  font-weight: 500;
 }
 
 .toggleIcon {
@@ -120,12 +132,30 @@
   color: #666;
 }
 
+.orderProducts {
+  margin-top: 8px;
+}
+
+.shippingAddressContent {
+  padding: 12px;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.shippingAddressContent p {
+  margin: 4px 0;
+}
+
 .orderTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 16px;
   padding-top: 16px;
   border-top: 1px solid #eee;
-  text-align: right;
-  font-size: 14px;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
@@ -133,5 +163,13 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+  }
+  
+  .filtersContainer {
+    padding: 12px;
+  }
+  
+  .filterSelect {
+    width: 100%;
   }
 }

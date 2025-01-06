@@ -8,6 +8,7 @@ import CategoryProvider from "./providers/CategoryProvider";
 import ProfileLayout from "./layouts/ProfileLayout";
 import CartProvider from "./providers/CartProvider";
 import OrderProvider from "./providers/OrderProvider";
+import OrdersProvider from "./providers/OrdersProvider";
 import WishlistProvider from "./providers/WishlistProvider";
 
 /*---AUTH---*/
@@ -50,6 +51,7 @@ function App() {
             <ProductProvider>
               <CartProvider>
                 <OrderProvider>
+                  <OrdersProvider>
                   <WishlistProvider>
                     <Layout>
                       <Routes>
@@ -111,6 +113,7 @@ function App() {
                       </ProfileLayout>
                     </Layout>
                   </WishlistProvider>
+                  </OrdersProvider>
                 </OrderProvider>
               </CartProvider>
             </ProductProvider>
