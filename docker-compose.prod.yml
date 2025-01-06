@@ -21,7 +21,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
       args:
-        - REACT_APP_API_URL=/api
+        - REACT_APP_API_URL=
     networks:
       - app_network
 
