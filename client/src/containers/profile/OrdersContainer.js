@@ -4,6 +4,61 @@ import { UserContext } from '../../providers/UserProvider';
 import { useContext } from 'react';
 import '../../assets/styles/orders.css';
 
+const OrderProductDetails = ({ productId, variantId, quantity }) => {
+  const [productDetails, setProductDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch product details');
+        }
+
+        const data = await response.json();
+        const variant = data.variants.find(v => v._id === variantId);
+        setProductDetails({ ...data, selectedVariant: variant });
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProductDetails();
+  }, [productId, variantId]);
+
+  if (loading) {
+    return <div className="text-gray-500">Loading...</div>;
+  }
+
+  if (!productDetails) {
+    return <div className="text-red-500">Product not found</div>;
+  }
+
+  const { name, selectedVariant } = productDetails;
+  
+  const formatProductInfo = () => {
+    if (!selectedVariant) return `×${quantity} ${name}`;
+    return `×${quantity} ${name} Color: ${selectedVariant.color} Size: ${selectedVariant.size} ${selectedVariant.name}`;
+  };
+
+  return (
+    <div className="w-full py-2 border-b last:border-b-0">
+      <span>
+        {formatProductInfo()}
+      </span>
+    </div>
+  );
+};
+
 function OrdersContainer() {
   const { orders, loading, error, getAllOrders } = useContext(OrderContext);
   const { user } = useContext(UserContext);
@@ -59,20 +114,20 @@ function OrdersContainer() {
 
   if (!user) {
     return (
-      <div style={{ textAlign: 'center', padding: '2rem' }}>
+      <div className="text-center p-8">
         <p>Please log in to view your orders.</p>
       </div>
     );
   }
 
   if (loading) return (
-    <div style={{ textAlign: 'center', padding: '2rem' }}>
+    <div className="text-center p-8">
       Loading orders...
     </div>
   );
 
   if (error) return (
-    <div style={{ textAlign: 'center', padding: '2rem', color: 'red' }}>
+    <div className="text-center p-8 text-red-500">
       {error}
     </div>
   );
@@ -80,9 +135,9 @@ function OrdersContainer() {
   const filteredOrders = filterOrders(orders);
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>My Orders</h2>
+    <div className="max-w-7xl mx-auto p-4">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">My Orders</h2>
         
         <div className="filtersContainer">
           <div className="filterGroup">
@@ -111,7 +166,7 @@ function OrdersContainer() {
               <option value="all">All Statuses</option>
               {statuses.map((status) => (
                 <option key={status} value={status}>
-                  {status.charAt(0).toUpperCase() + status.slice(1)}
+                  {status}
                 </option>
               ))}
             </select>
@@ -119,7 +174,7 @@ function OrdersContainer() {
         </div>
       </div>
 
-      <div>
+      <div className="space-y-4">
         {filteredOrders.length > 0 ? (
           filteredOrders.map((order) => (
             <div key={order._id} className="orderCard">
@@ -144,15 +199,14 @@ function OrdersContainer() {
               </div>
               
               {expandedProducts[order._id] && (
-                <div className="orderProducts">
+                <div className="orderProducts bg-gray-50 rounded-md p-4 mt-2">
                   {order.products_array.map((product) => (
-                    <div key={`${product.id}-${product.variantId}`} className="productItem">
-                      <div className="productInfo">
-                        <span>×{product.quantity}</span>
-                        <span>Product ID: {product.id}</span>
-                        <span>Variant: {product.variantId}</span>
-                      </div>
-                    </div>
+                    <OrderProductDetails
+                      key={`${product.id}-${product.variantId}`}
+                      productId={product.id}
+                      variantId={product.variantId}
+                      quantity={product.quantity}
+                    />
                   ))}
                 </div>
               )}
@@ -183,7 +237,7 @@ function OrdersContainer() {
             </div>
           ))
         ) : (
-          <div style={{ textAlign: 'center', padding: '2rem', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
+          <div className="text-center p-8 bg-gray-50 rounded">
             <p>No orders found with selected filters.</p>
           </div>
         )}
