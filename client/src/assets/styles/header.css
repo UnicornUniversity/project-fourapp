@@ -64,7 +64,8 @@
 }
 
 .dropdown h4 {
-    text-decoration: underline;
+
+    font-weight: lighter;
 }
 
 .dropdown .column {
