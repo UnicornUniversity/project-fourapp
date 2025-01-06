@@ -1,11 +1,10 @@
 {
     # Global options
     admin off
-    auto_https disable_redirects
 }
 
 # Replace these with your actual domain names in production
-:80 {
+srv687262.hstgr.cloud {
     handle /api/* {
         uri strip_prefix /api
         reverse_proxy server:5000
