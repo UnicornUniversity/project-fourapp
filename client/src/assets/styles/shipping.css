@@ -1,78 +1,35 @@
-/* Shipping Form Styles */
-.shippingForm {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem; /* Space between form elements */
-    max-width: 600px; /* Set a max width for the form */
-    margin: 0 auto; /* Center the form */
-    padding: 2rem; /* Add padding around the form */
-    background-color: #f9f9f9; /* Light background color */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.shippingForm h2 {
-    margin-bottom: 1rem; /* Space below the heading */
-    font-size: 1.5rem; /* Heading size */
-    color: #333; /* Heading color */
-}
-
-/* Row styles for input groups */
-.row {
-    display: flex;
-    justify-content: space-between; /* Space between items */
-    gap: 1rem; /* Space between inputs in the same row */
-}
-
-/* Input styles */
-.shippingInput {
-    padding: 0.75rem; /* Padding inside the input */
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 1rem; /* Font size */
-}
-
-/* Full width style for single input */
-.fullWidth {
-    flex: 1 1 100%; /* Allow input to take the full width */
-}
-
-/* Label styles */
-label {
-    margin-bottom: 0.5rem; /* Space below labels */
-    font-weight: bold; /* Bold labels */
-    color: #555; /* Label color */
-}
-
-/* Button styles */
-button {
-    padding: 0.75rem 1.5rem; /* Padding for the button */
-    background-color: black; /* Button background color */
-    color: white; /* Button text color */
-    border: none; /* Remove border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-
-button:hover {
-    background-color: #333; /* Darker background on hover */
-}
-
 .shippingPage {
     margin: 0 auto;
     width: 90%;
-    max-width: 1400px;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
-    padding: 2rem 0;
-  }
-  
+    display: flex;
+    gap: 2vw;
+}
+
+.shippingForm {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.shippingForm input {
+    width: 100%;
+    padding: 1rem 0rem 1rem 0rem;
+}
+
+.cartSummary {
+    width: 50%;
+}
+
+
+
+
 
 /* Responsive styles */
 @media (max-width: 768px) {
     .row {
-        flex-direction: column; /* Stack inputs on smaller screens */
+        flex-direction: column;
+        /* Stack inputs on smaller screens */
     }
 }

@@ -15,7 +15,7 @@ function ProductCreateContainer() {
     price: 0,
     description: "",
     isOnline: false,
-    categories: [], // This will hold the selected category IDs
+    categories: [],
     variants: [],
   });
 
@@ -27,8 +27,8 @@ function ProductCreateContainer() {
     images: [],
   });
 
-  const headers = ["Variety", "Size", "Color", "Stock", "Images"];
-  const columnKeys = ["name", "size", "color", "stock", "images"];
+  const headers = ["Images", "Variety", "Size", "Color", "Stock"];
+  const columnKeys = ["images", "name", "size", "color", "stock"];
 
   const handleSubmitProduct = async (event) => {
     event.preventDefault();
@@ -38,9 +38,8 @@ function ProductCreateContainer() {
       variants: formData.variants,
       price: Number(formData.price),
     };
-
-    // Call the handler to create the product
-    handlerMap.handleCreate(productData);
+    console.log(productData);
+    //handlerMap.handleCreate(productData);
   };
 
   const handleAddVariant = (event) => {
@@ -52,10 +51,9 @@ function ProductCreateContainer() {
 
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
-    // Update categories array with the selected category ID
     setFormData((prevData) => ({
       ...prevData,
-      categories: selectedCategory ? [selectedCategory] : [], // Set to array with selected category or empty array
+      categories: selectedCategory ? [selectedCategory] : [],
     }));
   };
 
@@ -74,7 +72,7 @@ function ProductCreateContainer() {
             <label className="inputLabel">Name</label>
           </Input>
           <Input
-            type="text" // Keep as text to allow for decimal input
+            type="text"
             className="profileInput"
             placeholder="Price"
             name="price"
@@ -84,7 +82,7 @@ function ProductCreateContainer() {
               if (/^\d*\.?\d*$/.test(value) || value === "") {
                 setFormData({ ...formData, price: value });
               }
-            }} // Use the custom price change handler
+            }}
           >
             <label className="inputLabel">Price</label>
           </Input>
@@ -110,7 +108,7 @@ function ProductCreateContainer() {
             <select
               name="category"
               value={formData.category}
-              onChange={handleCategoryChange} // Use the new handler
+              onChange={handleCategoryChange}
             >
               <option value="">Select Category</option>
               {categories.map((category) => (
@@ -123,7 +121,6 @@ function ProductCreateContainer() {
         </form>
       </Accordion>
 
-      {/* Always render the Variants Accordion */}
       <Accordion accordionTitle="Variants" className="varietyAccordion">
         <Table
           className="varietyTable"
@@ -201,17 +198,21 @@ function ProductCreateContainer() {
           </Input>
           <Input
             type="file"
+            multiple
             className="profileInput"
             placeholder="Upload Images"
             name="images"
-            multiple
             onChange={(e) => {
-              const files = Array.from(e.target.files);
-              setVariantForm({ ...variantForm, images: files });
+              const newFiles = Array.from(e.target.files);
+              setVariantForm((prevForm) => ({
+                ...prevForm,
+                images: [...prevForm.images, ...newFiles], // Append new files to existing ones
+              }));
             }}
           >
             <label className="inputLabel">Upload Images</label>
           </Input>
+
           <Input
             type="submit"
             className="profileInput"
@@ -221,7 +222,6 @@ function ProductCreateContainer() {
         </form>
       </Accordion>
 
-      {/* Create Button placed below the accordions */}
       <Button
         className="profileInput"
         buttonText="Create"
