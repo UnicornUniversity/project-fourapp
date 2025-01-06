@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { OrderContext } from '../../providers/OrdersProvider';
+import { OrdersContext } from '../../providers/OrdersProvider';
 import { UserContext } from '../../providers/UserProvider';
 import { useContext } from 'react';
 import '../../assets/styles/orders.css';
@@ -60,7 +60,7 @@ const OrderProductDetails = ({ productId, variantId, quantity }) => {
 };
 
 function OrdersContainer() {
-  const { orders, loading, error, getAllOrders } = useContext(OrderContext);
+  const { orders, loading, error, getAllOrders } = useContext(OrdersContext);
   const { user } = useContext(UserContext);
   
   const [expandedProducts, setExpandedProducts] = useState({});
