@@ -17,7 +17,8 @@ function CartPage() {
   }
   
   const calculateTotal = () => {
-    return cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return parseFloat(total.toFixed(2)); // Round to 2 decimal places and convert back to a number
   };
 
   return (

@@ -1,17 +1,60 @@
-import React, { createContext, useState, useCallback } from 'react';
-
+import React, { createContext, useState , useEffect, useContext } from 'react';
+import { UserContext } from './UserProvider';
+import { ProductContext } from './ProductProvider'; // Import ProductContext
 export const WishlistContext = createContext();
 
 function WishlistProvider({ children }) {
   const [wishlistItems, setWishlistItems] = useState([]);
+  const { user } = useContext(UserContext);
+  const { products } = useContext(ProductContext);
+  useEffect(() => {
+    if (user && user.id) {
+      handleLoad(user.id);
+    }
+  }, [user]);
 
-  // Add an item to the wishlist
-  const addToWishlist = useCallback((item) => {
-    // Check if the item already exists in the wishlist
-    if (wishlistItems.some(wishlistItem => wishlistItem.id === item.id)) {
+  async function handleLoad(userId) {
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/wishlist/${userId}`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+      const serverResponse = await response.json();
+      
+      if (response.ok) {
+        // Assuming serverResponse contains an array of wishlist items
+        const wishlistItemsWithDetails = serverResponse.map((wishlistItem) => {
+          // Find the product based on productId
+          const product = products.find(p => p._id === wishlistItem.productId);
+          
+          // Find the variant based on variantId
+          const variant = product?.variants.find(v => v._id === wishlistItem.variantId);
+  
+          // Combine wishlist item with product and variant details
+          return {
+            ...wishlistItem,
+            title: product?.name || "Unknown Product", // Fallback if product is not found
+            price: product?.price , // Fallback price
+            image: variant?.images[0] || '/images/default/image-placeholder.webp', // Use the first image or a placeholder
+            color: variant?.color,
+            size: variant?.size,
+          };
+        });
+        console.log(wishlistItemsWithDetails)
+        setWishlistItems(wishlistItemsWithDetails);
+      } else {
+        console.log(serverResponse);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+  const addToWishlist = async (item) => {
+    // Check if item already exists in wishlist
+    if (wishlistItems.some(wishlistItem => wishlistItem.variantId === item.variantId)) {
       return;
     }
-
     const wishlistItem = {
       id: item.id,
       productId: item.productId,
@@ -20,66 +63,85 @@ function WishlistProvider({ children }) {
       price: item.price,
       color: item.color,
       size: item.size,
-      image: item.image,
+      image: item.image
     };
 
-    setWishlistItems((prev) => [...prev, wishlistItem]);
-  }, [wishlistItems]);
-
-  // Remove an item from the wishlist
-  const removeFromWishlist = useCallback((itemId) => {
-    setWishlistItems((prev) => prev.filter((item) => item.id !== itemId));
-  }, []);
-
-  // Check if an item is in the wishlist
-  const isInWishlist = useCallback((itemId) => {
-    return wishlistItems.some((item) => item.id === itemId);
-  }, [wishlistItems]);
-
-  // Clear the entire wishlist
-  const clearWishlist = useCallback(() => {
-    setWishlistItems([]);
-  }, []);
-
-  // Move an item from the wishlist to the cart
-  const moveToCart = useCallback((itemId, addToCart) => {
-    const item = wishlistItems.find((item) => item.id === itemId);
-    if (item && typeof addToCart === 'function') {
-      try {
-        addToCart({
-          ...item,
-          quantity: 1,
-        });
-        removeFromWishlist(itemId);
-      } catch (error) {
-        console.error('Error moving item to cart:', error);
-      }
+    const body = {
+      productId: item.productId,
+      variantId: item.variantId,
     }
-  }, [wishlistItems, removeFromWishlist]);
+    try {
+      // Make API call to add item to wishlist
+      const response = await fetch('http://localhost:5000/api/users/wishlist/add-item', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+        credentials: 'include'
+      });
+      if (!response.ok) {
+        throw new Error('Failed to add item to wishlist');
+      }
+      // If the API call is successful, update the local state
+      setWishlistItems(prev => [...prev, wishlistItem]);
+    } catch (error) {
+      console.error('Error adding item to wishlist:', error);
+    }
+  };
+
+  const removeFromWishlist = async (item) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/wishlist/remove-item`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          productId:item.productId,
+          variantId:item.variantId
+        })
+      });
+      if (response.ok) {
+        setWishlistItems((prev) => prev.filter((wishlistItem) => wishlistItem.variantId !== item.variantId));
+      }
+    } catch (error) {
+      console.error('Error removing item from wishlist:', error);
+    }
+  };
+
+  const isInWishlist = (itemId) => {
+    return wishlistItems.some(item => item.variantId === itemId);
+  };
+
+  const clearWishlist = () => {
+    setWishlistItems([]);
+  };
+
+  const moveToCart = (itemId, addToCart) => {
+    const item = wishlistItems.find(item => item.id === itemId);
+    if (item && addToCart) {
+      addToCart({
+        ...item,
+        quantity: 1
+      });
+      
+    }
+  };
 
   return (
-    <WishlistContext.Provider
-      value={{
-        wishlistItems,
-        addToWishlist,
-        removeFromWishlist,
-        isInWishlist,
-        clearWishlist,
-        moveToCart,
-      }}
-    >
+    <WishlistContext.Provider value={{
+      wishlistItems,
+      addToWishlist,
+      removeFromWishlist,
+      isInWishlist,
+      clearWishlist,
+      moveToCart
+    }}>
       {children}
     </WishlistContext.Provider>
   );
 }
-
-// Custom hook for using wishlist context
-export const useWishlist = () => {
-  const context = React.useContext(WishlistContext);
-  if (context === undefined) {
-    throw new Error('useWishlist must be used within a WishlistProvider');
-  }
-  return context;
-};
 
 export default WishlistProvider;
