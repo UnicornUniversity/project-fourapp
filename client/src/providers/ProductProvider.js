@@ -94,7 +94,9 @@ export function ProductProvider({ children }) {
       });
 
       const serverResponse = await response.json();
+      console.log(serverResponse)
       if (response.ok) {
+        console.log(serverResponse.products)
         setProductsAP(serverResponse.products);
       }
     } catch (error) {

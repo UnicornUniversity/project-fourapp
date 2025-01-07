@@ -9,11 +9,11 @@ function CollectionContainer() {
   const navigate = useNavigate();
   return (
     <section className="collectionContainer">
-      <Card className="collectionCard" onClick={() => navigate("/men")}>
+      <Card className="collectionCard" onClick={() => navigate("/product/list/676414bee25e76f95bbf6231")}>
         <img src={MenImage} alt="Men image" className="collectionImage" />
         <Button className="collectionButton" buttonText={"Men"}></Button>
       </Card>
-      <Card className="collectionCard" onClick={() => navigate("/women")}>
+      <Card className="collectionCard" onClick={() => navigate("/product/list/676414c6e25e76f95bbf6233")}>
         <img src={WomenImage} alt="Women image" className="collectionImage" />
         <Button className="collectionButton" buttonText={"Women"}></Button>
       </Card>

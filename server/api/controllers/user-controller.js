@@ -75,6 +75,60 @@ export class UserController {
       next(ApiError.fromError(error));
     }
   }
+  
+  static async removeItemFromCart(req, res, next) {
+    try {
+      const userId = req.user.id; // Middleware for authenticated user
+      const { productId, variantId } = req.body;
+  
+      if (!productId || !variantId) {
+        throw ApiError.badRequest("Product ID and Variant ID are required");
+      }
+  
+      const updatedCart = await UserAbl.removeItemFromCart(userId, productId, variantId);
+      res.status(200).json(updatedCart);
+    } catch (error) {
+      next(ApiError.fromError(error));
+    }
+  }
+
+  static async updateCartItemQuantity(req, res, next) {
+    try {
+      const userId = req.user.id; // Middleware zajišťuje autentizaci
+      const { productId, variantId, quantity } = req.body;
+  
+      if (!productId || !variantId || quantity === undefined) {
+        throw ApiError.badRequest("Product ID, Variant ID, and Quantity are required");
+      }
+  
+      const updatedCart = await UserAbl.updateCartItemQuantity(
+        userId,
+        productId,
+        variantId,
+        quantity
+      );
+  
+      res.status(200).json(updatedCart); // Vrátíme aktualizovaný cart
+    } catch (error) {
+      next(ApiError.fromError(error));
+    }
+  }
+  
+  static async removeItemFromWishlist(req, res, next) {
+    try {
+      const userId = req.user.id; // Middleware for authenticated user
+      const { productId, variantId } = req.body;
+  
+      if (!productId || !variantId) {
+        throw ApiError.badRequest("Product ID and Variant ID are required");
+      }
+  
+      const updatedWishlist = await UserAbl.removeItemFromWishlist(userId, productId, variantId);
+      res.status(200).json(updatedWishlist);
+    } catch (error) {
+      next(ApiError.fromError(error));
+    }
+  }  
 
   static async update(req, res, next) {
     try {

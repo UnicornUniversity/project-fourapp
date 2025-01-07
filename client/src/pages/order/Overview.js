@@ -10,8 +10,9 @@ export function Overview() {
     const navigate = useNavigate()
 
     const calculateTotal = () => {
-        return order.products.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    };
+        const total = order.products.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        return parseFloat(total.toFixed(2)); // Round to 2 decimal places and convert back to a number
+      };
 
     function handleCompleteOrder() {
         const shippingDetails = {
@@ -31,9 +32,9 @@ export function Overview() {
     }
 
     return (
-        <div className="shippingPage">
-            <Card>
-                <div className="overViewContainer">
+        <div className="shippingContainer">
+            <Card className="overViewContainer">
+                <div>
                     <h2>Order Overview</h2>
                     {order && order.products && order.products.length > 0 ? (
                         order.products.map((item, index) => (
@@ -51,23 +52,14 @@ export function Overview() {
                         <div>No products in the order.</div>
                     )}
                     <div className="customerInfo">
-                        <h3>Customer Information</h3>
-                        <div>
-                            <label className="shippingLabel">Name:</label>
-                            <Input className="shippingInput" value={order.customer.name} readOnly />
-                        </div>
-                        <div>
-                            <label className="shippingLabel">Surname:</label>
-                            <Input className="shippingInput" value={order.customer.surname} readOnly />
-                        </div>
-                        <div>
-                            <label className="shippingLabel">Email:</label>
-                            <Input className="shippingInput" value={order.customer.email} readOnly />
-                        </div>
+                        <h2>Customer Information</h2>
+                        <Input className="shippingInput" value={order.customer.name} readOnly><label>Name</label> </Input>
+                        <Input className="shippingInput" value={order.customer.surname} readOnly ><label>Surname</label> </Input>
+                        <Input className="shippingInput" value={order.customer.email} readOnly><label>Email</label></Input>
                     </div>
                 </div>
             </Card>
-            <Card className="cartSummary">
+            <Card className="cartCard">
                 <h2>Cart Summary</h2>
                 {order.products.map(item => (
                     <div key={item.id} className="summaryItem">

@@ -107,7 +107,7 @@ function ProductFiltersContainer({ filtersSettings }) {
     document.getElementById("filterPopUpButton").style.display = "none";
     document.body.classList.add("no-scroll");
   }
-  
+
   function closeForm() {
     document.getElementById("filterForm").style.display = "none";
     document.getElementById("filterPopUpButton").style.display = "block";
@@ -122,13 +122,13 @@ function ProductFiltersContainer({ filtersSettings }) {
     const selectedFilterList = document.querySelector('.selectedFilterList');
     const priceFilterDivs = document.querySelectorAll('.priceFilter > div');
     const fileterButtonFlex = document.querySelector('.fileterButtonFlex');
-  
+
     // Kontrola existence prvků
     if (!filterContainer || !filterPopUpButton || !filterForm || !closeButton || !selectedFilterList || !priceFilterDivs || !fileterButtonFlex) {
       console.log('Některé prvky nejsou na této stránce.');
       return; // Ukončí funkci, pokud některý prvek chybí
     }
-  
+
     if (window.innerWidth <= 1200) {
       // Styly pro šířku menší nebo rovnou 1200px
       filterContainer.style.margin = '1rem 1rem';
@@ -176,15 +176,15 @@ function ProductFiltersContainer({ filtersSettings }) {
 
     // Otevření filtru
     filterPopUpButton.addEventListener('click', function () {
-        filterForm.style.display = 'block'; // Zobrazí formulář
-        filterForm.style.zIndex = '1000'; 
+      filterForm.style.display = 'block'; // Zobrazí formulář
+      filterForm.style.zIndex = '1000';
     });
 
     // Zavření filtru
     closeButton.addEventListener('click', function () {
-        filterForm.style.display = 'none'; // Skryje formulář
+      filterForm.style.display = 'none'; // Skryje formulář
     });
-});
+  });
 
 
 
@@ -194,183 +194,190 @@ function ProductFiltersContainer({ filtersSettings }) {
       <div className="priceFilter" id="filterForm">
         <section class="popUpButtons">
           <div>
-          <h3><i class="fa-solid fa-sliders"></i> Filters</h3>
+            <h3><i class="fa-solid fa-sliders"></i> Filters</h3>
           </div>
           <div>
-          <h3 onClick={closeForm} id="closeButton">Close <i class="fa-solid fa-x"></i></h3>
+            <h3 onClick={closeForm} id="closeButton">Close <i class="fa-solid fa-x"></i></h3>
           </div>
         </section>
-        
-        <div>
-        <label className="input-with-dollar">
-          Min Price:
-          <input
-            type="number"
-            name="minPrice"
-            value={selectedFilters.minPrice}
-            onChange={handlePriceChange}
-            min="0"
-          />
-        </label>
-        <label className="input-with-dollar">
-          Max Price:
-          <input
-            prefix="$"
-            type="number"
-            name="maxPrice"
-            value={selectedFilters.maxPrice}
-            onChange={handlePriceChange}
-            min="0"
-          />
-        </label>
-        
-        <button onClick={resetPriceFilters}>Reset Price <i class="fa-solid fa-arrow-rotate-left"></i></button>
-        
-        <div className="fileterButtonFlex">
-      {/* Size Filter Button with ReactJS Popup */}
-      <div className="filterButton">
-        <button
-          ref={sizeButtonRef}
-          onClick={() => setIsSizeOpen((prev) => !prev)} // Toggle size filter dropdown
-          style={{cursor: "pointer" }}
-        >
-          Size <i class="fa-solid fa-caret-down"></i>
-        </button>
 
-        <Popup
-          open={isSizeOpen}
-          onClose={() => setIsSizeOpen(false)} // Close the popup when clicking outside
-          position="bottom left" // Position of the dropdown relative to the button
-          closeOnDocumentClick // Close the popup when clicking outside
-          contentStyle={{
-            backgroundColor: "#fff",
-            border: "1px solid #ccc",
-            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
-            padding: "10px",
-            width: "200px", // Set a fixed width for the dropdown
-            position: "absolute", // Use absolute positioning for control
-            top: `${
-              sizeButtonRef.current
-                ? sizeButtonRef.current.getBoundingClientRect().bottom
-                : 0
-            }px`, // Ensure dropdown appears below the button
-            left: `${
-              sizeButtonRef.current
-                ? sizeButtonRef.current.getBoundingClientRect().left
-                : 0
-            }px`, // Align to the left of the button
-            zIndex: 10,
-          }}
-        >
-          <ul style={{ listStyle: "none", padding: "0", margin: "0" }}>
-            {filtersSettings.sizes.map((size) => (
-              <li
-                key={size}
-                onClick={() => toggleFilter("sizes", size)} // Filter toggle logic here
-                style={{
-                  padding: "8px 12px",
-                  cursor: "pointer",
-                  backgroundColor: selectedFilters.sizes.includes(size)
-                    ? "lightblue"
-                    : "transparent",
+        <div>
+          <label className="input-with-dollar">
+            Min Price:
+            <input
+              type="number"
+              name="minPrice"
+              value={selectedFilters.minPrice}
+              onChange={handlePriceChange}
+              min="0"
+            />
+          </label>
+          <label className="input-with-dollar">
+            Max Price:
+            <input
+              prefix="$"
+              type="number"
+              name="maxPrice"
+              value={selectedFilters.maxPrice}
+              onChange={handlePriceChange}
+              min="0"
+            />
+          </label>
+          <div className="filterButton">
+            <button onClick={resetPriceFilters}>Reset Price <i class="fa-solid fa-arrow-rotate-left"></i></button>
+          </div>
+
+          <div className="fileterButtonFlex">
+            {/* Size Filter Button with ReactJS Popup */}
+            <div className="filterButton">
+              <button
+                ref={sizeButtonRef}
+                onClick={() => setIsSizeOpen((prev) => !prev)} // Toggle size filter dropdown
+                style={{ cursor: "pointer" }}
+              >
+                Size <i class="fa-solid fa-caret-down"></i>
+              </button>
+
+              <Popup
+                open={isSizeOpen}
+                onClose={() => setIsSizeOpen(false)} // Close the popup when clicking outside
+                position="bottom left" // Position of the dropdown relative to the button
+                closeOnDocumentClick // Close the popup when clicking outside
+                contentStyle={{
+                  backgroundColor: "#fff",
+                  border: "1px solid #ccc",
+                  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+                  padding: "10px",
+                  width: "200px", // Set a fixed width for the dropdown
+                  position: "absolute", // Use absolute positioning for control
+                  top: `${sizeButtonRef.current
+                      ? sizeButtonRef.current.getBoundingClientRect().bottom
+                      : 0
+                    }px`, // Ensure dropdown appears below the button
+                  left: `${sizeButtonRef.current
+                      ? sizeButtonRef.current.getBoundingClientRect().left
+                      : 0
+                    }px`, // Align to the left of the button
+                  zIndex: 10,
                 }}
               >
-                {size}
-              </li>
-            ))}
-          </ul>
-        </Popup>
-      </div>
+                <ul style={{ listStyle: "none", padding: "0", margin: "0" }}>
+                  {filtersSettings.sizes.map((size) => (
+                    <li
+                      key={size}
+                      onClick={() => toggleFilter("sizes", size)} // Filter toggle logic here
+                      style={{
+                        padding: "8px 12px",
+                        cursor: "pointer",
+                        backgroundColor: selectedFilters.sizes.includes(size)
+                          ? "lightblue"
+                          : "transparent",
+                      }}
+                    >
+                      {size}
+                    </li>
+                  ))}
+                </ul>
+              </Popup>
+            </div>
 
-      {/* Color Filter Button with ReactJS Popup */}
-      
-        <div className="filterButton">
-          <button
-            ref={colorButtonRef}
-            onClick={() => setIsColorOpen((prev) => !prev)} // Toggle color filter dropdown
-            style={{ cursor: "pointer" }}
-          >
-            Color <i class="fa-solid fa-caret-down"></i>
-          </button>
+            {/* Color Filter Button with ReactJS Popup */}
 
-          <Popup
-            open={isColorOpen}
-            onClose={() => setIsColorOpen(false)} // Close the popup when clicking outside
-            position="bottom left" // Position of the dropdown relative to the button
-            closeOnDocumentClick // Close the popup when clicking outside
-            contentStyle={{
-              backgroundColor: "#fff",
-              border: "1px solid #ccc",
-              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
-              padding: "10px",
-              width: "200px", // Set a fixed width for the dropdown
-              position: "absolute", // Use absolute positioning for control
-              top: `${
-                colorButtonRef.current
-                  ? colorButtonRef.current.getBoundingClientRect().bottom
-                  : 0
-              }px`, // Ensure dropdown appears below the button
-              left: `${
-                colorButtonRef.current
-                  ? colorButtonRef.current.getBoundingClientRect().left
-                  : 0
-              }px`, // Align to the left of the button
-              zIndex: 10,
-            }}
-          >
-            <ul style={{ listStyle: "none", padding: "0", margin: "0" }}>
-              {filtersSettings.colors.map((color) => (
-                <li
-                  key={color}
-                  onClick={() => toggleFilter("colors", color)} // Filter toggle logic here
-                  style={{
-                    padding: "8px 12px",
-                    cursor: "pointer",
-                    backgroundColor: selectedFilters.colors.includes(color)
-                      ? "lightblue"
-                      : "transparent",
-                  }}
-                >
-                  {color}
-                </li>
-              ))}
-            </ul>
-          </Popup>
-        </div>
-        </div>
+            <div className="filterButton">
+              <button
+                ref={colorButtonRef}
+                onClick={() => setIsColorOpen((prev) => !prev)} // Toggle color filter dropdown
+                style={{ cursor: "pointer" }}
+              >
+                Color <i class="fa-solid fa-caret-down"></i>
+              </button>
+
+              <Popup
+                open={isColorOpen}
+                onClose={() => setIsColorOpen(false)} // Close the popup when clicking outside
+                position="bottom left" // Position of the dropdown relative to the button
+                closeOnDocumentClick // Close the popup when clicking outside
+                contentStyle={{
+                  backgroundColor: "#fff",
+                  border: "1px solid #ccc",
+                  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+                  padding: "10px",
+                  width: "200px", // Set a fixed width for the dropdown
+                  position: "absolute", // Use absolute positioning for control
+                  top: `${colorButtonRef.current
+                      ? colorButtonRef.current.getBoundingClientRect().bottom
+                      : 0
+                    }px`, // Ensure dropdown appears below the button
+                  left: `${colorButtonRef.current
+                      ? colorButtonRef.current.getBoundingClientRect().left
+                      : 0
+                    }px`, // Align to the left of the button
+                  zIndex: 10,
+                }}
+              >
+                <ul style={{ listStyle: "none", padding: "0", margin: "0" }}>
+                  {filtersSettings.colors.map((color) => (
+                    <li
+                      key={color}
+                      onClick={() => toggleFilter("colors", color)} // Filter toggle logic here
+                      style={{
+                        padding: "8px 12px",
+                        cursor: "pointer",
+                        backgroundColor: selectedFilters.colors.includes(color)
+                          ? "lightblue"
+                          : "transparent",
+                        display: "flex",
+                        gap: "1rem",
+                      }}
+                    >
+                      <div
+                        style={{
+                          backgroundColor: color,
+                          width: "20px",
+                          height: "20px",
+                        }}
+                      ></div>
+                      {color}
+                    </li>
+                  ))}
+                </ul>
+              </Popup>
+            </div>
+          </div>
+
         </div>
 
         <div class="selectedFilterList">
           <div>
             {selectedFilters.colors.length > 0
               ? selectedFilters.colors
-                  .map((color) => (
-                    <span key={color}>
-                      {color}{" "}
-                      <button onClick={() => removeFilter("colors", color)}>
-                        X
-                      </button>
-                    </span>
-                  ))
-                  .reduce((prev, curr) => [prev," ", curr])
+                .map((color) => (
+                  <span key={color}>
+                    {color}{" "}
+                    <button onClick={() => removeFilter("colors", color)}>
+                      X
+                    </button>
+                  </span>
+                ))
+                .reduce((prev, curr) => [prev, " ", curr])
               : ""}
-            </div>
+          </div>
 
-            <div>
+          <div>
             {selectedFilters.sizes.length > 0
               ? selectedFilters.sizes
-                  .map((size) => (
-                    <span key={size}>
-                      {size}{" "}
-                      <button onClick={() => removeFilter("sizes", size)}>
-                        X
-                      </button>
-                    </span>
-                  ))
-                  .reduce((prev, curr) => [prev," ", curr])
+                .map((size) => (
+                  <span key={size}>
+                    {size}{" "}
+                    <button onClick={() => removeFilter("sizes", size)}>
+                      X
+                    </button>
+                  </span>
+                ))
+                .reduce((prev, curr) => [prev, " ", curr])
               : ""}
-              </div>
-              <div>
+          </div>
+          <div>
           </div>
         </div>
       </div>
