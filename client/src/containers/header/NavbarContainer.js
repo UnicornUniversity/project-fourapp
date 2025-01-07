@@ -1,5 +1,5 @@
 import "./../../assets/styles/header.css";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import Cookies from "js-cookie";
@@ -12,89 +12,75 @@ function NavbarContainer() {
   const location = useLocation();
 
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false); // State to toggle the side menu
-  const [activeCategory, setActiveCategory] = useState(null); // Tracks which category is active
-  const menuRef = useRef(null); // Ref for the menu container
+  const [menuOpen, setMenuOpen] = useState(false); // State to toggle the mobile menu
+
+  const handleCategoryHover = (id) => {
+    setOpenDropdown(id);
+  };
+
+  const handleNavbarLeave = () => {
+    setOpenDropdown(null);
+  };
 
   const handleNavigate = (category) => {
     navigate(`/product/list/${category._id}`);
-    setMenuOpen(false); // Close the menu after navigation
   };
 
-  const handleCategoryClick = (category) => {
-    if (activeCategory === category._id) {
-      setActiveCategory(null); // Close the subcategories if already active
-    } else {
-      setActiveCategory(category._id); // Set the active category
-    }
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
-
-  // Close the menu when clicking outside of it
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   useEffect(() => {
     setOpenDropdown(null);
-    setActiveCategory(null); // Reset active category when navigating
+    setMenuOpen(false); // Close the menu when navigating
   }, [location.pathname]);
 
-  function handleToggleMenu() {
-  const burgerMenu = document.querySelector(".burger-menu");
-  const menu = document.querySelector(".menu-mobile ul");
-  burgerMenu.classList.toggle("active");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
-
   return (
-    <nav className="navbar">
-      <div className="navbarBarContainer" onClick={() => setMenuOpen(!menuOpen)}>
+    <nav className="navbar" onMouseLeave={handleNavbarLeave}>
+      <div className="navbarBarContainer" onClick={toggleMenu}>
         <i className="fa-solid fa-bars"></i>
       </div>
       <div className="navbarLogoContainer">
         <img onClick={() => navigate("/")} src={Logo} alt="Logo" />
       </div>
-      <ul className={`menu ${menuOpen ? "menu-open" : ""}`} ref={menuRef}>
-      <i class="fa-solid fa-x closeMark" onClick={() => setMenuOpen(false)}></i>
-        {categoryAllTree &&
-          categoryAllTree.map((category) => (
-            <li key={category._id}>
-              <a onClick={() => handleCategoryClick(category)}>
-                {category.name}
-              </a>
-              {activeCategory === category._id && category.subcategories && (
-                <div className="subcategories">
-                  {category.subcategories.map((subcategory) => (
-                    <div key={subcategory._id}>
-                      <h4 onClick={() => handleNavigate(subcategory)}>
-                        {subcategory.name}
-                      </h4>
-                      {subcategory.subcategories &&
-                        subcategory.subcategories.map((sub) => (
-                          <a
-                            key={sub._id}
-                            onClick={() => handleNavigate(sub)}
-                          >
-                            {sub.name}
-                          </a>
-                        ))}
-                    </div>
-                  ))}
+      <ul className={`menu ${menuOpen ? "menu-open" : ""}`}>
+        {categoryAllTree
+          ? categoryAllTree.map((category) => (
+              <li
+                key={category._id}
+                onMouseEnter={() => handleCategoryHover(category._id)}
+              >
+                <a onClick={() => handleNavigate(category)}>{category.name}</a>
+                <div
+                  className={`dropdown ${
+                    openDropdown === category._id ? "show" : ""
+                  }`}
+                >
+                  <div className="dropdown-container">
+                    {category.subcategories ? (
+                      category.subcategories.map((subcategory) => (
+                        <div className="column" key={subcategory._id}>
+                          <h4 onClick={() => handleNavigate(subcategory)}>
+                            {subcategory.name}
+                          </h4>
+                          {subcategory.subcategories.map((sub) => (
+                            <a onClick={() => handleNavigate(sub)} key={sub._id}>
+                              {sub.name}
+                            </a>
+                          ))}
+                        </div>
+                      ))
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
-              )}
-            </li>
-          ))}
+              </li>
+            ))
+          : null}
       </ul>
       <div className="navbarIconContainer">
+        <i className="fa-solid fa-magnifying-glass"></i>
         <i
           className="fa-solid fa-user"
           onClick={() => navigate(token ? "/user/profile" : "/user/login")}

@@ -24,11 +24,10 @@ function ProductCreateContainer() {
     size: "",
     color: "",
     stock: 0,
-    images: [],
   });
 
-  const headers = ["Variety", "Size", "Color", "Stock", "Images"];
-  const columnKeys = ["name", "size", "color", "stock", "images"];
+  const headers = ["Variety", "Size", "Color", "Stock"];
+  const columnKeys = ["name", "size", "color", "stock"];
 
   const handleSubmitProduct = async (event) => {
     event.preventDefault();
@@ -47,7 +46,7 @@ function ProductCreateContainer() {
     event.preventDefault();
     const updatedVariants = [...formData.variants, variantForm];
     setFormData({ ...formData, variants: updatedVariants });
-    setVariantForm({ name: "", size: "", color: "", stock: 0, images: [] });
+    setVariantForm({ name: "", size: "", color: "", stock: 0 });
   };
 
   const handleCategoryChange = (e) => {
@@ -127,10 +126,7 @@ function ProductCreateContainer() {
       <Accordion accordionTitle="Variants" className="varietyAccordion">
         <Table
           className="varietyTable"
-          data={formData.variants.map((variant) => ({
-            ...variant,
-            images: variant.images.map((image) => image.name).join(", "), // Display file names
-          }))}
+          data={formData.variants}
           headers={headers}
           columnKeys={columnKeys}
           renderAction={(variant, index) => (
@@ -198,19 +194,6 @@ function ProductCreateContainer() {
             }}
           >
             <label className="inputLabel">Stock</label>
-          </Input>
-          <Input
-            type="file"
-            className="profileInput"
-            placeholder="Upload Images"
-            name="images"
-            multiple
-            onChange={(e) => {
-              const files = Array.from(e.target.files);
-              setVariantForm({ ...variantForm, images: files });
-            }}
-          >
-            <label className="inputLabel">Upload Images</label>
           </Input>
           <Input
             type="submit"
