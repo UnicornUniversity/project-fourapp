@@ -169,14 +169,6 @@
 .swiper-pagination-bullet-active {
     background-color: black !important;
 }
-@media (min-width: 768px) {
-    .menu {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
 /* Responsive Styles */
 @media (max-width: 768px) {
     .navbarBarContainer {
