@@ -90,6 +90,14 @@
     visibility: visible;
 }
 
+/* Remove the :focus-within and :hover triggers for the dropdown */
+.menu>li:hover .dropdown,
+.dropdown:hover {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
 .dropdown.show {
     display: block;
     opacity: 1;
@@ -169,6 +177,7 @@
 .swiper-pagination-bullet-active {
     background-color: black !important;
 }
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .navbarBarContainer {
@@ -183,10 +192,13 @@
     }
 
     .dropdown.show {
-        display: block; /* Zobraz dropdown, pokud má třídu "show" */
-        opacity: 1; /* Nastaví opacity na 1, aby dropdown zůstal viditelný */
-        visibility: visible; /* Nastaví visibility na visible, aby dropdown zůstal viditelný */
-      }
+        display: block;
+        /* Zobraz dropdown, pokud má třídu "show" */
+        opacity: 1;
+        /* Nastaví opacity na 1, aby dropdown zůstal viditelný */
+        visibility: visible;
+        /* Nastaví visibility na visible, aby dropdown zůstal viditelný */
+    }
 
     .menu {
         position: fixed;
@@ -206,14 +218,15 @@
     }
 
     .close-menu-button i {
-        font-size: 0.3rem; /* Snížení velikosti ikony */
-      }
+        font-size: 0.3rem;
+        /* Snížení velikosti ikony */
+    }
 
     .menu-open {
         left: 0;
     }
 
-    
+
 
 
 
@@ -230,19 +243,19 @@
         box-shadow: none;
     }
 
-   
+
     .dropdown {
         display: none;
-      }
-    
-      /* Zobraz dropdown, pokud má třídu "open" */
-      .dropdown.open {
+    }
+
+    /* Zobraz dropdown, pokud má třídu "open" */
+    .dropdown.open {
         display: block;
-      }
+    }
 
 
 
-      .close-menu-button {
+    .close-menu-button {
         position: absolute;
         top: 1rem;
         left: 1rem;
@@ -250,17 +263,19 @@
         z-index: 100;
         margin-bottom: 2rem;
         font-weight: 800;
-      }
-      
-      .close-menu-button i {
-        font-size: 1.5rem;
-      }
-
-      .menu>li {
-        cursor: pointer; /* Nastaví kurzor na pointer pro li */
-      }
-      
-      .menu>li>a {
-        cursor: default; /* Nastaví kurzor na default pro a */
-      }
     }
+
+    .close-menu-button i {
+        font-size: 1.5rem;
+    }
+
+    .menu>li {
+        cursor: pointer;
+        /* Nastaví kurzor na pointer pro li */
+    }
+
+    .menu>li>a {
+        cursor: default;
+        /* Nastaví kurzor na default pro a */
+    }
+}

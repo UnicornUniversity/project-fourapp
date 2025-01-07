@@ -62,7 +62,6 @@ function ProductListContainer() {
         sizes: getSizes(products)
       });
       setFiltersInitialized(true); // Mark filters as initialized
-      console.log("Filters set:", filtersSettings);
     }
   }, [products, filtersInitialized]); // Run effect when products change
 
@@ -78,7 +77,6 @@ function ProductListContainer() {
     <div>
       {filtersSettings ? <ProductFilters filtersSettings={filtersSettings} /> : <></>}
       <div className="productList">
-        {console.log(products)}
         {products ? (
           products.map((product) => (
             <ProductCard key={product._id} product={product} />
