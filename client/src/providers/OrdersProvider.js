@@ -1,6 +1,6 @@
-import React, { createContext, useState, useCallback, useContext } from 'react';
-import { UserContext } from './UserProvider';
-
+import React, { createContext, useState, useCallback, useContext } from "react";
+import { UserContext } from "./UserProvider";
+import { env } from "../utils/env";
 export const OrdersContext = createContext();
 
 function OrdersProvider({ children }) {
@@ -11,33 +11,33 @@ function OrdersProvider({ children }) {
 
   const getAllOrders = useCallback(async () => {
     if (!user || !user.id) {
-      setError('User not authenticated');
+      setError("User not authenticated");
       return;
     }
 
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/orders/user/${user.id}`,
+        `${env.REACT_APP_API_URL}/api/orders/user/${user.id}`,
         {
-          method: 'GET',
-          credentials: 'include',
+          method: "GET",
+          credentials: "include",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
 
       if (!response.ok) {
-        throw new Error('Failed to fetch orders');
+        throw new Error("Failed to fetch orders");
       }
 
       const data = await response.json();
-      console.log('User orders:', data);
+      console.log("User orders:", data);
       setOrders(data);
       setError(null);
     } catch (err) {
-      console.error('Error fetching orders:', err);
+      console.error("Error fetching orders:", err);
       setError(err.message);
       setOrders([]);
     } finally {
@@ -53,9 +53,7 @@ function OrdersProvider({ children }) {
   };
 
   return (
-    <OrdersContext.Provider value={value}>
-      {children}
-    </OrdersContext.Provider>
+    <OrdersContext.Provider value={value}>{children}</OrdersContext.Provider>
   );
 }
 

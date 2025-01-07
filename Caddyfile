@@ -1,20 +1,12 @@
-{
-    # Global options
-    admin off
-}
-
-# Replace these with your actual domain names in production
 srv687262.hstgr.cloud {
     handle /api/* {
-        uri strip_prefix /api
-        reverse_proxy server:5000 {
-            header_up Host {upstream_hostport}
-            header_up X-Real-IP {remote_host}
-        }
+        reverse_proxy server:5000
     }
 
     handle /* {
-        reverse_proxy client:80
+        reverse_proxy client:80 {
+            health_timeout 5s
+        }
     }
 
     # Enable compression
