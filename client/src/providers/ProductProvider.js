@@ -134,6 +134,7 @@ export function ProductProvider({ children }) {
   }
   async function handleUpdate(product, id) {
     try {
+
       const response = await fetch(
         `${env.REACT_APP_API_URL}/api/products/${id}`,
         {
@@ -148,6 +149,7 @@ export function ProductProvider({ children }) {
       const serverResponse = await response.json();
       if (serverResponse.ok) {
         await handleLoad();
+
       }
     } catch (error) {
       console.error("Error updating product:", error);
