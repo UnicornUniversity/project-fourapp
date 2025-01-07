@@ -16,6 +16,7 @@ function ProfileOverviewContainer() {
 
   return (
     <div className="profileOverviewForm">
+      <h2 class="titleMargin">Profile</h2>
       <form>
         <Input
           type="text"

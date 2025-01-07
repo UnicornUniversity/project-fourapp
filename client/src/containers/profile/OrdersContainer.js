@@ -109,6 +109,94 @@ const OrderProductDetails = ({ productId, variantId, quantity }) => {
   );
 };
 
+const OrderProductDetails = ({ productId, variantId, quantity }) => {
+  const [productDetails, setProductDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      // Ensure we have a valid product ID
+      const actualProductId = typeof productId === 'object' ? productId._id || productId.id : productId;
+      
+      if (!actualProductId) {
+        setError('No valid product ID provided');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:5000/api/products/${actualProductId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch product (Status: ${response.status})`);
+        }
+
+        const data = await response.json();
+        
+        // Find the specific variant
+        const variant = data.variants?.find(v => v._id === variantId);
+        
+        if (!variant && data.variants?.length > 0) {
+          // If specific variant not found but variants exist, use first variant
+          setProductDetails({ ...data, selectedVariant: data.variants[0] });
+        } else {
+          setProductDetails({ ...data, selectedVariant: variant });
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProductDetails();
+  }, [productId, variantId]);
+
+  if (loading) {
+    return <div className="p-2 text-gray-500">Loading product details...</div>;
+  }
+
+  if (error) {
+    return <div className="p-2 text-red-500">Error: Unable to load product details</div>;
+  }
+
+  if (!productDetails) {
+    return <div className="p-2 text-gray-500">Product information unavailable</div>;
+  }
+
+  const { name, selectedVariant } = productDetails;
+  
+  const formatProductInfo = () => {
+    if (!selectedVariant) {
+      return `×${quantity} ${name}`;
+    }
+    
+    const variantInfo = [];
+    if (selectedVariant.color) variantInfo.push(selectedVariant.color);
+    if (selectedVariant.size) variantInfo.push(`Size: ${selectedVariant.size}`);
+    
+    return `×${quantity} ${name}${variantInfo.length ? ` - ${variantInfo.join(' - ')}` : ''}`;
+  };
+
+  return (
+    <div className="w-full py-2 border-b last:border-b-0">
+      <span className="text-sm">{formatProductInfo()}</span>
+      {selectedVariant?.price && (
+        <span className="text-sm text-gray-600 ml-2">
+          ${(selectedVariant.price * quantity).toFixed(2)}
+        </span>
+      )}
+    </div>
+  );
+};
+
 function OrdersContainer() {
   const { orders, loading, error, getAllOrders } = useContext(OrdersContext);
   const { user } = useContext(UserContext);
@@ -225,6 +313,7 @@ function OrdersContainer() {
   const filteredOrders = filterOrders(orders);
 
   return (
+
     <div className="max-w-7xl mx-auto p-4">
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-4">My Orders</h2>
@@ -269,7 +358,7 @@ function OrdersContainer() {
           filteredOrders.map((order) => {
             if (!order) return null;
             const orderId = getOrderId(order);
-
+            
             return (
               <div key={orderId} className="orderCard">
                 <div className="orderHeader">
@@ -277,6 +366,7 @@ function OrdersContainer() {
                     <span className="orderNumber">
                       Order #{orderId.slice(-6)}
                     </span>
+
                     <span
                       className={`orderStatus status${
                         order.status?.charAt(0).toUpperCase() +
@@ -287,6 +377,7 @@ function OrdersContainer() {
                         ? order.status.charAt(0).toUpperCase() +
                           order.status.slice(1)
                         : "N/A"}
+                        
                     </span>
                   </div>
                   <span>{formatDate(order.createdAt)}</span>
@@ -298,6 +389,7 @@ function OrdersContainer() {
                 >
                   <h4>Products ({order.products_array?.length || 0})</h4>
                   <span className="toggleIcon">
+
                     {expandedProducts[orderId] ? "▼" : "▲"}
                   </span>
                 </div>

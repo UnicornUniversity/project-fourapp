@@ -43,6 +43,7 @@ function ProfileUpdateContainer() {
 
   return (
     <div className="profileOverviewForm">
+      <h2 className="titleMargin">Profile Update</h2>
       <form onSubmit={handleSubmit}>
         <Input
           type="text"

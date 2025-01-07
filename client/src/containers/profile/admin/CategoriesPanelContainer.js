@@ -7,8 +7,8 @@ export function CategoriesPanelContainer(){
     const navigate = useNavigate();
     const { categories, handlerMap } = useContext(CategoryContext);
 
-    const columnKeysCategory = ["_id", "name"];
-    const headersCategory = ["Id", "Name"];
+    const columnKeysCategory = ["name"];
+    const headersCategory = ["Name"];
 
     let categoryData;
 
@@ -25,6 +25,7 @@ return(
       </button>
     </div>
     <Table
+      
       headers={headersCategory}
       data={categoryData}
       columnKeys={columnKeysCategory}

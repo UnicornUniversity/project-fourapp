@@ -37,6 +37,7 @@ export function ProductsPanelContainer() {
           </button>
         </div>
         <Table
+          className="productTable"
           headers={headersProducts}
           data={transformedData}
           columnKeys={columnKeysProducts}
