@@ -92,7 +92,7 @@ class OrderAbl {
       throw ApiError.forbidden("Order is not in pending state");
     }
 
-    return await orderDao.update({
+    const updatedOrder = await orderDao.update({
       id,
       shipping_method,
       total_cost,
@@ -100,8 +100,20 @@ class OrderAbl {
       payment_method,
       status: "processing",
     });
+
+    // Vyprázdnění košíku uživatele
+    const userId = order.user_id;
+    const user = await userDao.findById(userId);
+    if (!user) {
+      throw ApiError.notFound("User not found");
+    }
+
+    user.cart_array = []; // Nastavení prázdného košíku
+    await user.save(); // Uložení aktualizovaného uživatele
+
+    return updatedOrder;
   }
-  
+
   // Přidání platební metody
   static async addPaymentMethod(id, payment_method) {
     return await orderDao.updatePaymentMethod(id, payment_method);
