@@ -21,11 +21,11 @@ function CartItem({ item }) {
   };
 
   function handleWishlistToggle(){
-    console.log(item)
-    if(isInWishlist(item.productId)){
+    if(isInWishlist(item.variantId)){
       removeFromWishlist(item)
       showNotification("Product removed from wishlist")
     }else{
+      console.log("NIGGA")
       addToWishlist(item)
       showNotification("Product added to wishlist")
     }
@@ -82,7 +82,7 @@ function CartItem({ item }) {
   };
 
   return (
-    <div className="cartItemWrapper">
+    <div key={item.variantId} className="cartItemWrapper">
       <Card 
         className="cartItem" 
         onClick={handleProductClick}
@@ -123,7 +123,7 @@ function CartItem({ item }) {
             </div>
             
             <button 
-              className={`favoriteButton ${isInWishlist(item.productId) ? 'active' : ''}`}
+              className={`favoriteButton ${isInWishlist(item.variantId) ? 'active' : ''}`}
               onClick={(e) => {
                 handleWishlistToggle();
                 e.stopPropagation();
