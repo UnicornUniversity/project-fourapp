@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { env } from "../utils/env";
 
 export const ProductContext = createContext();
 
@@ -21,12 +22,15 @@ export function ProductProvider({ children }) {
 
   async function handleDelete(id) {
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${env.REACT_APP_API_URL}/api/products/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       handleLoadAP();
       //const serverResponse = await response.json();
@@ -60,7 +64,7 @@ export function ProductProvider({ children }) {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/products?${queryParams.toString()}`,
+        `${env.REACT_APP_API_URL}/api/products?${queryParams.toString()}`,
         {
           method: "GET",
           headers: {
@@ -88,7 +92,7 @@ export function ProductProvider({ children }) {
 
   async function handleLoadAP() {
     try {
-      const response = await fetch("http://localhost:5000/api/products", {
+      const response = await fetch(`${env.REACT_APP_API_URL}/api/products`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -106,12 +110,15 @@ export function ProductProvider({ children }) {
 
   async function handleGet(id) {
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${env.REACT_APP_API_URL}/api/products/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const serverResponse = await response.json();
       if (response.ok) {
@@ -127,17 +134,22 @@ export function ProductProvider({ children }) {
   }
   async function handleUpdate(product, id) {
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(product),
-      });
 
-      if (response.ok) {
-        navigate("/user/profile/admin");
-        handleLoad();
+      const response = await fetch(
+        `${env.REACT_APP_API_URL}/api/products/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(product),
+        }
+      );
+      handleLoad();
+      const serverResponse = await response.json();
+      if (serverResponse.ok) {
+        await handleLoad();
+
       }
     } catch (error) {
       console.error("Error updating product:", error);
@@ -147,7 +159,7 @@ export function ProductProvider({ children }) {
   async function handleGetRecent() {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/products/latest",
+        `${env.REACT_APP_API_URL}/api/products/latest`,
         {
           method: "GET",
           headers: {
@@ -175,7 +187,7 @@ export function ProductProvider({ children }) {
 
   async function handleCreate(product) {
     try {
-      const response = await fetch("http://localhost:5000/api/products", {
+      const response = await fetch(`${env.REACT_APP_API_URL}/api/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

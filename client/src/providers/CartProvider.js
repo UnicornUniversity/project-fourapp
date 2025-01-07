@@ -1,8 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { UserContext } from './UserProvider';
-import { ProductContext } from './ProductProvider';
-import { env } from '../utils/env';
-import Cookies from 'js-cookie';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { UserContext } from "./UserProvider";
+import { env } from "../utils/env";
 
 export const CartContext = createContext();
 
@@ -18,15 +16,18 @@ function CartProvider({ children }) {
 
   async function GetProduct(id) {
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${env.REACT_APP_API_URL}/api/products/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to fetch product');
+        throw new Error("Failed to fetch product");
       }
 
       return await response.json();
@@ -38,28 +39,36 @@ function CartProvider({ children }) {
 
   async function handleLoad(userId) {
     try {
-      const response = await fetch(`http://localhost:5000/api/users/cart/${userId}`, {
-        method: 'GET',
-        credentials: 'include',
-      });
+      const response = await fetch(
+        `${env.REACT_APP_API_URL}/api/users/cart/${userId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to fetch cart items');
+        throw new Error("Failed to fetch cart items");
       }
 
       const serverResponse = await response.json();
-      const cartItemsWithDetails = await Promise.all(serverResponse.map(async (cartItem) => {
-        const product = await GetProduct(cartItem.productId);
-        const variant = product?.variants.find(v => v._id === cartItem.variantId);
+      const cartItemsWithDetails = await Promise.all(
+        serverResponse.map(async (cartItem) => {
+          const product = await GetProduct(cartItem.productId);
+          const variant = product?.variants.find(
+            (v) => v._id === cartItem.variantId
+          );
 
-        return {
-          ...cartItem,
-          title: product?.name || "Unknown Product",
-          price: product?.price || 0,
-          image: variant?.images[0] || '/images/default/image-placeholder.webp',
-          color: variant?.color || 'Unknown Color',
-        };
-      }));
+          return {
+            ...cartItem,
+            title: product?.name || "Unknown Product",
+            price: product?.price || 0,
+            image:
+              variant?.images[0] || "/images/default/image-placeholder.webp",
+            color: variant?.color || "Unknown Color",
+          };
+        })
+      );
 
       setCartItems(cartItemsWithDetails);
     } catch (error) {
@@ -86,7 +95,7 @@ function CartProvider({ children }) {
       setCartItems(updatedCartItems);
 
       const response = await fetch(
-        `http://localhost:5000/api/users/cart/add-item`,
+        `${env.REACT_APP_API_URL}/api/users/cart/add-item`,
         {
           method: "POST",
           headers: {
@@ -102,7 +111,7 @@ function CartProvider({ children }) {
       );
 
       if (!response.ok) {
-        throw new Error('Failed to add item to cart');
+        throw new Error("Failed to add item to cart");
       }
     } catch (error) {
       console.error("Error adding item to cart:", error);
@@ -111,19 +120,22 @@ function CartProvider({ children }) {
 
   const updateQuantity = async (item, quantity) => {
     try {
-      const response = await fetch(`${env.REACT_APP_API_URL}/api/users/cart/update-quantity`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          variantId: item.variantId,
-          productId: item.productId,
-          quantity: quantity,
-        }),
-      });
-  
+      const response = await fetch(
+        `${env.REACT_APP_API_URL}/api/users/cart/update-quantity`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            variantId: item.variantId,
+            productId: item.productId,
+            quantity: quantity,
+          }),
+        }
+      );
+
       if (response.ok) {
         // Update the cart items state
         setCartItems((prev) =>
@@ -133,57 +145,62 @@ function CartProvider({ children }) {
               : cartItem
           )
         );
-
       } else {
         console.error("Failed to update quantity:", response.statusText);
-
       }
     } catch (error) {
       console.error("Error updating item in cart:", error);
-
     }
   };
 
   const removeFromCart = async (item) => {
     try {
-      const response = await fetch(`${env.REACT_APP_API_URL}/api/users/cart/remove-item`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          productId: item.productId,
-          variantId: item.variantId
-        })
-      });
+      const response = await fetch(
+        `${env.REACT_APP_API_URL}/api/users/cart/remove-item`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            productId: item.productId,
+            variantId: item.variantId,
+          }),
+        }
+      );
 
       if (response.ok) {
-        setCartItems((prev) => prev.filter((cartItem) => cartItem.variantId !== item.variantId));
+        setCartItems((prev) =>
+          prev.filter((cartItem) => cartItem.variantId !== item.variantId)
+        );
       }
     } catch (error) {
-      console.error('Error removing item from cart:', error);
+      console.error("Error removing item from cart:", error);
     }
   };
-
-
 
   const toggleFavorite = (itemId) => {
     setCartItems((prev) =>
       prev.map((item) =>
-        item.productId === itemId ? { ...item, isFavorite: !item.isFavorite } : item
+        item.productId === itemId
+          ? { ...item, isFavorite: !item.isFavorite }
+          : item
       )
     );
   };
 
   return (
-    < CartContext.Provider value={{
-      cartItems,
-      addToCart,
-      removeFromCart,
-      updateQuantity,
-      toggleFavorite,
-    }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        setCartItems,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        toggleFavorite,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

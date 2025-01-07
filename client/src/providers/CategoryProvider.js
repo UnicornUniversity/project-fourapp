@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { env } from "../utils/env";
+
 export const CategoryContext = createContext();
 
 function CategoryProvider({ children }) {
@@ -21,7 +23,7 @@ function CategoryProvider({ children }) {
   async function handleGet(id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories/${id}`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories/${id}`, // OUR API ENDPOINT
         {
           method: "GET",
           headers: {
@@ -44,7 +46,7 @@ function CategoryProvider({ children }) {
   async function handleLoad() {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/categories", // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories`, // OUR API ENDPOINT
         {
           method: "GET",
           headers: {
@@ -69,7 +71,7 @@ function CategoryProvider({ children }) {
   async function handleUpdate(id, body) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories/${id}`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories/${id}`, // OUR API ENDPOINT
         {
           method: "PUT",
           headers: {
@@ -97,7 +99,7 @@ function CategoryProvider({ children }) {
   async function handleDelete(id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories/${id}`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories/${id}`, // OUR API ENDPOINT
         {
           method: "DELETE",
           headers: {
@@ -123,7 +125,7 @@ function CategoryProvider({ children }) {
     const body = JSON.stringify(category);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories`, // OUR API ENDPOINT
         {
           method: "POST",
           headers: {
@@ -149,7 +151,7 @@ function CategoryProvider({ children }) {
   async function handleGetCategoryTree(category_id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories/${category_id}/tree`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories/${category_id}/tree`, // OUR API ENDPOINT
         {
           method: "GET",
           headers: {
@@ -171,7 +173,7 @@ function CategoryProvider({ children }) {
   async function handleGetCategoryAllTree() {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories/alltree`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories/alltree`, // OUR API ENDPOINT
         {
           method: "GET",
           headers: {

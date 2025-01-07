@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { OrdersContext } from '../../providers/OrdersProvider';
-import { UserContext } from '../../providers/UserProvider';
-import { useContext } from 'react';
-import '../../assets/styles/orders.css';
+import React, { useEffect, useState } from "react";
+import { OrdersContext } from "../../providers/OrdersProvider";
+import { UserContext } from "../../providers/UserProvider";
+import { useContext } from "react";
+import "../../assets/styles/orders.css";
+import { env } from "../../utils/env";
 
 const OrderProductDetails = ({ productId, variantId, quantity }) => {
   const [productDetails, setProductDetails] = useState(null);
@@ -12,31 +13,39 @@ const OrderProductDetails = ({ productId, variantId, quantity }) => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       // Ensure we have a valid product ID
-      const actualProductId = typeof productId === 'object' ? productId._id || productId.id : productId;
-      
+      const actualProductId =
+        typeof productId === "object"
+          ? productId._id || productId.id
+          : productId;
+
       if (!actualProductId) {
-        setError('No valid product ID provided');
+        setError("No valid product ID provided");
         setLoading(false);
         return;
       }
 
       try {
-        const response = await fetch(`http://localhost:5000/api/products/${actualProductId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(
+          `${env.REACT_APP_API_URL}/api/products/${actualProductId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!response.ok) {
-          throw new Error(`Failed to fetch product (Status: ${response.status})`);
+          throw new Error(
+            `Failed to fetch product (Status: ${response.status})`
+          );
         }
 
         const data = await response.json();
-        
+
         // Find the specific variant
-        const variant = data.variants?.find(v => v._id === variantId);
-        
+        const variant = data.variants?.find((v) => v._id === variantId);
+
         if (!variant && data.variants?.length > 0) {
           // If specific variant not found but variants exist, use first variant
           setProductDetails({ ...data, selectedVariant: data.variants[0] });
@@ -44,7 +53,7 @@ const OrderProductDetails = ({ productId, variantId, quantity }) => {
           setProductDetails({ ...data, selectedVariant: variant });
         }
       } catch (error) {
-        console.error('Error fetching product:', error);
+        console.error("Error fetching product:", error);
         setError(error.message);
       } finally {
         setLoading(false);
@@ -59,25 +68,33 @@ const OrderProductDetails = ({ productId, variantId, quantity }) => {
   }
 
   if (error) {
-    return <div className="p-2 text-red-500">Error: Unable to load product details</div>;
+    return (
+      <div className="p-2 text-red-500">
+        Error: Unable to load product details
+      </div>
+    );
   }
 
   if (!productDetails) {
-    return <div className="p-2 text-gray-500">Product information unavailable</div>;
+    return (
+      <div className="p-2 text-gray-500">Product information unavailable</div>
+    );
   }
 
   const { name, selectedVariant } = productDetails;
-  
+
   const formatProductInfo = () => {
     if (!selectedVariant) {
       return `×${quantity} ${name}`;
     }
-    
+
     const variantInfo = [];
     if (selectedVariant.color) variantInfo.push(selectedVariant.color);
     if (selectedVariant.size) variantInfo.push(`Size: ${selectedVariant.size}`);
-    
-    return `×${quantity} ${name}${variantInfo.length ? ` - ${variantInfo.join(' - ')}` : ''}`;
+
+    return `×${quantity} ${name}${
+      variantInfo.length ? ` - ${variantInfo.join(" - ")}` : ""
+    }`;
   };
 
   return (
@@ -95,18 +112,28 @@ const OrderProductDetails = ({ productId, variantId, quantity }) => {
 function OrdersContainer() {
   const { orders, loading, error, getAllOrders } = useContext(OrdersContext);
   const { user } = useContext(UserContext);
-  
+
   const [expandedProducts, setExpandedProducts] = useState({});
   const [expandedAddresses, setExpandedAddresses] = useState({});
-  const [selectedMonth, setSelectedMonth] = useState('all');
-  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [selectedMonth, setSelectedMonth] = useState("all");
+  const [selectedStatus, setSelectedStatus] = useState("all");
 
   const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
-  const statuses = ['Processing', 'Shipped', 'Completed', 'Cancelled'];
+  const statuses = ["Processing", "Shipped", "Completed", "Cancelled"];
 
   useEffect(() => {
     if (user) {
@@ -115,64 +142,69 @@ function OrdersContainer() {
   }, [user, getAllOrders]);
 
   const getOrderId = (order) => {
-    if (!order) return '';
-    if (typeof order._id === 'string') return order._id;
+    if (!order) return "";
+    if (typeof order._id === "string") return order._id;
     if (order._id && order._id.$oid) return order._id.$oid;
-    if (order._id && typeof order._id.toString === 'function') return order._id.toString();
-    return '';
+    if (order._id && typeof order._id.toString === "function")
+      return order._id.toString();
+    return "";
   };
 
   const toggleProducts = (orderId) => {
-    setExpandedProducts(prev => ({
+    setExpandedProducts((prev) => ({
       ...prev,
-      [orderId]: !prev[orderId]
+      [orderId]: !prev[orderId],
     }));
   };
 
   const toggleAddress = (orderId) => {
-    setExpandedAddresses(prev => ({
+    setExpandedAddresses((prev) => ({
       ...prev,
-      [orderId]: !prev[orderId]
+      [orderId]: !prev[orderId],
     }));
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return '';
+    if (!dateString) return "";
     try {
-      if (typeof dateString === 'object' && dateString.$date) {
+      if (typeof dateString === "object" && dateString.$date) {
         dateString = dateString.$date;
       }
-      return new Date(dateString).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+      return new Date(dateString).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       });
     } catch (error) {
-      console.error('Error formatting date:', error);
-      return '';
+      console.error("Error formatting date:", error);
+      return "";
     }
   };
 
   const filterOrders = (orders) => {
     if (!Array.isArray(orders)) return [];
-    
-    return orders.filter(order => {
+
+    return orders.filter((order) => {
       if (!order) return false;
-      
+
       try {
-        const orderDate = order.createdAt ? 
-          (order.createdAt.$date ? new Date(order.createdAt.$date) : new Date(order.createdAt)) 
+        const orderDate = order.createdAt
+          ? order.createdAt.$date
+            ? new Date(order.createdAt.$date)
+            : new Date(order.createdAt)
           : null;
-        
-        const monthMatches = selectedMonth === 'all' || 
+
+        const monthMatches =
+          selectedMonth === "all" ||
           (orderDate && orderDate.getMonth() === parseInt(selectedMonth));
-        
-        const statusMatches = selectedStatus === 'all' || 
+
+        const statusMatches =
+          selectedStatus === "all" ||
           order.status?.toLowerCase() === selectedStatus.toLowerCase();
-        
+
         return monthMatches && statusMatches;
       } catch (error) {
-        console.error('Error filtering order:', error);
+        console.error("Error filtering order:", error);
         return false;
       }
     });
@@ -186,17 +218,9 @@ function OrdersContainer() {
     );
   }
 
-  if (loading) return (
-    <div className="text-center p-8">
-      Loading orders...
-    </div>
-  );
+  if (loading) return <div className="text-center p-8">Loading orders...</div>;
 
-  if (error) return (
-    <div className="text-center p-8 text-red-500">
-      {error}
-    </div>
-  );
+  if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
 
   const filteredOrders = filterOrders(orders);
 
@@ -204,12 +228,12 @@ function OrdersContainer() {
     <div className="max-w-7xl mx-auto p-4">
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-4">My Orders</h2>
-        
+
         <div className="filtersContainer">
           <div className="filterGroup">
             <label>Month: </label>
-            <select 
-              value={selectedMonth} 
+            <select
+              value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
               className="filterSelect"
             >
@@ -224,8 +248,8 @@ function OrdersContainer() {
 
           <div className="filterGroup">
             <label>Status: </label>
-            <select 
-              value={selectedStatus} 
+            <select
+              value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
               className="filterSelect"
             >
@@ -245,7 +269,7 @@ function OrdersContainer() {
           filteredOrders.map((order) => {
             if (!order) return null;
             const orderId = getOrderId(order);
-            
+
             return (
               <div key={orderId} className="orderCard">
                 <div className="orderHeader">
@@ -253,23 +277,31 @@ function OrdersContainer() {
                     <span className="orderNumber">
                       Order #{orderId.slice(-6)}
                     </span>
-                    <span className={`orderStatus status${order.status?.charAt(0).toUpperCase() + order.status?.slice(1)}`}>
-                      {order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : 'N/A'}
+                    <span
+                      className={`orderStatus status${
+                        order.status?.charAt(0).toUpperCase() +
+                        order.status?.slice(1)
+                      }`}
+                    >
+                      {order.status
+                        ? order.status.charAt(0).toUpperCase() +
+                          order.status.slice(1)
+                        : "N/A"}
                     </span>
                   </div>
                   <span>{formatDate(order.createdAt)}</span>
                 </div>
 
-                <div 
+                <div
                   className="orderProductsHeader"
                   onClick={() => toggleProducts(orderId)}
                 >
                   <h4>Products ({order.products_array?.length || 0})</h4>
                   <span className="toggleIcon">
-                    {expandedProducts[orderId] ? '▼' : '▲'}
+                    {expandedProducts[orderId] ? "▼" : "▲"}
                   </span>
                 </div>
-                
+
                 {expandedProducts[orderId] && order.products_array && (
                   <div className="orderProducts bg-gray-50 rounded-md p-4 mt-2">
                     {order.products_array.map((product) => (
@@ -283,25 +315,34 @@ function OrdersContainer() {
                   </div>
                 )}
 
-                <div 
+                <div
                   className="shippingAddressHeader"
                   onClick={() => toggleAddress(orderId)}
                 >
                   <h4>Shipping Address</h4>
                   <span className="toggleIcon">
-                    {expandedAddresses[orderId] ? '▼' : '▲'}
+                    {expandedAddresses[orderId] ? "▼" : "▲"}
                   </span>
                 </div>
-                
+
                 {expandedAddresses[orderId] && order.shipping_address && (
                   <div className="shippingAddressContent">
-                    <p>Street: {order.shipping_address.shipping_street_address || 'N/A'}</p>
-                    <p>City: {order.shipping_address.shipping_city || 'N/A'}</p>
-                    <p>ZIP Code: {order.shipping_address.shipping_zip_code || 'N/A'}</p>
-                    <p>Country: {order.shipping_address.shipping_country || 'N/A'}</p>
+                    <p>
+                      Street:{" "}
+                      {order.shipping_address.shipping_street_address || "N/A"}
+                    </p>
+                    <p>City: {order.shipping_address.shipping_city || "N/A"}</p>
+                    <p>
+                      ZIP Code:{" "}
+                      {order.shipping_address.shipping_zip_code || "N/A"}
+                    </p>
+                    <p>
+                      Country:{" "}
+                      {order.shipping_address.shipping_country || "N/A"}
+                    </p>
                   </div>
                 )}
-                
+
                 <div className="orderTotal">
                   <span>Total:</span>
                   <span>${Number(order.total_cost || 0).toFixed(2)}</span>

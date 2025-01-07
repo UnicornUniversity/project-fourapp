@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 import { env } from "../utils/env";
 export const UserContext = createContext();
 
-
 function UserProvider({ children }) {
   const [user, setUser] = useState({});
   const [token, setToken] = useState("");
@@ -52,7 +51,7 @@ function UserProvider({ children }) {
   async function handleUpdate(_id, body) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/users/${_id}`, //OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/users/${_id}`, //OUR API ENDPOINT
         {
           method: "PUT",
           headers: {
@@ -73,7 +72,7 @@ function UserProvider({ children }) {
   async function handleRegister(user) {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/register", //OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/auth/register`, //OUR API ENDPOINT
         {
           method: "POST",
           headers: {
@@ -99,7 +98,7 @@ function UserProvider({ children }) {
   async function handleLogin(user) {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/login", //OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/auth/login`, //OUR API ENDPOINT
         {
           method: "POST",
           credentials: "include",
@@ -125,7 +124,7 @@ function UserProvider({ children }) {
 
   async function handleGoogleLogin() {
     try {
-      window.location.href = "http://localhost:5000/api/auth/google"; // URL backendu
+      window.location.href = `${env.REACT_APP_API_URL}/api/auth/google`; // URL backendu
     } catch (error) {
       //console.error("Error sending token to backend:", error);
     }
