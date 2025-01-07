@@ -63,6 +63,8 @@
 
 .dropdown h4 {
     font-weight: lighter;
+    text-decoration: underline;
+    font-weight: 600;
 }
 
 .dropdown .column {
@@ -181,7 +183,12 @@
         transform: translate(-50%, -50%);
     }
 
-
+    .dropdown.show {
+        display: block; /* Zobraz dropdown, pokud má třídu "show" */
+        opacity: 1; /* Nastaví opacity na 1, aby dropdown zůstal viditelný */
+        visibility: visible; /* Nastaví visibility na visible, aby dropdown zůstal viditelný */
+      }
+      
     .menu {
         position: fixed;
         top: 0;
@@ -191,17 +198,23 @@
         background-color: white;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        padding: 2rem 1rem;
+        gap: 2rem;
+        padding: 4rem 1rem;
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
         transition: left 0.3s ease;
         overflow-y: auto;
-        z-index: 1000;
+        z-index: 99;
     }
+
+    .close-menu-button i {
+        font-size: 0.3rem; /* Snížení velikosti ikony */
+      }
 
     .menu-open {
         left: 0;
     }
+
+    
 
 
 
@@ -219,6 +232,36 @@
     }
 
    
+    .dropdown {
+        display: none;
+      }
+    
+      /* Zobraz dropdown, pokud má třídu "open" */
+      .dropdown.open {
+        display: block;
+      }
 
 
-}
+
+      .close-menu-button {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        cursor: pointer;
+        z-index: 100;
+        margin-bottom: 2rem;
+        font-weight: 800;
+      }
+      
+      .close-menu-button i {
+        font-size: 1.5rem;
+      }
+
+      .menu>li {
+        cursor: pointer; /* Nastaví kurzor na pointer pro li */
+      }
+      
+      .menu>li>a {
+        cursor: default; /* Nastaví kurzor na default pro a */
+      }
+    }
