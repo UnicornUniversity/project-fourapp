@@ -1,11 +1,31 @@
 .productList {
     margin: 0 auto;
-    padding-top: 3vh;
-
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2vw;
     width: 80%;
+}
+
+@media (max-width: 1200px) {
+    .productList {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+
+}
+
+@media (max-width: 800px) {
+    .productList {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    
+}
+
+@media (max-width: 500px) {
+    .productList {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
 .productCard {
@@ -109,7 +129,6 @@
 }
 
 .productCardColor {
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     width: 25px;
     height: 25px;
 }
@@ -117,24 +136,167 @@
 /*-------Filters-----------*/
 
 .filterContainer {
-    padding-left: 10vw;
-    display: flex;
     align-items: center;
     gap: 16px;
     width: fit-content;
-    margin: 1rem 0 1rem;
+    margin: 2rem auto;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    background-color: white;
 }
 
-.filterButton {
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+.dropDownItem:hover{
+    background-color: #ffff;
+    color: #000;
+}
+
+.priceFilter > div{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 0.3rem;
+}
+
+.priceFilter > div > label > input{
+    text-align: right;
+    font-weight: 500;
+    border: #000 2px solid;
+    margin-left: 0.5rem;
     border-radius: 4px;
-    cursor: pointer;
-    padding: 5px 40px;
-
+    height: 2rem;
+    font-size: 1em;
 }
 
+.priceFilter > div > button{
+    padding: 0.7rem 2rem;
+    margin-top: -10px;
+}
 
+.filterButton > button{
+    padding: 0.7rem 2rem;
+    margin-top: -20px;
+}
+.selectedFilterList{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    
+}
 
+.selectedFilterList > div > span{
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0.1rem 0 0.1rem 0.5rem;
+}
+.selectedFilterList > div > span > button{
+    padding: 0.4rem 1rem;
+}
+
+.filterPopUpButton{
+    display: none;
+}
+
+.fileterButtonFlex{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0;
+}
+#closeButton{
+    display: none;
+}
+
+@media (max-width: 1200px) {
+
+    .filterPopUpButton{
+        display: block;
+    }
+    #filterForm{
+        display: none;
+        z-index: 1;
+    }
+    .selectedFilterList{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+    }
+    .popUpButtons{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+    }
+
+    .priceFilter > div{
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 0rem;
+    }
+    .priceFilter > div > label{
+        margin: 0;
+    }
+    .fileterButtonFlex{
+        margin-bottom: 1rem;
+    }
+
+    .filterContainer {
+        margin: rem 1rem;
+    }
+
+    #filterForm {
+        display: none;
+        position: fixed;
+        top: 5rem;
+        left: 0;
+        z-index: 1000;
+        overflow-y: auto;
+        padding: 2rem;
+        box-sizing: border-box;
+        background-color: #ffff;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
+        height: 100%;
+    }
+    
+    .filterPopUpButton {
+        display: block; /* Zobrazí se pouze na menších obrazovkách */
+    }
+}
+
+.no-scroll {
+    overflow: hidden; /* Zablokuje scrollování */
+    height: 100%; /* Zajistí, že stránka nebude scrollovat */
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Pro Firefox */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Pro Chrome, Safari, Edge */
+    margin: 0; /* Odstraní výchozí okraj */
+}
+
+input{
+    padding-right: 20px ;
+}
+
+.input-with-dollar {
+    position: relative;
+    display: inline-block;
+}
+
+.input-with-dollar::before {
+    content: "$"; /* Přidá znak $ */
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-55%);
+    pointer-events: none; /* Zabrání interakci se znakem $ */
+    color: #000; /* Barva znaku $ */
+    font-size: 15px; /* Velikost znaku $ */
+}
 
 /*---DETAIL---*/
 
@@ -147,6 +309,14 @@
     gap: 2rem;
     padding: 2rem 0;
 }
+
+@media (max-width: 900px) {
+    .productContent {
+        grid-template-columns: 1fr;
+    }
+
+}
+
 
 
 .productGallery {
@@ -322,6 +492,10 @@
     border: none;
     background: white;
     cursor: pointer;
+    color: #000;
+}
+.accordionButton:hover{
+    color: white;
 }
 
 .accordionContent {
@@ -337,11 +511,23 @@
     width: 95%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(calc((100% - (4 * 2vw)) / 5), 1fr));
+    grid-template-columns: repeat(5, 1fr);
     gap: 2vw;
     box-sizing: border-box;
 }
 
+@media (max-width: 1000px) {
+    .recentContainer {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+@media (max-width: 600px) {
+.recentContainer {
+    grid-template-columns: repeat(2, 1fr);
+}
+}
+  
 .recentContainer>h3 {
     grid-column: 1 / -1;
     margin-bottom: 1em;

@@ -32,6 +32,13 @@ function NavbarContainer() {
     setOpenDropdown(null);
   }, [location.pathname]); // Runs whenever the pathname changes
 
+  function handleToggleMenu() {
+  const burgerMenu = document.querySelector(".burger-menu");
+  const menu = document.querySelector(".menu-mobile ul");
+  burgerMenu.classList.toggle("active");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
   return (
     <nav
       className="navbar"

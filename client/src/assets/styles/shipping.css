@@ -41,12 +41,11 @@
 label {
     margin-bottom: 0.5rem; /* Space below labels */
     font-weight: bold; /* Bold labels */
-    color: #555; /* Label color */
 }
 
 /* Button styles */
 button {
-    padding: 0.75rem 1.5rem; /* Padding for the button */
+   /* Padding for the button */
     background-color: black; /* Button background color */
     color: white; /* Button text color */
     border: none; /* Remove border */
@@ -71,8 +70,20 @@ button:hover {
   
 
 /* Responsive styles */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     .row {
         flex-direction: column; /* Stack inputs on smaller screens */
+    }
+    .shippingPage{
+        grid-template-columns: 1fr;
+        align-items: center;
+    }
+    .shippingPage > div:first-child{
+        width: 95%;
+
+    }
+    .shippingPage > div:last-child{
+        margin: 0 auto;
+        width: 75%;
     }
 }
