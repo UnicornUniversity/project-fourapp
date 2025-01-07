@@ -7,7 +7,10 @@
 srv687262.hstgr.cloud {
     handle /api/* {
         uri strip_prefix /api
-        reverse_proxy server:5000
+        reverse_proxy server:5000 {
+            header_up Host {upstream_hostport}
+            header_up X-Real-IP {remote_host}
+        }
     }
 
     handle /* {
@@ -29,5 +32,9 @@ srv687262.hstgr.cloud {
         X-XSS-Protection "1; mode=block"
         # Prevent site from being embedded in iframes
         X-Frame-Options "DENY"
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization"
+        Access-Control-Allow-Credentials true
     }
 } 

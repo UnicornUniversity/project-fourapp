@@ -47,12 +47,12 @@ try {
 }
 
 // Endpointy
-app.use("auth", authRouter);
-app.use("categories", categoriesRouter);
-app.use("products", productsRouter);
-app.use("users", userRouter);
-app.use("orders", ordersRouter);
-app.use("auditlogs", auditlogRouter);
+app.use("/auth", authRouter);
+app.use("/categories", categoriesRouter);
+app.use("/products", productsRouter);
+app.use("/users", userRouter);
+app.use("/orders", ordersRouter);
+app.use("/auditlogs", auditlogRouter);
 app.use(errorHandler);
 
 // Spuštění serveru
