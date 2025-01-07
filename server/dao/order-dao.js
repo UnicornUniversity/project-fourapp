@@ -36,6 +36,7 @@ class orderDao {
 
   static async update(orderData) {
     const { id, ...updateData } = orderData;
+    console.log(updateData)
     const updatedOrder = await Order.findByIdAndUpdate(id, updateData, {
       new: true,
     });
