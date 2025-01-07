@@ -8,7 +8,7 @@ import CategoryProvider from "./providers/CategoryProvider";
 import ProfileLayout from "./layouts/ProfileLayout";
 import CartProvider from "./providers/CartProvider";
 import OrderProvider from "./providers/OrderProvider";
-import OrdersProvider from "./providers/OrdersProvider";
+import OrdersProvider from "./providers/OrderProvider";
 import WishlistProvider from "./providers/WishlistProvider";
 
 /*---AUTH---*/

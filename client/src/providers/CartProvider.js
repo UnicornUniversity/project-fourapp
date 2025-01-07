@@ -1,7 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { UserContext } from "./UserProvider";
-import { ProductContext } from "./ProductProvider"; // Import ProductContext
-import { env } from "../utils/env";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { UserContext } from './UserProvider';
+import { ProductContext } from './ProductProvider'; // Import ProductContext
 
 export const CartContext = createContext();
 
@@ -16,39 +15,35 @@ function CartProvider({ children }) {
     }
   }, [user]);
 
+
+
   async function handleLoad(userId) {
     try {
-      const response = await fetch(
-        `${env.REACT_APP_API_URL}/api/users/cart/${userId}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`http://localhost:5000/api/users/cart/${userId}`, {
+        method: 'GET',
+        credentials: 'include',
+      });
       const serverResponse = await response.json();
-
+      
       if (response.ok) {
         // Assuming serverResponse contains an array of cart items
         const cartItemsWithDetails = serverResponse.map((cartItem) => {
           // Find the product based on productId
-          const product = products.find((p) => p._id === cartItem.productId);
-
+          const product = products.find(p => p._id === cartItem.productId);
+          
           // Find the variant based on variantId
-          const variant = product?.variants.find(
-            (v) => v._id === cartItem.variantId
-          );
+          const variant = product?.variants.find(v => v._id === cartItem.variantId);
 
           // Combine cart item with product and variant details
           return {
             ...cartItem,
             title: product?.name || "Unknown Product", // Fallback if product is not found
-            price: product?.price, // Fallback price
-            image:
-              variant?.images[0] || "/images/default/image-placeholder.webp", // Use the first image or a placeholder
-            color: variant?.color,
+            price: product?.price , // Fallback price
+            image: variant?.images[0] || '/images/default/image-placeholder.webp', // Use the first image or a placeholder
+            color: variant?.color
           };
         });
-        console.log(cartItemsWithDetails);
+        console.log(cartItemsWithDetails)
         setCartItems(cartItemsWithDetails);
       } else {
         console.log(serverResponse);
@@ -84,7 +79,7 @@ function CartProvider({ children }) {
       });
 
       const response = await fetch(
-        `${env.REACT_APP_API_URL}/api/users/cart/add-item`, // OUR API ENDPOINT
+        `http://localhost:5000/api/users/cart/add-item`, // OUR API ENDPOINT
         {
           method: "POST",
           headers: {
@@ -110,7 +105,9 @@ function CartProvider({ children }) {
 
   const updateQuantity = (itemId, quantity) => {
     setCartItems((prev) =>
-      prev.map((item) => (item.id === itemId ? { ...item, quantity } : item))
+      prev.map((item) =>
+        item.id === itemId ? { ...item, quantity } : item
+      )
     );
   };
 
@@ -123,15 +120,13 @@ function CartProvider({ children }) {
   };
 
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        toggleFavorite,
-      }}
-    >
+    <CartContext.Provider value={{
+      cartItems,
+      addToCart,
+      removeFromCart,
+      updateQuantity,
+      toggleFavorite,
+    }}>
       {children}
     </CartContext.Provider>
   );

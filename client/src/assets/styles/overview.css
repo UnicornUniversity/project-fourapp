@@ -4,6 +4,13 @@
 .overViewContainer{
     padding: 2rem;
 }
+
+@media (max-width: 800px) {
+    .overViewContainer{
+        width: 75%;
+    }
+}
+
 .productRow {
     display: flex;
     align-items: center;

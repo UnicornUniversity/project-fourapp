@@ -13,6 +13,13 @@
     gap: 2vw;
 }
 
+@media (max-width: 800px) {
+    .profileContent>div{
+        display: block;
+    }
+}
+
+
 .profileContent>div>div:nth-child(2) {
     width: 100%;
 }
