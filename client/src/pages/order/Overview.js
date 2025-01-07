@@ -31,7 +31,7 @@ export function Overview() {
     }
 
     return (
-        <div className="shippingPage">
+        <div className="shippingContainer">
             <Card>
                 <div className="overViewContainer">
                     <h2>Order Overview</h2>
@@ -67,7 +67,7 @@ export function Overview() {
                     </div>
                 </div>
             </Card>
-            <Card className="cartSummary">
+            <Card className="cartCard">
                 <h2>Cart Summary</h2>
                 {order.products.map(item => (
                     <div key={item.id} className="summaryItem">
