@@ -80,7 +80,7 @@ function OrdersContainer() {
   const filteredOrders = filterOrders(orders);
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem' }}>
+    <div class="ordersContainer">
       <div style={{ marginBottom: '2rem' }}>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>My Orders</h2>
         

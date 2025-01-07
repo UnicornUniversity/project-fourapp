@@ -5,8 +5,18 @@
     margin: 0 auto;
     gap: 2vw;
     height: 80vh;
-    margin-top: 10vh;
-    margin-bottom: 10vh;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 1200px) {
+    .collectionContainer{
+        flex-direction: column;
+        height: 20vh;
+    }
+    .collectionContainer >div{
+        width: 100%;
+    }
 }
 
 .collectionCard {

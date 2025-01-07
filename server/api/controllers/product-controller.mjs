@@ -112,31 +112,4 @@ export default class ProductController {
       next(error);
     }
   }
-
-  static async uploadVariantImages(req, res, next) {
-    try {
-      const { productId, variantId } = req.params;
-
-      if (!req.files || req.files.length === 0) {
-        throw ApiError.badRequest("No files uploaded");
-      }
-
-      const imageUrls = req.files.map(
-        (file) => `/images/products/${file.filename}`
-      );
-
-        await ProductAbl.updateVariantImages(
-        productId,
-        variantId,
-        imageUrls
-      );
-
-      res.status(200).json({
-        message: "Images uploaded successfully",
-        images: imageUrls,
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
 }
