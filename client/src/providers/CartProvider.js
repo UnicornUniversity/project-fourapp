@@ -179,6 +179,7 @@ function CartProvider({ children }) {
   return (
     < CartContext.Provider value={{
       cartItems,
+      setCartItems,
       addToCart,
       removeFromCart,
       updateQuantity,
