@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { UserContext } from './UserProvider';
 import { ProductContext } from './ProductProvider';
+import { env } from '../utils/env';
+import Cookies from 'js-cookie';
 
 export const CartContext = createContext();
 
@@ -107,9 +109,44 @@ function CartProvider({ children }) {
     }
   }
 
+  const updateQuantity = async (item, quantity) => {
+    try {
+      const response = await fetch(`${env.REACT_APP_API_URL}/api/users/cart/update-quantity`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          variantId: item.variantId,
+          productId: item.productId,
+          quantity: quantity,
+        }),
+      });
+  
+      if (response.ok) {
+        // Update the cart items state
+        setCartItems((prev) =>
+          prev.map((cartItem) =>
+            cartItem.variantId === item.variantId
+              ? { ...cartItem, quantity: quantity } // Update the quantity of the matching item
+              : cartItem
+          )
+        );
+
+      } else {
+        console.error("Failed to update quantity:", response.statusText);
+
+      }
+    } catch (error) {
+      console.error("Error updating item in cart:", error);
+
+    }
+  };
+
   const removeFromCart = async (item) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/users/cart/remove-item`, {
+      const response = await fetch(`${env.REACT_APP_API_URL}/api/users/cart/remove-item`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -130,13 +167,6 @@ function CartProvider({ children }) {
   };
 
 
-  const updateQuantity = (itemId, quantity) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.productId === itemId ? { ...item, quantity } : item
-      )
-    );
-  };
 
   const toggleFavorite = (itemId) => {
     setCartItems((prev) =>
