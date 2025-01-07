@@ -171,3 +171,61 @@
 .swiper-pagination-bullet-active {
     background-color: black !important;
 }
+
+.navbarBarContainer {
+    display: none;
+    cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .menu {
+        position: fixed;
+        top: 0;
+        padding: 2rem 1rem 1rem 2rem;
+        left: -100%;
+        height: 100%;
+        width: 40%;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+        -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+        transition: left 0.3s ease;
+        overflow-y: auto;
+    }
+
+
+    .menu-open {
+        left: 0;
+    }
+
+    .subcategories {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .subcategories h4 {
+        font-weight: lighter;
+        font-size: medium;
+    }
+
+    .subcategories>div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .navbarBarContainer {
+        display: block;
+    }
+
+    .navbarLogoContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
