@@ -37,7 +37,7 @@ app.use(cookieParser());
 app.use(requestLogger);
 app.use(auditRoute);
 
-app.use('/images', express.static(path.join(__dirname, 'assets/images')));
+app.use("/images", express.static(path.join(__dirname, "assets/images")));
 
 // Připojení k databázi
 try {
