@@ -1,0 +1,144 @@
+[{
+  "_id": {
+    "$oid": "676414bee25e76f95bbf6231"
+  },
+  "name": "Men",
+  "parentCategoryId": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676414c6e25e76f95bbf6233"
+  },
+  "name": "Women",
+  "parentCategoryId": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676414cfe25e76f95bbf6235"
+  },
+  "name": "Accessories",
+  "parentCategoryId": null,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676414f2e25e76f95bbf6237"
+  },
+  "name": "Glasses",
+  "parentCategoryId": {
+    "$oid": "676414cfe25e76f95bbf6235"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67641501e25e76f95bbf6239"
+  },
+  "name": "Hats",
+  "parentCategoryId": {
+    "$oid": "676414cfe25e76f95bbf6235"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676415b3e25e76f95bbf623b"
+  },
+  "name": "Tops",
+  "parentCategoryId": {
+    "$oid": "676414bee25e76f95bbf6231"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676415bbe25e76f95bbf623d"
+  },
+  "name": "Bottoms",
+  "parentCategoryId": {
+    "$oid": "676414bee25e76f95bbf6231"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6764163fe25e76f95bbf623f"
+  },
+  "name": "Sweatpants",
+  "parentCategoryId": {
+    "$oid": "676415bbe25e76f95bbf623d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676416d0e25e76f95bbf6241"
+  },
+  "name": "T-Shirts",
+  "parentCategoryId": {
+    "$oid": "676415b3e25e76f95bbf623b"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676416e3e25e76f95bbf6243"
+  },
+  "name": "Hoodies",
+  "parentCategoryId": {
+    "$oid": "676415b3e25e76f95bbf623b"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676417a3e25e76f95bbf6247"
+  },
+  "name": "Tops",
+  "parentCategoryId": {
+    "$oid": "676414c6e25e76f95bbf6233"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676417ace25e76f95bbf6249"
+  },
+  "name": "Coats",
+  "parentCategoryId": {
+    "$oid": "676417a3e25e76f95bbf6247"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676417bfe25e76f95bbf624b"
+  },
+  "name": "Hoodies",
+  "parentCategoryId": {
+    "$oid": "676417a3e25e76f95bbf6247"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67641a35e25e76f95bbf6342"
+  },
+  "name": "Sunglasses",
+  "parentCategoryId": {
+    "$oid": "676414f2e25e76f95bbf6237"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67641a86e25e76f95bbf6344"
+  },
+  "name": "Stretch caps",
+  "parentCategoryId": {
+    "$oid": "67641501e25e76f95bbf6239"
+  },
+  "__v": 0
+}]

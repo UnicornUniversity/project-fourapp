@@ -1,0 +1,958 @@
+[{
+  "_id": {
+    "$oid": "6758c4bec78fa24271c453db"
+  },
+  "name": "Biz Turtleneck",
+  "description": "Comfortable cotton turtleneck",
+  "price": 29.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "L Turtleneck Black",
+      "size": "L",
+      "color": "Black",
+      "stock": 50,
+      "images": [
+        "/images/products/black_turtleneck_03.jpg",
+        "/images/products/black_turtleneck_02.jpg",
+        "/images/products/black_turtleneck_01.jpg"
+      ],
+      "_id": {
+        "$oid": "6758c4bec78fa24271c453dc"
+      }
+    },
+    {
+      "name": "M Turtleneck Black",
+      "size": "M",
+      "color": "Black",
+      "stock": 30,
+      "images": [
+        "/images/products/black_turtleneck_03.jpg",
+        "/images/products/black_turtleneck_02.jpg",
+        "/images/products/black_turtleneck_01.jpg"
+      ],
+      "_id": {
+        "$oid": "6758c4bec78fa24271c453dd"
+      }
+    },
+    {
+      "name": "S Turtleneck Black",
+      "size": "S",
+      "color": "Black",
+      "stock": 30,
+      "images": [
+        "/images/products/black_turtleneck_03.jpg",
+        "/images/products/black_turtleneck_02.jpg",
+        "/images/products/black_turtleneck_01.jpg"
+      ],
+      "_id": {
+        "$oid": "6758c4bec78fa24271c453de"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414bee25e76f95bbf6231"
+    },
+    {
+      "$oid": "676415b3e25e76f95bbf623b"
+    },
+    {
+      "$oid": "676416e3e25e76f95bbf6243"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6758c4c5c78fa24271c453e0"
+  },
+  "name": "Cosy Turtleneck",
+  "description": "Comfortable cotton turtleneck",
+  "price": 49.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "32 Cosy Turtleneck Red",
+      "size": "32",
+      "color": "Red",
+      "stock": 25,
+      "images": [
+        "/images/products/red_turtleneck_01.jpg",
+        "/images/products/red_turtleneck_02.jpg",
+        "/images/products/red_turtleneck_03.jpg"
+      ],
+      "_id": {
+        "$oid": "6758c4c5c78fa24271c453e1"
+      }
+    },
+    {
+      "name": "34 Cosy Turtleneck Red",
+      "size": "34",
+      "color": "Red",
+      "stock": 20,
+      "images": [
+        "/images/products/red_turtleneck_01.jpg",
+        "/images/products/red_turtleneck_02.jpg",
+        "/images/products/red_turtleneck_03.jpg"
+      ],
+      "_id": {
+        "$oid": "6758c4c5c78fa24271c453e2"
+      }
+    },
+    {
+      "name": "36 Cosy Turtleneck Red",
+      "size": "36",
+      "color": "Red",
+      "stock": 20,
+      "images": [
+        "/images/products/red_turtleneck_01.jpg",
+        "/images/products/red_turtleneck_02.jpg",
+        "/images/products/red_turtleneck_03.jpg"
+      ],
+      "_id": {
+        "$oid": "6758c4c5c78fa24271c453e3"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414bee25e76f95bbf6231"
+    },
+    {
+      "$oid": "676415b3e25e76f95bbf623b"
+    },
+    {
+      "$oid": "676416e3e25e76f95bbf6243"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6758c4cbc78fa24271c453e5"
+  },
+  "name": "Cosy Sweatshirt",
+  "description": "Comfortable cotton sweatshirt",
+  "price": 14.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "L Cosy Sweatshirt",
+      "size": "L",
+      "color": "Beige",
+      "stock": 40,
+      "images": [
+        "/images/products/play_sweatshirt_01.jpg",
+        "/images/products/play_sweatshirt_02.jpg"
+      ],
+      "_id": {
+        "$oid": "6758c4cbc78fa24271c453e6"
+      }
+    },
+    {
+      "name": "XL Cosy Sweatshirt",
+      "size": "XL",
+      "color": "Beige",
+      "stock": 35,
+      "images": [
+        "/images/products/play_sweatshirt_01.jpg",
+        "/images/products/play_sweatshirt_02.jpg"
+      ],
+      "_id": {
+        "$oid": "6758c4cbc78fa24271c453e7"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414bee25e76f95bbf6231"
+    },
+    {
+      "$oid": "676415b3e25e76f95bbf623b"
+    },
+    {
+      "$oid": "676416e3e25e76f95bbf6243"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6759f6500fbf437a3cd4cd99"
+  },
+  "name": "Unicorn Shirt",
+  "description": "Comfortable cotton shirt",
+  "price": 9.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "L Unicorn Shirt",
+      "size": "L",
+      "color": "Navy",
+      "stock": 40,
+      "images": [
+        "/images/products/unicorn_navy_shirt_01.jpg",
+        "/images/products/unicorn_navy_shirt_02.jpg",
+        "/images/products/unicorn_navy_shirt_03.jpg"
+      ],
+      "_id": {
+        "$oid": "6759f6500fbf437a3cd4cd9a"
+      }
+    },
+    {
+      "name": "L Unicorn Shirt",
+      "size": "L",
+      "color": "Green",
+      "stock": 35,
+      "images": [
+        "/images/products/unicorn_lightblue_shirt_01.jpg",
+        "/images/products/unicorn_lightblue_shirt_02.jpg",
+        "/images/products/unicorn_lightblue_shirt_03.jpg"
+      ],
+      "_id": {
+        "$oid": "6759f6500fbf437a3cd4cd9b"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676416d0e25e76f95bbf6241"
+    },
+    {
+      "$oid": "676414bee25e76f95bbf6231"
+    },
+    {
+      "$oid": "676415b3e25e76f95bbf623b"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "88c82020eba190d8a87d34fa"
+  },
+  "name": "Madmonq Shirt",
+  "description": "Comfortable cotton shirt",
+  "price": 9.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "L Madmonq Shirt",
+      "size": "L",
+      "color": "Black",
+      "stock": 40,
+      "images": [
+        "/images/products/madmonq_shirt_01.jpg",
+        "/images/products/madmonq_shirt_02.jpg"
+      ],
+      "_id": {
+        "$oid": "88c82020eba190d8a87d34fb"
+      }
+    },
+    {
+      "name": "XL Madmonq Shirt",
+      "size": "XL",
+      "color": "Black",
+      "stock": 35,
+      "images": [
+        "/images/products/madmonq_shirt_01.jpg",
+        "/images/products/madmonq_shirt_02.jpg"
+      ],
+      "_id": {
+        "$oid": "88c82020eba190d8a87d34fc"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676416d0e25e76f95bbf6241"
+    },
+    {
+      "$oid": "676414bee25e76f95bbf6231"
+    },
+    {
+      "$oid": "676415b3e25e76f95bbf623b"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "70299310cadeaf57d82927fa"
+  },
+  "name": "Bomber Jacket",
+  "description": "Comfortable cotton bomber jacket",
+  "price": 59.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "L Bomber Jacket",
+      "size": "L",
+      "color": "Brown",
+      "stock": 40,
+      "images": [
+        "/images/products/brown_bomber_01.jpg",
+        "/images/products/brown_bomber_02.jpg",
+        "/images/products/brown_bomber_03.jpg"
+      ],
+      "_id": {
+        "$oid": "70299310cadeaf57d82927fb"
+      }
+    },
+    {
+      "name": "XL Bomber Jacket",
+      "size": "XL",
+      "color": "Brown",
+      "stock": 35,
+      "images": [
+        "/images/products/brown_bomber_01.jpg",
+        "/images/products/brown_bomber_02.jpg",
+        "/images/products/brown_bomber_03.jpg"
+      ],
+      "_id": {
+        "$oid": "70299310cadeaf57d82927fc"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414c6e25e76f95bbf6233"
+    },
+    {
+      "$oid": "676417a3e25e76f95bbf6247"
+    },
+    {
+      "$oid": "676417ace25e76f95bbf6249"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "59ea43fcacdd7e840313127a"
+  },
+  "name": "Casio Watch",
+  "description": "90's biz casio watch",
+  "price": 39.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "OS Casio Watch",
+      "size": "One Size",
+      "color": "Silver",
+      "stock": 40,
+      "images": [
+        "/images/products/casio_watches_01.jpg",
+        "/images/products/casio_watches_02.jpg"
+      ],
+      "_id": {
+        "$oid": "59ea43fcacdd7e840313127b"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414cfe25e76f95bbf6235"
+    },
+    {
+      "$oid": "676414f2e25e76f95bbf6237"
+    },
+    {
+      "$oid": "67641a35e25e76f95bbf6342"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "ea91d4b74b2d65e4d949a8ca"
+  },
+  "name": "Stylish Glasses",
+  "description": "+100 street credit glasses",
+  "price": 39.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "OS Casio Watch",
+      "size": "One Size",
+      "color": "Purple",
+      "stock": 40,
+      "images": [
+        "/images/products/party_glasses_01.jpg",
+        "/images/products/party_glasses_02.jpg"
+      ],
+      "_id": {
+        "$oid": "ea91d4b74b2d65e4d949a8cb"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414cfe25e76f95bbf6235"
+    },
+    {
+      "$oid": "676414f2e25e76f95bbf6237"
+    },
+    {
+      "$oid": "67641a35e25e76f95bbf6342"
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67641df9e25e76f95bbf6453"
+  },
+  "name": "Oversized t-shirt",
+  "price": 49.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "Oversized T-shirt Black",
+      "size": "L",
+      "color": "Black",
+      "stock": 50,
+      "images": [
+        "/images/products/black oversized t-shirt.webp"
+      ],
+      "_id": {
+        "$oid": "67641df9e25e76f95bbf6454"
+      }
+    },
+    {
+      "name": "Oversized T-shirt Black",
+      "size": "M",
+      "color": "Black",
+      "stock": 30,
+      "images": [
+        "/images/products/black oversized t-shirt.webp"
+      ],
+      "_id": {
+        "$oid": "67641df9e25e76f95bbf6455"
+      }
+    },
+    {
+      "name": "Oversized T-shirt Green",
+      "size": "S",
+      "color": "Green",
+      "stock": 20,
+      "images": [
+        "/images/products/green oversized t-shirt.webp"
+      ],
+      "_id": {
+        "$oid": "67641df9e25e76f95bbf6456"
+      }
+    },
+    {
+      "name": "Oversized T-shirt Green",
+      "size": "XL",
+      "color": "Green",
+      "stock": 40,
+      "images": [
+        "/images/products/green oversized t-shirt.webp"
+      ],
+      "_id": {
+        "$oid": "67641df9e25e76f95bbf6457"
+      }
+    },
+    {
+      "name": "Oversized T-shirt Red",
+      "size": "M",
+      "color": "Red",
+      "stock": 25,
+      "images": [
+        "/images/products/red oversized t-shirt.webp"
+      ],
+      "_id": {
+        "$oid": "67641df9e25e76f95bbf6458"
+      }
+    },
+    {
+      "name": "Oversized T-shirt Red",
+      "size": "S",
+      "color": "Red",
+      "stock": 15,
+      "images": [
+        "/images/products/red oversized t-shirt.webp"
+      ],
+      "_id": {
+        "$oid": "67641df9e25e76f95bbf6459"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676416d0e25e76f95bbf6241"
+    },
+    {
+      "$oid": "676414bee25e76f95bbf6231"
+    },
+    {
+      "$oid": "676415b3e25e76f95bbf623b"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-12-19T13:22:01.744Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-19T13:22:01.744Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67642108e25e76f95bbf66b1"
+  },
+  "name": "Sweatpants",
+  "price": 59.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "Sweatpants Black",
+      "size": "M",
+      "color": "Black",
+      "stock": 40,
+      "images": [
+        "/images/products/black sweatpants.webp"
+      ],
+      "_id": {
+        "$oid": "67642108e25e76f95bbf66b2"
+      }
+    },
+    {
+      "name": "Sweatpants Black",
+      "size": "L",
+      "color": "Black",
+      "stock": 25,
+      "images": [
+        "/images/products/black sweatpants.webp"
+      ],
+      "_id": {
+        "$oid": "67642108e25e76f95bbf66b3"
+      }
+    },
+    {
+      "name": "Sweatpants Gray",
+      "size": "S",
+      "color": "Gray",
+      "stock": 30,
+      "images": [
+        "/images/products/gray sweatpants.webp"
+      ],
+      "_id": {
+        "$oid": "67642108e25e76f95bbf66b4"
+      }
+    },
+    {
+      "name": "Sweatpants Gray",
+      "size": "XL",
+      "color": "Gray",
+      "stock": 20,
+      "images": [
+        "/images/products/gray sweatpants.webp"
+      ],
+      "_id": {
+        "$oid": "67642108e25e76f95bbf66b5"
+      }
+    },
+    {
+      "name": "Sweatpants Olive",
+      "size": "M",
+      "color": "Olive",
+      "stock": 15,
+      "images": [
+        "/images/products/olive seatpants.webp"
+      ],
+      "_id": {
+        "$oid": "67642108e25e76f95bbf66b6"
+      }
+    },
+    {
+      "name": "Sweatpants Olive",
+      "size": "L",
+      "color": "Olive",
+      "stock": 10,
+      "images": [
+        "/images/products/olive seatpants.webp"
+      ],
+      "_id": {
+        "$oid": "67642108e25e76f95bbf66b7"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414bee25e76f95bbf6231"
+    },
+    {
+      "$oid": "676415bbe25e76f95bbf623d"
+    },
+    {
+      "$oid": "6764163fe25e76f95bbf623f"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-12-19T13:35:04.044Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-19T13:35:04.044Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6764226be25e76f95bbf69b2"
+  },
+  "name": "Hoodie",
+  "price": 49.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "Hoodie Black",
+      "size": "M",
+      "color": "black",
+      "stock": 40,
+      "images": [
+        "/images/products/hoodie black.webp"
+      ],
+      "_id": {
+        "$oid": "6764226be25e76f95bbf69b3"
+      }
+    },
+    {
+      "name": "Hoodie Black",
+      "size": "L",
+      "color": "black",
+      "stock": 30,
+      "images": [
+        "/images/products/hoodie black.webp"
+      ],
+      "_id": {
+        "$oid": "6764226be25e76f95bbf69b4"
+      }
+    },
+    {
+      "name": "Hoodie Blue",
+      "size": "M",
+      "color": "blue",
+      "stock": 25,
+      "images": [
+        "/images/products/hoodie blue.webp"
+      ],
+      "_id": {
+        "$oid": "6764226be25e76f95bbf69b5"
+      }
+    },
+    {
+      "name": "Hoodie Blue",
+      "size": "L",
+      "color": "blue",
+      "stock": 15,
+      "images": [
+        "/images/products/hoodie blue.webp"
+      ],
+      "_id": {
+        "$oid": "6764226be25e76f95bbf69b6"
+      }
+    },
+    {
+      "name": "Hoodie Brown",
+      "size": "M",
+      "color": "brown",
+      "stock": 20,
+      "images": [
+        "/images/products/hoodie oak.webp"
+      ],
+      "_id": {
+        "$oid": "6764226be25e76f95bbf69b7"
+      }
+    },
+    {
+      "name": "Hoodie Brown",
+      "size": "L",
+      "color": "brown",
+      "stock": 10,
+      "images": [
+        "/images/products/hoodie oak.webp"
+      ],
+      "_id": {
+        "$oid": "6764226be25e76f95bbf69b8"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414bee25e76f95bbf6231"
+    },
+    {
+      "$oid": "676415b3e25e76f95bbf623b"
+    },
+    {
+      "$oid": "676416e3e25e76f95bbf6243"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-12-19T13:40:59.684Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-19T13:40:59.684Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676423cce25e76f95bbf7008"
+  },
+  "name": "Blocktech Coat",
+  "price": 79.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "Blocktech Coat Black",
+      "size": "M",
+      "color": "black",
+      "stock": 50,
+      "images": [
+        "/images/products/black blocktech coat.avif"
+      ],
+      "_id": {
+        "$oid": "676423cce25e76f95bbf7009"
+      }
+    },
+    {
+      "name": "Blocktech Coat Black",
+      "size": "L",
+      "color": "black",
+      "stock": 40,
+      "images": [
+        "/images/products/black blocktech coat.avif"
+      ],
+      "_id": {
+        "$oid": "676423cce25e76f95bbf700a"
+      }
+    },
+    {
+      "name": "Blocktech Coat Olive",
+      "size": "M",
+      "color": "olive",
+      "stock": 30,
+      "images": [
+        "/images/products/olive blocktech coat.avif"
+      ],
+      "_id": {
+        "$oid": "676423cce25e76f95bbf700b"
+      }
+    },
+    {
+      "name": "Blocktech Coat Olive",
+      "size": "L",
+      "color": "olive",
+      "stock": 20,
+      "images": [
+        "/images/products/olive blocktech coat.avif"
+      ],
+      "_id": {
+        "$oid": "676423cce25e76f95bbf700c"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414c6e25e76f95bbf6233"
+    },
+    {
+      "$oid": "676417a3e25e76f95bbf6247"
+    },
+    {
+      "$oid": "676417ace25e76f95bbf6249"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-12-19T13:46:52.739Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-19T13:46:52.739Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67642499e25e76f95bbf7209"
+  },
+  "name": "Zipper",
+  "price": 59.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "Zipper Red",
+      "size": "M",
+      "color": "red",
+      "stock": 35,
+      "images": [
+        "/images/products/red zipper.webp"
+      ],
+      "_id": {
+        "$oid": "67642499e25e76f95bbf720a"
+      }
+    },
+    {
+      "name": "Zipper Red",
+      "size": "L",
+      "color": "red",
+      "stock": 25,
+      "images": [
+        "/images/products/red zipper.webp"
+      ],
+      "_id": {
+        "$oid": "67642499e25e76f95bbf720b"
+      }
+    },
+    {
+      "name": "Zipper Black",
+      "size": "M",
+      "color": "black",
+      "stock": 40,
+      "images": [
+        "/images/products/black zipper.webp"
+      ],
+      "_id": {
+        "$oid": "67642499e25e76f95bbf720c"
+      }
+    },
+    {
+      "name": "Zipper Black",
+      "size": "L",
+      "color": "black",
+      "stock": 30,
+      "images": [
+        "/images/products/black zipper.webp"
+      ],
+      "_id": {
+        "$oid": "67642499e25e76f95bbf720d"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414c6e25e76f95bbf6233"
+    },
+    {
+      "$oid": "676417a3e25e76f95bbf6247"
+    },
+    {
+      "$oid": "676417bfe25e76f95bbf624b"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-12-19T13:50:17.145Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-19T13:50:17.145Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67642553e25e76f95bbf768f"
+  },
+  "name": "Hipster Sunglasses",
+  "price": 29.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "Hipster Sunglasses Rosegold",
+      "size": "One Size",
+      "color": "pink",
+      "stock": 50,
+      "images": [
+        "/images/products/rosegold hipster sunglasses.avif"
+      ],
+      "_id": {
+        "$oid": "67642553e25e76f95bbf7690"
+      }
+    },
+    {
+      "name": "Hipster Sunglasses Silver",
+      "size": "One Size",
+      "color": "silver",
+      "stock": 40,
+      "images": [
+        "/images/products/silver hipster sunglasses.avif"
+      ],
+      "_id": {
+        "$oid": "67642553e25e76f95bbf7691"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414cfe25e76f95bbf6235"
+    },
+    {
+      "$oid": "676414f2e25e76f95bbf6237"
+    },
+    {
+      "$oid": "67641a35e25e76f95bbf6342"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-12-19T13:53:23.442Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-19T13:53:23.442Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "676425f6e25e76f95bbf77f4"
+  },
+  "name": "Stretch Cap",
+  "price": 19.99,
+  "isOnline": true,
+  "variants": [
+    {
+      "name": "Stretch Cap Black",
+      "size": "One Size",
+      "color": "black",
+      "stock": 50,
+      "images": [
+        "/images/products/black stretch cap.avif"
+      ],
+      "_id": {
+        "$oid": "676425f6e25e76f95bbf77f5"
+      }
+    },
+    {
+      "name": "Stretch Cap Brown",
+      "size": "One Size",
+      "color": "brown",
+      "stock": 40,
+      "images": [
+        "/images/products/brown stretch cap.avif"
+      ],
+      "_id": {
+        "$oid": "676425f6e25e76f95bbf77f6"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "$oid": "676414cfe25e76f95bbf6235"
+    },
+    {
+      "$oid": "67641501e25e76f95bbf6239"
+    },
+    {
+      "$oid": "67641a86e25e76f95bbf6344"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-12-19T13:56:06.667Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-19T13:56:06.667Z"
+  },
+  "__v": 0
+}]
