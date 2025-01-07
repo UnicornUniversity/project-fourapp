@@ -13,7 +13,7 @@ router.get("/:userId", UserController.get);
 router.delete("/:userId", UserController.delete);
 router.get("/", UserController.list);
 router.post("/cart/add-item",authMiddleware ,UserController.addItemToCart);
-router.post("/wishlist/add-item", UserController.addItemToWishlist);
+router.post("/wishlist/add-item",authMiddleware, UserController.addItemToWishlist);
 router.post("/cart/remove-item", authMiddleware, UserController.removeItemFromCart);
 router.post("/wishlist/remove-item", authMiddleware, UserController.removeItemFromWishlist);
 

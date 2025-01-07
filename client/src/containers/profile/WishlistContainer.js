@@ -93,7 +93,7 @@ function WishlistContainer() {
                     className="removeButton"
                     onClick={(e) => {
                       e.stopPropagation();
-                      removeFromWishlist(item.id);
+                      removeFromWishlist(item);
                     }}
                   >
                     <i className="fa-solid fa-trash"></i>

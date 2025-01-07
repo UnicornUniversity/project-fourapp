@@ -28,7 +28,7 @@ function CartPage() {
         ))}
       </div>
       
-      <Card className="cartSummary">
+      <Card className="cartCard">
         <h2>Cart Summary</h2>
         {cartItems.map(item => (
           <div key={item.id} className="summaryItem">
