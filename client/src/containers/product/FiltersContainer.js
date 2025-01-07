@@ -318,7 +318,7 @@ function ProductFiltersContainer({ filtersSettings }) {
               zIndex: 10,
             }}
           >
-            <ul style={{ listStyle: "none", padding: "0", margin: "0" }}>
+            <ul style={{ listStyle: "none", padding: "0", margin: "0"}}>
               {filtersSettings.colors.map((color) => (
                 <li
                   key={color}
@@ -329,8 +329,17 @@ function ProductFiltersContainer({ filtersSettings }) {
                     backgroundColor: selectedFilters.colors.includes(color)
                       ? "lightblue"
                       : "transparent",
+                      display: "flex",
+                      gap:"1rem",
                   }}
                 >
+                                    <div
+            style={{
+              backgroundColor: color,
+              width: "20px",
+              height: "20px",
+            }}
+          ></div>
                   {color}
                 </li>
               ))}

@@ -104,6 +104,32 @@ class userDao {
     return user.cart_array;
   }
 
+  static async removeItemFromCart(userId, productId, variantId) {
+    const user = await User.findById(userId);
+    if (!user) throw ApiError.notFound("User not found");
+  
+    user.cart_array = user.cart_array.filter(
+      (item) =>
+        item.productId.toString() !== productId || item.variantId !== variantId
+    );
+  
+    await user.save();
+    return user.cart_array;
+  }
+  
+  static async removeItemFromWishlist(userId, productId, variantId) {
+    const user = await User.findById(userId);
+    if (!user) throw ApiError.notFound("User not found");
+  
+    user.wishlist_array = user.wishlist_array.filter(
+      (item) =>
+        item.productId.toString() !== productId || item.variantId !== variantId
+    );
+  
+    await user.save();
+    return user.wishlist_array;
+  }
+  
   static async list({ limit = 10, page = 0 } = {}) {
     limit = parseInt(limit, 10);
     page = parseInt(page, 10);

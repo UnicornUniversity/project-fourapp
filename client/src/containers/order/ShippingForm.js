@@ -46,10 +46,10 @@ const ShippingForm = () => {
                 zip_code: zipCode,
                 country: country,
             },
-            customer:{
-              name: name,
-              surname: surname,
-              email: email,
+            customer: {
+                name: name,
+                surname: surname,
+                email: email,
             },
             payment_method: paymentMethod, // Always set to "Credit Card"
             products: cartItems
@@ -63,162 +63,97 @@ const ShippingForm = () => {
     };
 
     return (
-        <form className='shippingPage' onSubmit={handleSubmit}>
-            <Card>
-                <div className='shippingForm'>
-                    <h2>Shipping Information</h2>
-                    <div className="row">
-                        <div>
-                            <label htmlFor="name">Name:</label>
-                            <Input
-                                className="shippingInput"
-                                type="text"
-                                id="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="surname">Surname:</label>
-                            <Input
-                                className="shippingInput"
-                                type="text"
-                                id="surname"
-                                value={surname}
-                                onChange={(e) => setSurname(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div>
-                            <label htmlFor="email">Email:</label>
-                            <Input
-                                className="shippingInput fullWidth"
-                                type="email"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div>
-                            <label htmlFor="phoneNumber">Phone Number:</label>
-                            <Input
-                                className="shippingInput"
-                                type="text"
-                                id="phoneNumber"
-                                value={phoneNumber}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div>
-                            <label htmlFor="address">Address:</label>
-                            <Input
-                                className="shippingInput fullWidth"
-                                type="text"
-                                id="address"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div>
-                            <label htmlFor="city">City:</label>
-                            <Input
-                                className="shippingInput"
-                                type="text"
-                                id="city"
-                                value={city}
-                                onChange={(e) => setCity(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="zipCode">Zip Code:</label>
-                            <Input
-                                className="shippingInput"
-                                type="text"
-                                id="zipCode"
-                                value={zipCode}
-                                onChange={(e) => setZipCode(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div>
-                            <label htmlFor="country">Country:</label>
-                            <Input
-                                className="shippingInput"
-                                type="text"
-                                id="country"
-                                value={country}
-                                onChange={(e) => setCountry(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <h2>Payment Information</h2>
-                    <div className="row">
-                        <div>
-                            <label htmlFor="cardNumber">Card Number:</label>
-                            <Input
-                                className="shippingInput fullWidth"
-                                type="text"
-                                id="cardNumber"
-                                value={cardNumber}
-                                onChange={(e) => setCardNumber(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div>
-                            <label htmlFor="expirationDate">Expiration Date:</label>
-                            <Input
-                                className="shippingInput"
-                                type="text"
-                                id="expirationDate"
-                                placeholder="MM/YY"
-                                value={expirationDate}
-                                onChange={(e) => setExpirationDate(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="securityCode">Security Code:</label>
-                            <Input
-                                className="shippingInput"
-                                type="text"
-                                id="securityCode"
-                                value={securityCode}
-                                onChange={(e) => setSecurityCode(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div>
-                            <label htmlFor="cardHolderName">Card Holder Name:</label>
-                            <Input
-                                className="shippingInput fullWidth"
-                                type="text"
-                                id="cardHolderName"
-                                value={cardHolderName}
-                                onChange={(e) => setCardHolderName(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                </div>
+        <form className='shippingContainer' onSubmit={handleSubmit}>
+            <Card className="shippingCard">
+                <h2>Shipping Information</h2>
+                <Input
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Name"
+                />
+                <Input
+                    type="text"
+                    id="surname"
+                    value={surname}
+                    onChange={(e) => setSurname(e.target.value)}
+                    placeholder="Surname"
+                />
+                <Input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                />
+                <Input
+                    type="text"
+                    id="phoneNumber"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="Phone Number"
+                />
+                <Input
+                    type="text"
+                    id="address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="Address"
+                />
+                <Input
+                    type="text"
+                    id="city"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    placeholder="City"
+                />
+                <Input
+                    type="text"
+                    id="zipCode"
+                    value={zipCode}
+                    onChange={(e) => setZipCode(e.target.value)}
+                    placeholder="Zip Code"
+                />
+                <Input
+                    type="text"
+                    id="country"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    placeholder="Country"
+                />
+                <h2>Payment Information</h2>
+                <Input
+                    type="text"
+                    id="cardNumber"
+                    value={cardNumber}
+                    onChange={(e) => setCardNumber(e.target.value)}
+                    placeholder="Card Number"
+                />
+                <Input
+                    type="text"
+                    id="expirationDate"
+                    placeholder="MM/YY"
+                    value={expirationDate}
+                    onChange={(e) => setExpirationDate(e.target.value)}
+                />
+                <Input
+                    type="text"
+                    id="securityCode"
+                    value={securityCode}
+                    onChange={(e) => setSecurityCode(e.target.value)}
+                    placeholder="Security Code"
+                />
+                <Input
+                    type="text"
+                    id="cardHolderName"
+                    value={cardHolderName}
+                    onChange={(e) => setCardHolderName(e.target.value)}
+                    placeholder="Card Holder Name"
+                />
             </Card>
 
-            <Card className="cartSummary">
+            <Card className="cartCard">
                 <h2>Cart Summary</h2>
                 {cartItems.map(item => (
                     <div key={item.id} className="summaryItem">
