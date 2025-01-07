@@ -113,12 +113,12 @@ function CartItem({ item }) {
             <div className="quantityControl">
               <button onClick={(e) => {
                 e.stopPropagation();
-                updateQuantity(item.id, Math.max(1, item.quantity - 1));
+                updateQuantity(item, Math.max(1, item.quantity - 1));
               }}>−</button>
               <span>{item.quantity}</span>
               <button onClick={(e) => {
                 e.stopPropagation();
-                updateQuantity(item.id, item.quantity + 1);
+                updateQuantity(item, item.quantity + 1);
               }}>+</button>
             </div>
             

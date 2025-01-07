@@ -134,7 +134,7 @@ function ProductDetailContainer() {
     if (!selectedVariant) return;
 
     const itemId = `${selectedProduct._id}-${selectedVariant._id}`;
-    const isItemInWishlist = isInWishlist(itemId);
+    const isItemInWishlist = isInWishlist(selectedVariant._id);
 
     const wishlistItem = {
       id: itemId,
@@ -260,15 +260,15 @@ function ProductDetailContainer() {
           
           <Button
             className={`wishlistButton ${
-              isInWishlist(`${selectedProduct._id}-${selectedVariant?._id}`) ? "active" : ""
+              isInWishlist(`${selectedVariant?._id}`) ? "active" : ""
             }`}
             onClick={handleWishlistToggle}
             disabled={!selectedVariant}
-            buttonText={isInWishlist(`${selectedProduct._id}-${selectedVariant?._id}`)
+            buttonText={isInWishlist(`${selectedVariant?._id}`)
               ? "Remove from Wishlist"
               : "Add to Wishlist"}
           >
-            <i className={`fa-${isInWishlist(`${selectedProduct._id}-${selectedVariant?._id}`) ? "solid" : "regular"} fa-heart`} />
+            <i className={`fa-${isInWishlist(`${selectedVariant?._id}`) ? "solid" : "regular"} fa-heart`} />
           </Button>
         </div>
 
