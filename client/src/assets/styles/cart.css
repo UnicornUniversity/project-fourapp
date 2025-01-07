@@ -1,7 +1,7 @@
 /* Main cart page layout */
 .cartPage {
     margin: 0 auto;
-    width: 90%;
+    width: 80%;
     max-width: 1400px;
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -21,6 +21,7 @@
   }
   
   .cartItem {
+    width: 95%;
     display: flex;
     align-items: center;
     padding: 1rem;
@@ -124,6 +125,7 @@
     cursor: pointer;
     padding: 0.5rem;
     transition: opacity 0.2s ease-in-out;
+    background-color: #333;
   }
   
   .favoriteButton:hover,
@@ -256,15 +258,21 @@
   }
   
   /* Responsive Design */
-  @media (max-width: 768px) {
+  @media (max-width: 800px) {
     .cartPage {
       grid-template-columns: 1fr;
+      justify-items: center;
     }
   
     .cartItem {
-      flex-direction: column;
       align-items: flex-start;
-      text-align: center;
+      width: 90%;
+      height: 6rem;
+    }
+
+    .cartItemImage > img{
+      width: 6rem;
+      height: 6rem;
     }
   
     .cartItemImage {

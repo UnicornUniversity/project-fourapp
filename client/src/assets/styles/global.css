@@ -1,3 +1,7 @@
+body{
+  background-color: rgb(253, 253, 253); 
+}
+
 /*---FONTS---*/
 
 @font-face {
@@ -378,3 +382,7 @@ td {
 }
 
 /*------------*/
+
+.ordersContainer{
+  margin: 0;
+}

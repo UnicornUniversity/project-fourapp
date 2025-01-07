@@ -26,7 +26,7 @@ function WishlistContainer() {
   };
 
   return (
-    <div className="profileContent">
+    <div className="wishListContainer">
       <div className="contentHeader">
         <h2>My Wishlist</h2>
         <p>{wishlistItems.length} items saved</p>
