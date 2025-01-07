@@ -78,6 +78,14 @@ class UserAbl {
       return await userDao.addItemToCart(userId, productId, variantId, quantity);
     }
 
+    static async removeItemFromCart(userId, productId, variantId) {
+      return await userDao.removeItemFromCart(userId, productId, variantId);
+    }
+    
+    static async removeItemFromWishlist(userId, productId, variantId) {
+      return await userDao.removeItemFromWishlist(userId, productId, variantId);
+    }
+
 }
 
 export default UserAbl;
