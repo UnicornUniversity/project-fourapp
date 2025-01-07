@@ -1,15 +1,22 @@
+{
+    # Global options
+    admin off
+    auto_https disable_redirects
+}
+
 srv687262.hstgr.cloud {
+    tls {
+        protocols tls1.2 tls1.3
+    }
+
     handle /api/* {
         reverse_proxy server:5000
     }
 
     handle /* {
-        reverse_proxy client:80 {
-            health_timeout 5s
-        }
+        reverse_proxy client:80
     }
 
-    # Enable compression
     encode gzip
 
     # Add security headers
