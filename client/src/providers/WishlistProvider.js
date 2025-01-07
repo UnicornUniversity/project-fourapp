@@ -1,16 +1,17 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useCallback } from 'react';
 
 export const WishlistContext = createContext();
 
 function WishlistProvider({ children }) {
   const [wishlistItems, setWishlistItems] = useState([]);
 
-  const addToWishlist = (item) => {
-    // Check if item already exists in wishlist
+  // Add an item to the wishlist
+  const addToWishlist = useCallback((item) => {
+    // Check if the item already exists in the wishlist
     if (wishlistItems.some(wishlistItem => wishlistItem.id === item.id)) {
       return;
     }
-    
+
     const wishlistItem = {
       id: item.id,
       productId: item.productId,
@@ -19,44 +20,54 @@ function WishlistProvider({ children }) {
       price: item.price,
       color: item.color,
       size: item.size,
-      image: item.image
+      image: item.image,
     };
 
-    setWishlistItems(prev => [...prev, wishlistItem]);
-  };
+    setWishlistItems((prev) => [...prev, wishlistItem]);
+  }, [wishlistItems]);
 
-  const removeFromWishlist = (itemId) => {
-    setWishlistItems(prev => prev.filter(item => item.id !== itemId));
-  };
+  // Remove an item from the wishlist
+  const removeFromWishlist = useCallback((itemId) => {
+    setWishlistItems((prev) => prev.filter((item) => item.id !== itemId));
+  }, []);
 
-  const isInWishlist = (itemId) => {
-    return wishlistItems.some(item => item.id === itemId);
-  };
+  // Check if an item is in the wishlist
+  const isInWishlist = useCallback((itemId) => {
+    return wishlistItems.some((item) => item.id === itemId);
+  }, [wishlistItems]);
 
-  const clearWishlist = () => {
+  // Clear the entire wishlist
+  const clearWishlist = useCallback(() => {
     setWishlistItems([]);
-  };
+  }, []);
 
-  const moveToCart = (itemId, addToCart) => {
-    const item = wishlistItems.find(item => item.id === itemId);
-    if (item && addToCart) {
-      addToCart({
-        ...item,
-        quantity: 1
-      });
-      removeFromWishlist(itemId);
+  // Move an item from the wishlist to the cart
+  const moveToCart = useCallback((itemId, addToCart) => {
+    const item = wishlistItems.find((item) => item.id === itemId);
+    if (item && typeof addToCart === 'function') {
+      try {
+        addToCart({
+          ...item,
+          quantity: 1,
+        });
+        removeFromWishlist(itemId);
+      } catch (error) {
+        console.error('Error moving item to cart:', error);
+      }
     }
-  };
+  }, [wishlistItems, removeFromWishlist]);
 
   return (
-    <WishlistContext.Provider value={{
-      wishlistItems,
-      addToWishlist,
-      removeFromWishlist,
-      isInWishlist,
-      clearWishlist,
-      moveToCart
-    }}>
+    <WishlistContext.Provider
+      value={{
+        wishlistItems,
+        addToWishlist,
+        removeFromWishlist,
+        isInWishlist,
+        clearWishlist,
+        moveToCart,
+      }}
+    >
       {children}
     </WishlistContext.Provider>
   );

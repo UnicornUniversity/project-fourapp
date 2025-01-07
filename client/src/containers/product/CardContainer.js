@@ -74,9 +74,6 @@ export function ProductCardContainer({ product }) {
       {/* Price */}
       <div className="productCardFooter">
         <p>${product.price}</p>
-        <span>
-          <i className="fa-solid fa-bag-shopping"></i>
-        </span>
       </div>
     </Card>
   );

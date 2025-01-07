@@ -1,13 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { UserContext } from './UserProvider';
-import { ProductContext } from './ProductProvider'; // Import ProductContext
+import { ProductContext } from './ProductProvider';
 
 export const CartContext = createContext();
 
 function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const { user } = useContext(UserContext);
-  const { products } = useContext(ProductContext); // Access products from ProductContext
 
   useEffect(() => {
     if (user && user.id) {
@@ -15,7 +14,25 @@ function CartProvider({ children }) {
     }
   }, [user]);
 
+  async function GetProduct(id) {
+    try {
+      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
+      if (!response.ok) {
+        throw new Error('Failed to fetch product');
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching product:", error);
+      return null;
+    }
+  }
 
   async function handleLoad(userId) {
     try {
@@ -23,79 +40,70 @@ function CartProvider({ children }) {
         method: 'GET',
         credentials: 'include',
       });
-      const serverResponse = await response.json();
-      
-      if (response.ok) {
-        // Assuming serverResponse contains an array of cart items
-        const cartItemsWithDetails = serverResponse.map((cartItem) => {
-          // Find the product based on productId
-          const product = products.find(p => p._id === cartItem.productId);
-          
-          // Find the variant based on variantId
-          const variant = product?.variants.find(v => v._id === cartItem.variantId);
 
-          // Combine cart item with product and variant details
-          return {
-            ...cartItem,
-            title: product?.name || "Unknown Product", // Fallback if product is not found
-            price: product?.price , // Fallback price
-            image: variant?.images[0] || '/images/default/image-placeholder.webp', // Use the first image or a placeholder
-            color: variant?.color
-          };
-        });
-        console.log(cartItemsWithDetails)
-        setCartItems(cartItemsWithDetails);
-      } else {
-        console.log(serverResponse);
+      if (!response.ok) {
+        throw new Error('Failed to fetch cart items');
       }
+
+      const serverResponse = await response.json();
+      const cartItemsWithDetails = await Promise.all(serverResponse.map(async (cartItem) => {
+        const product = await GetProduct(cartItem.productId);
+        const variant = product?.variants.find(v => v._id === cartItem.variantId);
+
+        return {
+          ...cartItem,
+          title: product?.name || "Unknown Product",
+          price: product?.price || 0,
+          image: variant?.images[0] || '/images/default/image-placeholder.webp',
+          color: variant?.color || 'Unknown Color',
+        };
+      }));
+
+      setCartItems(cartItemsWithDetails);
     } catch (error) {
-      console.log(error);
+      console.error("Error loading cart items:", error);
     }
   }
 
   async function addToCart(item) {
     try {
-      // Check if the item already exists in the cart
       const existingItemIndex = cartItems.findIndex(
         (cartItem) =>
           cartItem.productId === item.productId &&
           cartItem.variantId === item.variantId
       );
 
+      let updatedCartItems;
       if (existingItemIndex !== -1) {
-        // If it exists, update the quantity
-        const updatedCartItems = [...cartItems];
+        updatedCartItems = [...cartItems];
         updatedCartItems[existingItemIndex].quantity += item.quantity;
-        setCartItems(updatedCartItems);
       } else {
-        // If it doesn't exist, add the new item
-        setCartItems((prev) => [...prev, item]);
+        updatedCartItems = [...cartItems, item];
       }
 
-      const body = JSON.stringify({
-        productId: item.productId,
-        quantity: item.quantity,
-        variantId: item.variantId,
-      });
+      setCartItems(updatedCartItems);
 
       const response = await fetch(
-        `http://localhost:5000/api/users/cart/add-item`, // OUR API ENDPOINT
+        `http://localhost:5000/api/users/cart/add-item`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           credentials: "include",
-          body: body,
+          body: JSON.stringify({
+            productId: item.productId,
+            quantity: item.quantity,
+            variantId: item.variantId,
+          }),
         }
       );
 
-      const serverResponse = await response.json();
       if (!response.ok) {
-        console.log(serverResponse);
+        throw new Error('Failed to add item to cart');
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error adding item to cart:", error);
     }
   }
 
@@ -120,7 +128,7 @@ function CartProvider({ children }) {
   };
 
   return (
-    <CartContext.Provider value={{
+    < CartContext.Provider value={{
       cartItems,
       addToCart,
       removeFromCart,
