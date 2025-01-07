@@ -1,58 +1,52 @@
 import "./../../assets/styles/header.css";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import Cookies from "js-cookie";
 import Logo from "../../assets/images/fourapp-logo.png";
-import { useState } from "react";
 
 function NavbarContainer() {
   const token = Cookies.get("token");
   const { categoryAllTree } = useContext(CategoryContext);
-  //console.log(categoryTree);
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [openDropdown, setOpenDropdown] = useState(null); // Tracks which dropdown is open
-  const location = useLocation(); // React Router hook to get the current URL
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleCategoryHover = (id) => {
-    setOpenDropdown(id); // Open the corresponding dropdown
+  const handleNavigate = (category) => {
+    navigate(`/product/list/${category._id}`);
   };
 
-  const handleNavbarLeave = () => {
-    setOpenDropdown(null); // Close the dropdown when leaving the navbar
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
-  const handleNavigate = (category) =>{
-    navigate(`/product/list/${category._id}`)
-  }
-
-  // Close the dropdown when the URL changes
   useEffect(() => {
     setOpenDropdown(null);
-  }, [location.pathname]); // Runs whenever the pathname changes
-
-  function handleToggleMenu() {
-  const burgerMenu = document.querySelector(".burger-menu");
-  const menu = document.querySelector(".menu-mobile ul");
-  burgerMenu.classList.toggle("active");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   return (
-    <nav
-      className="navbar"
-      onMouseLeave={handleNavbarLeave} // Close dropdown when leaving navbar
-    >
+    <nav className="navbar" onMouseLeave={() => setOpenDropdown(null)}>
+      <div className="navbarBarContainer" onClick={toggleMenu}>
+        <i className="fa-solid fa-bars"></i>
+      </div>
       <div className="navbarLogoContainer">
         <img onClick={() => navigate("/")} src={Logo} alt="Logo" />
       </div>
-      <ul className="menu">
+      <ul className={`menu ${menuOpen ? "menu-open" : ""}`}>
+        {menuOpen && (
+          <div className="close-menu-button" onClick={toggleMenu}>
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+        )}
         {categoryAllTree
           ? categoryAllTree.map((category) => (
               <li
                 key={category._id}
-                onMouseEnter={() => handleCategoryHover(category._id)} // Open dropdown on category hover
+                onMouseEnter={() => setOpenDropdown(category._id)}
+                onClick={() => setOpenDropdown(category._id)}
               >
                 <a onClick={() => handleNavigate(category)}>{category.name}</a>
                 <div
@@ -64,9 +58,16 @@ function NavbarContainer() {
                     {category.subcategories ? (
                       category.subcategories.map((subcategory) => (
                         <div className="column" key={subcategory._id}>
-                          <h4 onClick={() => handleNavigate(subcategory)}>{subcategory.name}</h4>
-                          {subcategory.subcategories.map((subcategory) => (
-                            <a onClick={() => handleNavigate(subcategory)} key={subcategory._id}>{subcategory.name}</a>
+                          <h4 onClick={() => handleNavigate(subcategory)}>
+                            {subcategory.name}
+                          </h4>
+                          {subcategory.subcategories.map((sub) => (
+                            <a
+                              onClick={() => handleNavigate(sub)}
+                              key={sub._id}
+                            >
+                              {sub.name}
+                            </a>
                           ))}
                         </div>
                       ))
@@ -80,7 +81,6 @@ function NavbarContainer() {
           : null}
       </ul>
       <div className="navbarIconContainer">
-        <i className="fa-solid fa-magnifying-glass"></i>
         <i
           className="fa-solid fa-user"
           onClick={() => navigate(token ? "/user/profile" : "/user/login")}

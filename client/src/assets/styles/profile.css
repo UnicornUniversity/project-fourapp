@@ -72,11 +72,10 @@
     gap: 1rem;
 }
 
-
-
 .titleMargin{
     margin-bottom: 0.5rem;
 }
+
 .logoutButton {
     display: flex;
     width: 5rem;

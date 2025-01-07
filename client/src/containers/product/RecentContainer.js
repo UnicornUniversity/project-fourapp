@@ -10,8 +10,8 @@ function RecentContainer() {
     <section className="recentContainer">
       <h3>Newest additions</h3>
       <div>
-        {recentProducts && recentProducts.products.length > 0 ? (
-          recentProducts.products.map((product) => (
+        {recentProducts && recentProducts.length > 0 ? (
+          recentProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
         ) : (

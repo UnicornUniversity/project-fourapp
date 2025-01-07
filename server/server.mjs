@@ -28,6 +28,8 @@ app.use(
   cors({
     origin: env.CLIENT_URL || "http://localhost:3000",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(passport.initialize());
@@ -35,7 +37,7 @@ app.use(cookieParser());
 app.use(requestLogger);
 app.use(auditRoute);
 
-app.use('/images', express.static(path.join(__dirname, 'assets/images')));
+app.use("/images", express.static(path.join(__dirname, "assets/images")));
 
 // Připojení k databázi
 try {
@@ -57,4 +59,4 @@ app.use(errorHandler);
 
 // Spuštění serveru
 const PORT = env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server běží na portu ${PORT}`));
+app.listen(PORT, "0.0.0.0", () => console.log(`Server běží na portu ${PORT}`));

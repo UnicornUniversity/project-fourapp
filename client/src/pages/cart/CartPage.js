@@ -17,33 +17,41 @@ function CartPage() {
   }
   
   const calculateTotal = () => {
-    return cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return parseFloat(total.toFixed(2)); // Round to 2 decimal places and convert back to a number
   };
 
   return (
     <div className="cartPage">
-      <div className="cartItems">
-        {cartItems.map(item => (
-          <CartItem key={item.id} item={item} />
-        ))}
-      </div>
-      
-      <Card className="cartSummary">
-        <h2>Cart Summary</h2>
-        {cartItems.map(item => (
-          <div key={item.id} className="summaryItem">
-            <span>{item.title}</span>
-            <span>{item.price} $</span>
+      {cartItems.length !== 0 ? (
+        <>
+          <div className="cartItems">
+            {cartItems.map(item => (
+              <CartItem key={item.id} item={item} />
+            ))}
           </div>
-        ))}
-        <div className="summaryTotal">
-          <strong>Total:</strong>
-          <strong>{calculateTotal()} $</strong>
-        </div>
-        <button onClick={handleShipping} className="checkoutButton">Continue to payment</button>
-      </Card>
+          
+          <Card className="cartCard">
+            <h2>Cart Summary</h2>
+            {cartItems.map(item => (
+              <div key={item.id} className="summaryItem">
+                <span>{item.title}</span>
+                <span>{item.price} $</span>
+              </div>
+            ))}
+            <div className="summaryTotal">
+              <strong>Total:</strong>
+              <strong>{calculateTotal()} $</strong>
+            </div>
+            <button onClick={handleShipping} className="checkoutButton">Continue to payment</button>
+          </Card>
+        </>
+      ) : (
+        <h2>Your cart is empty</h2>
+      )}
     </div>
   );
+  
 }
 
 export default CartPage;

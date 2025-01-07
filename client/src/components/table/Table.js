@@ -26,8 +26,8 @@ function Table({
               if (key === "sizes") {
                 return (
                   <td key={keyIndex}>
-                    {row[key].map((size) => (
-                      <span key={size} className="size-badge">
+                    {row[key].map((size, keyIndex) => (
+                      <span key={keyIndex} className="size-badge">
                         {size}
                       </span>
                     ))}

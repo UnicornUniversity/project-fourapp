@@ -8,7 +8,7 @@ class OrderAbl {
   // Vytvoření objednávky
   static async createOrder(user_id) {
     const user = await userDao.findById(user_id);
-    console.log(user , user_id , 1)
+    console.log(user, user_id, 1);
     if (!user) throw ApiError.notFound("User not found");
 
     const cart = user.cart_array || [];
@@ -92,7 +92,7 @@ class OrderAbl {
       throw ApiError.forbidden("Order is not in pending state");
     }
 
-    return await orderDao.update({
+    const updatedOrder = await orderDao.update({
       id,
       shipping_method,
       total_cost,
@@ -100,8 +100,43 @@ class OrderAbl {
       payment_method,
       status: "processing",
     });
+
+    // Vyprázdnění košíku uživatele
+    const userId = order.user_id;
+    const user = await userDao.findById(userId);
+    if (!user) {
+      throw ApiError.notFound("User not found");
+    }
+
+    user.cart_array = []; // Nastavení prázdného košíku
+    await user.save(); // Uložení aktualizovaného uživatele
+
+    // Aktualizace skladu produktů
+    for (const item of order.products_array) {
+      const product = await Product.findById(item.id);
+      if (!product) {
+        throw ApiError.notFound(`Product ${item.id} not found`);
+      }
+      const variant = product.variants.find(
+        (v) => v._id.toString() === item.variantId.toString()
+      );
+      if (!variant) {
+        throw ApiError.notFound(`Variant ${item.variantId} not found`);
+      }
+
+      if (variant.stock < item.quantity) {
+        throw ApiError.badRequest(
+          `Not enough stock for product ${product.name} (variant ${variant.name})`
+        );
+      }
+
+      variant.stock -= item.quantity; // Odečtení zakoupeného množství
+      await product.save(); // Uložení změn produktu
+    }
+
+    return updatedOrder;
   }
-  
+
   // Přidání platební metody
   static async addPaymentMethod(id, payment_method) {
     return await orderDao.updatePaymentMethod(id, payment_method);
@@ -143,6 +178,18 @@ class OrderAbl {
       return order;
     } catch (error) {
       throw ApiError.internal("Failed to delete order", error.message);
+    }
+  }
+
+  static async getUserOrders(userId) {
+    try {
+      const user = await userDao.findById(userId);
+      if (!user) throw ApiError.notFound("User not found");
+
+      const orders = await orderDao.findByUserId(userId);
+      return orders;
+    } catch (error) {
+      throw ApiError.fromError(error, "Failed to get user orders");
     }
   }
 }

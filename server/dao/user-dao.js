@@ -59,6 +59,29 @@ class userDao {
   
     return user.wishlist_array;
   }
+
+  static async updateCartItemQuantity(userId, productId, variantId, quantity) {
+    if (quantity <= 0) {
+      throw ApiError.badRequest("Quantity must be greater than zero");
+    }
+  
+    const user = await User.findById(userId);
+    if (!user) throw ApiError.notFound("User not found");
+  
+    const cartItem = user.cart_array.find(
+      (item) =>
+        item.productId.toString() === productId && item.variantId === variantId
+    );
+  
+    if (!cartItem) {
+      throw ApiError.notFound("Item not found in cart");
+    }
+  
+    cartItem.quantity = quantity;
+    await user.save();
+  
+    return user.cart_array;
+  }  
   
   static async cartByUserId(id) {
     const user = await User.findById(id, "cart_array");
@@ -104,6 +127,32 @@ class userDao {
     return user.cart_array;
   }
 
+  static async removeItemFromCart(userId, productId, variantId) {
+    const user = await User.findById(userId);
+    if (!user) throw ApiError.notFound("User not found");
+  
+    user.cart_array = user.cart_array.filter(
+      (item) =>
+        item.productId.toString() !== productId || item.variantId !== variantId
+    );
+  
+    await user.save();
+    return user.cart_array;
+  }
+  
+  static async removeItemFromWishlist(userId, productId, variantId) {
+    const user = await User.findById(userId);
+    if (!user) throw ApiError.notFound("User not found");
+  
+    user.wishlist_array = user.wishlist_array.filter(
+      (item) =>
+        item.productId.toString() !== productId || item.variantId !== variantId
+    );
+  
+    await user.save();
+    return user.wishlist_array;
+  }
+  
   static async list({ limit = 10, page = 0 } = {}) {
     limit = parseInt(limit, 10);
     page = parseInt(page, 10);

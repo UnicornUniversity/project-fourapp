@@ -1,12 +1,19 @@
-.shippingPage {
-    padding: 20px;
-}
-.overViewContainer{
-    padding: 2rem;
+.overViewContainer {
+    padding: 1rem;
+
 }
 
+.overViewContainer>div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.customerInfo h2{
+    margin-bottom: 1rem;
+}
 @media (max-width: 800px) {
-    .overViewContainer{
+    .overViewContainer {
         width: 75%;
     }
 }
@@ -14,45 +21,53 @@
 .productRow {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #ccc; /* Optional: adds a separator between products */
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+    /* Optional: adds a separator between products */
     padding: 0.5rem 2rem
 }
 
 .productImage {
-    width: 50px; /* Adjust size as needed */
+    width: 50px;
+    /* Adjust size as needed */
     height: auto;
     margin-right: 15px;
 }
 
 .productDetails {
     flex-grow: 1;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 3rem;
 }
 
-.customerInfo {
-    margin-top: 20px;
+.productDetails>div:nth-child(4) {
+    display: flex;
+    justify-content: flex-end;
 }
 
-.shippingLabel {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block; /* Ensures labels are on their own line */
-}
+
 
 .shippingInput {
-    width: 100%; /* Full width for inputs */
-    padding: 8px;
+    width: 100%;
+    /* Full width for inputs */
+    padding: 1rem;
+    box-sizing: border-box;
+
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .colorSquare {
-    width: 20px; /* Adjust size as needed */
-    height: 20px; /* Adjust size as needed */
-    display: inline-block; /* Ensures it stays inline with text */
-    margin-right: 10px; /* Space between the square and the text */
-    border: 1px solid #ccc; /* Optional: adds a border around the square */
+    width: 20px;
+    /* Adjust size as needed */
+    height: 20px;
+    /* Adjust size as needed */
+    display: inline-block;
+    /* Ensures it stays inline with text */
+    margin-right: 10px;
+    /* Space between the square and the text */
+    border: 1px solid #ccc;
+    /* Optional: adds a border around the square */
 }

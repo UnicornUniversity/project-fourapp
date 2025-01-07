@@ -6,7 +6,6 @@
     align-items: center;
     position: relative;
     z-index: 2;
-    box-shadow: 0px 24px 12px -30px rgba(0,0,0,0.45);
 }
 
 .navbarIconContainer {
@@ -32,14 +31,12 @@
 .menu>li {
     position: static;
     cursor: pointer;
-
 }
 
 .menu>li>a {
     text-decoration: none;
     color: black;
     display: block;
-
 }
 
 .dropdown {
@@ -54,7 +51,6 @@
     z-index: 999;
     padding-bottom: 1rem;
     transition: opacity 0.25s ease, visibility 0.25s ease;
-    box-shadow: 0px 24px 12px -30px rgba(0,0,0,0.45);
 }
 
 .dropdown-container {
@@ -66,7 +62,9 @@
 }
 
 .dropdown h4 {
+    font-weight: lighter;
     text-decoration: underline;
+    font-weight: 600;
 }
 
 .dropdown .column {
@@ -86,6 +84,14 @@
 
 .menu>li:hover .dropdown,
 .menu>li:focus-within .dropdown,
+.dropdown:hover {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Remove the :focus-within and :hover triggers for the dropdown */
+.menu>li:hover .dropdown,
 .dropdown:hover {
     display: block;
     opacity: 1;
@@ -113,11 +119,10 @@
     cursor: pointer;
 }
 
-
-
-
-
-
+.navbarBarContainer {
+    display: none;
+    cursor: pointer;
+}
 
 .swiper {
     width: 100%;
@@ -173,57 +178,111 @@
     background-color: black !important;
 }
 
-@media (max-width: 800px) {
+.close-menu-button>i {
+    display: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbarBarContainer {
+        display: block;
+    }
+
+    .navbarLogoContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+
     .menu {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        width: 50%;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 4rem 1rem;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        z-index: 99;
     }
-  
-    .menu li {
-      position: relative;
+
+    .close-menu-button i {
+        font-size: 0.3rem;
+        display: contents;
+        /* Snížení velikosti ikony */
     }
-  
-    .menu li a {
-      display: block;
-      padding: 10px;
-      text-decoration: none;
-      color: #333;
+
+    .menu-open {
+        left: 0;
     }
-  
-    .menu li a:hover {
-      background-color: #ccc;
+
+
+
+
+
+    .menu>li>a {
+        padding: 0.5rem 0;
     }
-  
-    .dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: #fff;
-      padding: 10px;
-      border: 1px solid #ddd;
-      display: none;
+
+
+
+
+    .close-menu-button {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        cursor: pointer;
+        z-index: 100;
+        margin-bottom: 2rem;
+        font-weight: 800;
     }
-  
-    .dropdown.show {
-      display: block;
+
+    .close-menu-button i {
+        font-size: 1.5rem;
     }
-  
-    .dropdown-container {
-      display: flex;
-      flex-wrap: wrap;
+
+    .menu>li {
+        cursor: pointer;
+        /* Nastaví kurzor na pointer pro li */
     }
-  
-    .column {
-      margin-right: 20px;
+
+    .menu>li>a {
+        cursor: default;
+        /* Nastaví kurzor na default pro a */
     }
-  
-    .column h4 {
-      margin-top: 0;
+
+    /* Add styles for subcategories */
+    .submenu {
+        list-style: none;
+        margin: 0;
+        padding: 0 1rem;
+        display: none;
+        /* Hidden by default */
     }
-  
-    .column a {
-      display: block;
-      margin-bottom: 10px;
+
+    .menu>li>.submenu {
+        display: block;
     }
-  }
+
+    .menu-open li .submenu {
+        margin-top: 0.5rem;
+    }
+
+    .menu li .submenu .subcategory {
+        padding: 0.5rem 0;
+        color: black;
+        cursor: pointer;
+    }
+
+    .menu li .submenu .subcategory:hover {
+        text-decoration: underline;
+    }
+
+}

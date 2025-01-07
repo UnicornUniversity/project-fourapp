@@ -190,4 +190,12 @@
   .filterSelect {
     width: 100%;
   }
+  
+  .filtersContainer {
+    padding: 12px;
+  }
+  
+  .filterSelect {
+    width: 100%;
+  }
 }

@@ -50,7 +50,7 @@ export const productsDao = {
     colors,
     sizes,
     page = 0,
-    pageSize = 10,
+    pageSize,
   }) {
     const query = {};
 

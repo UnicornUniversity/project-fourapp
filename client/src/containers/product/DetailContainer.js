@@ -58,25 +58,19 @@ function ProductDetailContainer() {
     ...new Set(selectedProduct.variants.map((v) => v.size)),
   ];
   
-  const availableColors = [
+  const allColors = [
     ...new Set(selectedProduct.variants.map((v) => v.color)),
   ];
 
   const isSizeAvailable = (size) => {
     return selectedProduct.variants.some(
-      (v) =>
-        v.size === size &&
-        v.stock > 0 &&
-        (!selectedColor || v.color === selectedColor)
+      (v) => v.size === size && v.stock > 0
     );
   };
 
   const isColorAvailable = (color) => {
     return selectedProduct.variants.some(
-      (v) =>
-        v.color === color &&
-        v.stock > 0 &&
-        (!selectedSize || v.size === selectedSize)
+      (v) => v.color === color && v.size === selectedSize && v.stock > 0
     );
   };
 
@@ -84,11 +78,16 @@ function ProductDetailContainer() {
     if (!isSizeAvailable(size)) return;
 
     setSelectedSize(size);
-    const newVariant = selectedProduct.variants.find(
-      (v) => v.size === size && v.color === selectedColor && v.stock > 0
+    
+    // Find a variant with the selected size and any available color
+    const availableVariant = selectedProduct.variants.find(
+      (v) => v.size === size && v.stock > 0
     );
-    if (newVariant) {
-      setSelectedVariant(newVariant);
+
+    if (availableVariant) {
+      setSelectedColor(availableVariant.color);
+      setSelectedVariant(availableVariant);
+      setCurrentImage(0);
     }
   };
 
@@ -99,14 +98,11 @@ function ProductDetailContainer() {
     setCurrentImage(0);
 
     const newVariant = selectedProduct.variants.find(
-      (v) =>
-        v.color === color &&
-        v.stock > 0 &&
-        (!selectedSize || v.size === selectedSize)
+      (v) => v.color === color && v.size === selectedSize && v.stock > 0
     );
+    
     if (newVariant) {
       setSelectedVariant(newVariant);
-      setSelectedSize(newVariant.size);
     }
   };
 
@@ -134,7 +130,7 @@ function ProductDetailContainer() {
     if (!selectedVariant) return;
 
     const itemId = `${selectedProduct._id}-${selectedVariant._id}`;
-    const isItemInWishlist = isInWishlist(itemId);
+    const isItemInWishlist = isInWishlist(selectedVariant._id);
 
     const wishlistItem = {
       id: itemId,
@@ -175,8 +171,7 @@ function ProductDetailContainer() {
           <img
             src={currentVariantImages[currentImage]}
             onError={handleImageError}
-            alt={`${selectedProduct.name} - ${selectedVariant?.color || ""}`
-            }
+            alt={`${selectedProduct.name} - ${selectedVariant?.color || ""}`}
           />
         </div>
         <div className="productThumbnails">
@@ -227,7 +222,7 @@ function ProductDetailContainer() {
         <div className="variantSection">
           <h3>Color</h3>
           <div className="variantOptions">
-            {availableColors.map((color) => {
+            {allColors.map((color) => {
               const isAvailable = isColorAvailable(color);
               return (
                 <Button
@@ -260,15 +255,15 @@ function ProductDetailContainer() {
           
           <Button
             className={`wishlistButton ${
-              isInWishlist(`${selectedProduct._id}-${selectedVariant?._id}`) ? "active" : ""
+              isInWishlist(`${selectedVariant?._id}`) ? "active" : ""
             }`}
             onClick={handleWishlistToggle}
             disabled={!selectedVariant}
-            buttonText={isInWishlist(`${selectedProduct._id}-${selectedVariant?._id}`)
+            buttonText={isInWishlist(`${selectedVariant?._id}`)
               ? "Remove from Wishlist"
               : "Add to Wishlist"}
           >
-            <i className={`fa-${isInWishlist(`${selectedProduct._id}-${selectedVariant?._id}`) ? "solid" : "regular"} fa-heart`} />
+            <i className={`fa-${isInWishlist(`${selectedVariant?._id}`) ? "solid" : "regular"} fa-heart`} />
           </Button>
         </div>
 

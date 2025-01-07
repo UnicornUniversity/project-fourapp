@@ -3,7 +3,6 @@ import Card from "../../components/card/Card";
 import React from "react";
 
 export function ProductCardContainer({ product }) {
-  console.log(product ,product.variants[0])
   const mainVariant = product.variants[0];
   const mainImage =
     mainVariant.images[0] || "/images/default/image-placeholder.webp";
@@ -74,9 +73,6 @@ export function ProductCardContainer({ product }) {
       {/* Price */}
       <div className="productCardFooter">
         <p>${product.price}</p>
-        <span>
-          <i className="fa-solid fa-bag-shopping"></i>
-        </span>
       </div>
     </Card>
   );
