@@ -89,4 +89,19 @@ export class OrderController {
       next(error);
     }
   }
+
+  static async getUserOrders(req, res, next) {
+    try {
+      const userId = req.params.userId;
+      
+      if (req.user.id !== userId) {
+        throw ApiError.forbidden("You can only view your own orders");
+      }
+
+      const orders = await OrderAbl.getUserOrders(userId);
+      res.status(200).json(orders);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
