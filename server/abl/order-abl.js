@@ -111,6 +111,29 @@ class OrderAbl {
     user.cart_array = []; // Nastavení prázdného košíku
     await user.save(); // Uložení aktualizovaného uživatele
 
+    // Aktualizace skladu produktů
+    for (const item of order.products_array) {
+      const product = await Product.findById(item.id);
+      if (!product) {
+        throw ApiError.notFound(`Product ${item.id} not found`);
+      }
+      const variant = product.variants.find(
+        (v) => v._id.toString() === item.variantId.toString()
+      );
+      if (!variant) {
+        throw ApiError.notFound(`Variant ${item.variantId} not found`);
+      }
+
+      if (variant.stock < item.quantity) {
+        throw ApiError.badRequest(
+          `Not enough stock for product ${product.name} (variant ${variant.name})`
+        );
+      }
+
+      variant.stock -= item.quantity; // Odečtení zakoupeného množství
+      await product.save(); // Uložení změn produktu
+    }
+
     return updatedOrder;
   }
 
