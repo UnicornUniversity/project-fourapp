@@ -1,1 +1,7 @@
 node_modules
+
+# Keep assets directory structure but ignore the contents
+server/assets/images/*
+!server/assets/images/products/
+server/assets/images/products/*
+!server/assets/images/products/.gitkeep
