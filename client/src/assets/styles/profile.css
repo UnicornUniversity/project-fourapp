@@ -14,6 +14,25 @@
     .profileSidebar > div > div{
         width: 70%;
     }
+
+    td{
+        overflow: hidden;
+    }
+
+    .responsivityDataCut{
+        width: 100%;
+    }
+    .responsivityDataCut > thead > tr >th{
+        text-align: left;
+    }
+
+    .productTable > tbody > tr > td:nth-child(2){
+        display: none;
+    }
+    .productTable > thead > tr >th:nth-child(2){
+        display: none;
+    }
+
 }
 
 
@@ -50,9 +69,22 @@
 .profileAdminPanel {
     display: flex;
     flex-direction: column;
-    gap: 5vh;
+    gap: 1rem;
 }
 
+
+
+.titleMargin{
+    margin-bottom: 0.5rem;
+}
+.logoutButton {
+    display: flex;
+    width: 5rem;
+    justify-content: center;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+}
 .profileAdminPanel>div>Table {
     -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
@@ -110,115 +142,3 @@
     flex-direction: column;
     row-gap: 5vh;
 }
-/*
-.profile-Layout {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    align-items: flex-start;
-}
-
-.profile-Sidebar {
-    width: 250px;
-    flex-shrink: 0;
-    background-color: white;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar-Item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 12px 36px;
-    cursor: pointer;
-    margin-bottom: 0.5rem;
-    border: 2px solid transparent;
-    border-radius: 0.375rem;
-    transition: all 0.2s ease;
-}
-
-.sidebar-Item i {
-    opacity: 0.5;
-    width: 20px;
-    text-align: center;
-}
-
-.sidebar-Item.active {
-    background-color: black;
-    color: white;
-    border: 2px solid black;
-}
-
-.sidebar-Item.active i {
-    opacity: 1;
-}
-
-.sidebar-Item:not(.active) {
-    border: 2px solid #e5e7eb;
-}
-
-.sidebar-Item:not(.active):hover {
-    background-color: #f5f5f5;
-    border-color: #d1d5db;
-}
-
-.profile-Form {
-    flex: 1;
-    min-width: min(100%, 800px);
-    padding: 2rem;
-    background-color: white;
-    border: none;
-}
-
-.profile-Form form {
-    width: 100%;
-}
-
-.inputLabel {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.875rem;
-    color: #333;
-}
-
-.inputWrapper {
-    margin-bottom: 1.5rem;
-    width: 100%;
-}
-
-.formInput {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0.75rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.375rem;
-    font-size: 1rem;
-}
-.formInput:read-only {
-    background-color: #f5f5f5;
-    cursor: not-allowed;
-    opacity: 1;
-}
-
-input[type="date"].formInput {
-    font-family: inherit;
-    color: inherit;
-}
-
-input[type="date"].formInput::-webkit-calendar-picker-indicator {
-    opacity: 0.5;
-    cursor: pointer;
-}
-
-.profile-Card-wrapper {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: min(100%, 800px);
-}
-
-*/

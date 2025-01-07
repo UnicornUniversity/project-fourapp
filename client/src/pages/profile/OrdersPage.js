@@ -5,9 +5,7 @@ function ProfileOrdersPage() {
   return (
     <div className="profileOrderHistory">
       <ProfileSidebar />
-      <div className="profileContent">
-        <OrdersContainer />
-      </div>
+      <OrdersContainer />
     </div>
   );
 }
