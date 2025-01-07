@@ -85,6 +85,11 @@ class UserAbl {
     static async removeItemFromWishlist(userId, productId, variantId) {
       return await userDao.removeItemFromWishlist(userId, productId, variantId);
     }
+    
+    static async updateCartItemQuantity(userId, productId, variantId, quantity) {
+      return await userDao.updateCartItemQuantity(userId, productId, variantId, quantity);
+    }
+    
 
 }
 
