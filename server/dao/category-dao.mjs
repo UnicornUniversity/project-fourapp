@@ -9,9 +9,9 @@ export const categoriesDao = {
   },
 
   async get(id) {
-    const category = await Category.findOne({ id });
+    const category = await Category.findById(id);
     if (!category) {
-      throw ApiError.notFound();
+      throw ApiError.notFound("Category not found");
     }
 
     const subcategories = await this.getByParentCategory(id);
@@ -23,7 +23,7 @@ export const categoriesDao = {
   },
 
   async update(id, data) {
-    return await Category.findOneAndUpdate({ id }, data, { new: true });
+    return await Category.findByIdAndUpdate(id, data, { new: true });
   },
 
   async delete(id) {
@@ -32,17 +32,15 @@ export const categoriesDao = {
       throw ApiError.forbidden("Must not have any child categories");
     }
 
-    // TODO: Check for items using given category
-
-    return await Category.deleteOne({ id });
+    return await Category.findByIdAndDelete(id);
   },
-
+  
   async getByParentCategory(parentCategoryId) {
     return await Category.find({ parentCategoryId });
   },
 
   async getCategoryTree(id) {
-    const category = await Category.findOne({ id });
+    const category = await Category.findById(id);
     if (!category) {
       throw ApiError.notFound();
     }
@@ -51,10 +49,23 @@ export const categoriesDao = {
     const tree = {
       ...category.toObject(),
       subcategories: await Promise.all(
-        children.map(async (child) => await this.getCategoryTree(child.id))
+        children.map(async (child) => await this.getCategoryTree(child._id))
       ),
     };
 
     return tree;
   },
+
+  async getAllCategoriesTree() {
+    // Fetch all top-level categories (assuming they have a parentId of null or similar)
+    const topLevelCategories = await Category.find({ parentCategoryId: null });
+
+    // Build the tree for each top-level category
+    const tree = await Promise.all(
+        topLevelCategories.map(async (category) => await this.getCategoryTree(category._id))
+    );
+
+    return tree;
+}
+
 };

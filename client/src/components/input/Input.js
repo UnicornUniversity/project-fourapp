@@ -10,7 +10,8 @@ function Input({
   value,
   children,
   errorMessage,
-  checked
+  checked,
+  onChange,
 }) {
   return (
     <div className="inputWrapper">
@@ -24,6 +25,7 @@ function Input({
         name={name}
         value={value}
         checked={checked}
+        onChange={onChange}
       ></input>
       {errorMessage && (
         <div className="tooltipError">

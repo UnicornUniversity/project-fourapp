@@ -7,8 +7,8 @@ class userDao {
   }
 
   static async getByEmail(email) {
-    return await User.findOne({ email });
-  }
+    return await User.findOne({ email }).select("+password");
+  }  
 
   static async existsByEmail(email) {
     const user = await User.findOne({ email });
@@ -63,6 +63,26 @@ class userDao {
       throw ApiError.notFound("User not found or update failed");
     }
     return updatedUser;
+  
+  }
+  static async addItemToCart(userId, productId, variantId, quantity = 1) {
+    const user = await User.findById(userId);
+    if (!user) throw ApiError.notFound("User not found");
+  
+    const existingItem = user.cart_array.find(
+      (item) =>
+        item.productId.toString() === productId &&
+        item.variantId === variantId
+    );
+  
+    if (existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      user.cart_array.push({ productId, variantId, quantity });
+    }
+  
+    await user.save();
+    return user.cart_array;
   }
 
   static async list({ limit = 10, page = 0 } = {}) {

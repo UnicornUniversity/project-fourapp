@@ -1,4 +1,3 @@
-import { ApiError } from "../utils/error.mjs";
 import {
   createProductRequestSchema,
   updateProductRequestSchema,
@@ -25,13 +24,11 @@ export class ProductAbl {
   static async list(filters) {
     return await productsDao.listByFilter(filters);
   }
-
   static async get(id) {
-    const product = await productsDao.get(id);
-    if (!product) {
-      throw ApiError.notFound("Product not found");
-    }
+    return await productsDao.get(id);
+  }
 
-    return product;
+  static async getLatest() {
+    return await productsDao.getLatest();
   }
 }

@@ -1,115 +1,148 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from 'react';
 
-// Create the context
 export const ProductContext = createContext();
 
-// Provider Component
-function ProductProvider({ children }) {
-  const [products, setProducts] = useState([
-    {
-      id: "1",
-      name: "T-Shirt",
-      price: "19.99",
-      description: "Comfortable cotton T-Shirt",
-      isOnline: true,
-      variant: [
-        {
-          variantId: "1a",
-          name: "T-Shirt Small Black",
-          size: "S",
-          color: "Black",
-          stock: 50,
-          image: [
-            "/images/tshirt/T-shirt.webp",
-            "/images/tshirt/tshirt-2.avif",
-          ],
+export function ProductProvider({ children }) {
+  const [products, setProducts] = useState([]);
+  const [productsAP, setProductsAP] = useState();
+  const [recentProducts, setRecentProducts] = useState();
+  const [product, setProduct] = useState();
+  const [filters, setFilters] = useState({});
+
+  useEffect(() => {
+    handleLoad();
+    handleLoadAP();
+  }, [filters]);
+
+  async function handleDelete(id) {
+    try {
+      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
         },
-        {
-          variantId: "1b",
-          name: "T-Shirt Medium Blue",
-          size: "M",
-          color: "Blue",
-          stock: 30,
-          image: ["/images/tshirt/navy-t-shirt.webp"],
+      });
+
+      handleLoadAP();
+      const serverResponse = await response.json();
+      if (response.ok) {
+        console.log("deleted " + id);
+      }
+    } catch (error) {
+      console.error("Error sending token to backend:", error);
+    }
+  }
+
+  async function handleLoad() {
+    // Construct the query parameters conditionally
+    const queryParams = new URLSearchParams();
+
+    if (filters.minPrice != null) {
+      queryParams.append('minPrice', filters.minPrice);
+    }
+    if (filters.maxPrice != null) {
+      queryParams.append('maxPrice', filters.maxPrice);
+    }
+    if (filters.colors && filters.colors.length > 0) {
+      queryParams.append('colors[]', filters.colors.join(',')); // Join colors array into a comma-separated string
+    }
+    if (filters.sizes && filters.sizes.length > 0) {
+      queryParams.append('sizes[]', filters.sizes.join(',')); // Join sizes array into a comma-separated string
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/products?${queryParams.toString()}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
-        {
-          variantId: "1c",
-          name: "T-Shirt Small Blue",
-          size: "S",
-          color: "Blue",
-          stock: 30,
-          image: ["/images/tshirt/navy-t-shirt.webp"],
-        }
-      ],
-      categoryId: ["101"],
+      });
+
+      const serverResponse = await response.json();
+      if (response.ok) {
+        setProducts(serverResponse.products); // Assuming setProducts is defined in your component
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  async function handleLoadAP() {
+    try {
+      const response = await fetch("http://localhost:5000/api/products", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const serverResponse = await response.json();
+      if (response.ok) {
+        setProductsAP(serverResponse.products);
+      }
+    } catch (error) {
+      console.error("Error sending token to backend:", error);
+    }
+  }
+
+  async function handleGet(id) {
+    try {
+      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const serverResponse = await response.json();
+      if (response.ok) {
+        setProduct(serverResponse);
+        console.log("Server response:", serverResponse);
+      } else {
+        console.error("Failed to fetch product:", serverResponse);
+      }
+    } catch (error) {
+      console.error("Error fetching product:", error);
+    }
+  }
+
+  async function handleGetRecent() {
+    try {
+      const response = await fetch("http://localhost:5000/api/products/latest", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const serverResponse = await response.json();
+      if (response.ok) {
+        setRecentProducts(serverResponse);
+      }
+    } catch (error) {
+      console.error("Error fetching latest products:", error);
+    }
+  }
+
+  const value = {
+    filters,
+    products,
+    recentProducts,
+    product,
+    productsAP,
+    handlerMap: {
+      setFilters,
+      handleGet,
+      setProducts,
+      handleDelete,
     },
-    {
-      id: "2",
-      name: "Jeans",
-      price: "49.99",
-      description: "Classic denim jeans",
-      isOnline: true,
-      variant: [
-        {
-          variantId: "2a",
-          name: "Jeans Slim Fit",
-          size: "32",
-          color: "Blue",
-          stock: 25,
-          image: ["/images/jeans/jeans.jpg"],
-        },
-        {
-          variantId: "2b",
-          name: "Jeans Regular Fit",
-          size: "34",
-          color: "Black",
-          stock: 20,
-          image: ["path/to/jeans-regular-black.jpg"],
-        },
-        {
-          variantId: "2c",
-          name: "Jeans Regular Fit",
-          size: "32",
-          color: "Black",
-          stock: 20,
-          image: ["path/to/jeans-regular-black.jpg"],
-        }
-      ],
-      categoryId: ["102"],
-    },
-    {
-      id: "3",
-      name: "Sneakers",
-      price: "89.99",
-      description: "Lightweight running sneakers",
-      isOnline: true,
-      variant: [
-        {
-          variantId: "3a",
-          name: "Sneakers Red",
-          size: "10",
-          color: "Red",
-          stock: 40,
-          image: ["path/to/sneakers-red.jpg"],
-        },
-        {
-          variantId: "3b",
-          name: "Sneakers White",
-          size: "11",
-          color: "White",
-          stock: 35,
-          image: ["path/to/sneakers-white.jpg"],
-        },
-      ],
-      categoryId: ["103"],
-    },
-  ]);
+  };
 
   return (
-    <ProductContext.Provider value={{ products, setProducts }}>
+    <ProductContext.Provider value={value}>
       {children}
     </ProductContext.Provider>
   );
-}
+};
 
 export default ProductProvider;

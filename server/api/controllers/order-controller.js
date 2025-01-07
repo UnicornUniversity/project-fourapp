@@ -1,73 +1,94 @@
-import OrderAbl from "../../abl/order-abl.js"; // Import business logiky pro objednávky
-import userDao from "../../dao/user-dao.js"; // Import pro práci s uživateli
+import express from "express";
+import mongoose from "mongoose";
+import OrderAbl from "../../abl/order-abl.js";
+import userDao from "../../dao/user-dao.js";
 import { ApiError } from "../../utils/error.mjs";
 
-class OrderController {
-  // Vytvoření nové objednávky
-  static async create(req, res, next) {
-    const { user_id } = req.body;
+const router = express.Router();
 
-    try {
-      const user = await userDao.findById(user_id);
-      if (!user) {
-        throw ApiError.notFound("User not found");
-      }
+router.post("/", async (req, res, next) => {
+  const { user_id } = req.body;
 
-      if (!user.cart_array || user.cart_array.length === 0) {
-        throw ApiError.badRequest("User's cart is empty");
-      }
-
-      const newOrder = await OrderAbl.createOrder(user_id);
-      res.status(201).json(newOrder);
-    } catch (error) {
-      next(error);
+  try {
+    if (!user_id) {
+      throw ApiError.badRequest("Missing user_id");
     }
-  }
 
-  // Dokončení objednávky
-  static async complete(req, res, next) {
-    const { id } = req.params;
-    const { shipping_method, total_cost, shipping_address, payment_method } =
-      req.body;
-
-    try {
-      const updatedOrder = await OrderAbl.completeOrder(
-        id,
-        shipping_method,
-        total_cost,
-        shipping_address,
-        payment_method
-      );
-      res.status(200).json(updatedOrder);
-    } catch (error) {
-      next(error);
+    if (!mongoose.Types.ObjectId.isValid(user_id)) {
+      throw ApiError.badRequest(`Invalid user_id format: ${user_id}`);
     }
-  }
 
-  // Přidání platební metody k objednávce
-  static async addPaymentMethod(req, res, next) {
-    const { id } = req.params;
-    const { payment_method } = req.body;
-
-    try {
-      const updatedOrder = await OrderAbl.addPaymentMethod(id, payment_method);
-      res.status(200).json(updatedOrder);
-    } catch (error) {
-      next(error);
+    const user = await userDao.findById(user_id);
+    if (!user) {
+      throw ApiError.notFound("User not found");
     }
-  }
 
-  // Filtrování objednávek podle uživatele
-  static async filterByUser(req, res, next) {
-    const { user_id, year, month } = req.query;
-
-    try {
-      const orders = await OrderAbl.listOrdersByFilter(user_id, year, month);
-      res.status(200).json(orders);
-    } catch (error) {
-      next(error);
+    if (!user.cart_array || user.cart_array.length === 0) {
+      throw ApiError.badRequest("User's cart is empty");
     }
-  }
-}
 
-export default OrderController;
+    const newOrder = await OrderAbl.createOrder(user_id);
+
+    res.status(201).json({ message: "Order created successfully", newOrder });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/:id/complete", async (req, res, next) => {
+  const { id } = req.params;
+  const { shipping_method, total_cost, shipping_address, payment_method } =
+    req.body;
+
+  try {
+    const updatedOrder = await OrderAbl.completeOrder(
+      id,
+      shipping_method,
+      total_cost,
+      shipping_address,
+      payment_method
+    );
+
+    res
+      .status(200)
+      .json({ message: "Order completed successfully", updatedOrder });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/:id/payment", async (req, res, next) => {
+  const { id } = req.params;
+  const { payment_method } = req.body;
+
+  try {
+    if (!payment_method) {
+      throw ApiError.badRequest("Missing payment_method");
+    }
+
+    const updatedOrder = await OrderAbl.addPaymentMethod(id, payment_method);
+
+    res.status(200).json({
+      message: "Payment method added successfully",
+      updatedOrder,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const deletedOrder = await OrderAbl.deleteOrder(id);
+
+    res
+      .status(200)
+      .json({ message: "Order deleted successfully", deletedOrder });
+  } catch (error) {
+    next(error);
+  }
+});
+
+export default router;

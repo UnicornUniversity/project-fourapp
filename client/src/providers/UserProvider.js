@@ -1,11 +1,78 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie"
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
-  // const [user, setUser] = useState();
+  const [user, setUser] = useState({});
+  const [token, setToken] = useState("")
   const navigate = useNavigate();
   const [error , setError] = useState();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newToken = Cookies.get('token');
+      if (newToken !== token) {
+        setToken(newToken); // Update state when the token changes
+        console.log('Token updated:', newToken);
+      }
+    }, 500); // Poll every 500ms (adjust as needed)
+
+    return () => clearInterval(interval); // Cleanup
+  }, [token]);
+
+  useEffect(() => {
+    console.log("here")
+    getUser()
+  },[token])
+
+  async function getUser() {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/auth/user", //OUR API ENDPOINT
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            
+          },
+          credentials: "include"
+        }
+      );
+      const serverResponse = await response.json();
+      console.log(serverResponse)
+      if (response.ok) {
+        setUser(serverResponse)
+      } else {
+      }
+    } catch (error) {
+
+    }
+  }
+
+  async function  handleUpdate(_id , body) {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/users/${_id}`, //OUR API ENDPOINT
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            
+          },
+          body:JSON.stringify(body)
+        }
+      );
+      const serverResponse = await response.json();
+      console.log(serverResponse)
+      if (response.ok) {
+        getUser()
+      } else {
+      }
+    } catch (error) {
+
+    }
+  }
 
   async function handleRegister(user) {
     try {
@@ -20,7 +87,7 @@ function UserProvider({ children }) {
         }
       );
       const serverResponse = await response.json();
-      console.log(serverResponse);
+      console.log(serverResponse)
       if (response.ok) {
         navigate("/user/login");
         //console.log("Token verified successfully:", data); //WENT THROUGH RESPONSE
@@ -33,7 +100,9 @@ function UserProvider({ children }) {
     }
   }
 
-  async function handleLogin(user) {
+  
+
+  async function handleLogin( user ) {
     try {
       const response = await fetch(
         "http://localhost:5000/api/auth/login", //OUR API ENDPOINT
@@ -48,8 +117,7 @@ function UserProvider({ children }) {
       );
 
       const serverResponse = await response.json(); //SHOULD BE TOKEN
-
-      console.log(serverResponse);
+      console.log(serverResponse)
       if (response.ok) {
         navigate("/user/profile");
         //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
@@ -64,20 +132,13 @@ function UserProvider({ children }) {
   async function handleGoogleLogin() {
     try {
       window.location.href = "http://localhost:5000/api/auth/google"; // URL backendu
+      
     } catch (error) {
       //console.error("Error sending token to backend:", error);
     }
   }
 
-  // Mock user data
-  const [user, setUser] = useState({
-    first_name: "Karel",
-    last_name: "Mácha",
-    email: "karel.macha@example.com",
-    phone_number: "123-456-7890",
-    dob: "1990-01-01",
-    role: "admin",
-  });
+
 
   const updateUserProfile = (userData) => {
     setUser((prevUser) => ({
@@ -93,6 +154,7 @@ function UserProvider({ children }) {
       handleLogin,
       handleGoogleLogin,
       updateUserProfile,
+      handleUpdate,
       setError,
     },
   };

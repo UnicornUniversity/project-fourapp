@@ -55,10 +55,7 @@ export class ApiError extends Error {
     }
 
     if (error instanceof MongooseError) {
-      return ApiError.internalServerError(
-        message || "Mongoose error",
-        extensions
-      );
+      return ApiError.internalServerError(error.message, extensions);
     }
     if (error instanceof ZodError) {
       return ApiError.badRequest(message || "Validation error", {

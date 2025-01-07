@@ -1,6 +1,7 @@
 import { Product } from "../models/Product.mjs";
 import { ApiError } from "../utils/error.mjs";
 import { Category } from "../models/Category.mjs";
+import { Types } from "mongoose";
 
 export const productsDao = {
   async create(data) {
@@ -42,23 +43,26 @@ export const productsDao = {
   },
 
   async listByFilter({
-    searchQuery,
-    category,
+    search,
+    categories,
     maxPrice,
     minPrice,
-    color,
+    colors,
+    sizes,
     page = 0,
     pageSize = 10,
   }) {
     const query = {};
 
-    if (searchQuery)
+    if (search)
       query.name = {
-        $regex: searchQuery,
+        $regex: search,
         $options: "i",
       };
-    if (category?.length) {
-      query.categoryId = { $in: category };
+    if (categories && categories.length > 0) {
+      query.categories = {
+        $in: categories.map(Types.ObjectId.createFromHexString),
+      };
     }
     if (maxPrice !== undefined) {
       query.price = { ...query.price, $lte: maxPrice };
@@ -66,8 +70,11 @@ export const productsDao = {
     if (minPrice !== undefined) {
       query.price = { ...query.price, $gte: minPrice };
     }
-    if (color) {
-      query["variants.color"] = color;
+    if (colors && colors.length > 0) {
+      query["variants.color"] = { $in: colors };
+    }
+    if (sizes && sizes.length > 0) {
+      query["variants.size"] = { $in: sizes };
     }
 
     const products = await Product.find(query)
@@ -78,5 +85,9 @@ export const productsDao = {
       products,
       total: await Product.countDocuments(query),
     };
+  },
+
+  async getLatest(limit = 5) {
+    return await Product.find({}).sort({ createdAt: -1 }).limit(limit);
   },
 };
