@@ -92,7 +92,10 @@
   gap: 1rem;
   margin-top: 0.5rem;
 }
-
+.cartItemActions button {
+  background-color: black;
+  color: white;
+}
 .quantityControl {
   display: flex;
   align-items: center;
@@ -112,6 +115,7 @@
   align-items: center;
   justify-content: center;
   transition: opacity 0.2s ease-in-out;
+  color:black;
 }
 
 .quantityControl span {
