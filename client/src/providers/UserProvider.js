@@ -1,7 +1,9 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { env } from "../utils/env";
 export const UserContext = createContext();
+
 
 function UserProvider({ children }) {
   const [user, setUser] = useState({});
