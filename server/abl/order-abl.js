@@ -8,7 +8,7 @@ class OrderAbl {
   // Vytvoření objednávky
   static async createOrder(user_id) {
     const user = await userDao.findById(user_id);
-    console.log(user, user_id, 1);
+    console.log(user , user_id , 1)
     if (!user) throw ApiError.notFound("User not found");
 
     const cart = user.cart_array || [];
@@ -143,18 +143,6 @@ class OrderAbl {
       return order;
     } catch (error) {
       throw ApiError.internal("Failed to delete order", error.message);
-    }
-  }
-
-  static async getUserOrders(userId) {
-    try {
-      const user = await userDao.findById(userId);
-      if (!user) throw ApiError.notFound("User not found");
-
-      const orders = await orderDao.findByUserId(userId);
-      return orders;
-    } catch (error) {
-      throw ApiError.fromError(error, "Failed to get user orders");
     }
   }
 }

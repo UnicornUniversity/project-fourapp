@@ -8,8 +8,8 @@ import { useParams } from "react-router-dom";
 function ProductListContainer() {
   const { products, handlerMap } = useContext(ProductContext);
   const [filtersSettings, setFilterSetting] = useState();
-  const [filtersInitialized, setFiltersInitialized] = useState(false); // New state to track initialization
   const {categoryId} = useParams()
+  const [filtersInitialized, setFiltersInitialized] = useState(false); // New state to track initialization
 
   function getMinMaxPrice(products) {
     let minPrice = Infinity;
@@ -67,10 +67,12 @@ function ProductListContainer() {
   }, [products, filtersInitialized]); // Run effect when products change
 
   useEffect(() => {
-    console.log(categoryId)
-    handlerMap.setCategory(categoryId)
-  },[categoryId])
-
+    // Update filters while keeping existing ones
+    handlerMap.setFilters(prevFilters => ({
+      ...prevFilters,
+      category: categoryId, // Update or add the category filter
+    }));
+  }, [categoryId]);
 
   return (
     <div>

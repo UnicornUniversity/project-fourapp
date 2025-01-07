@@ -1,9 +1,19 @@
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserProvider";
 import Input from "../../components/input/Input";
+import Button from "../../components/button/Button";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function ProfileOverviewContainer() {
-  const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    Cookies.remove("token"); // Remove the token from cookies
+    navigate("/user/login"); // Redirect to the login page
+  };
+
   return (
     <div className="profileOverviewForm">
       <form>
@@ -27,6 +37,11 @@ function ProfileOverviewContainer() {
         >
           <label className="inputLabel">Email</label>
         </Input>
+        <Button
+          buttonText="Logout"
+          className="logoutButton"
+          onClick={handleLogout} // Add the logout handler
+        />
       </form>
     </div>
   );

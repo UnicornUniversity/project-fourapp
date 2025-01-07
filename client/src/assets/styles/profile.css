@@ -1,8 +1,28 @@
-/* Base CSS (same as above) */
 .profileSidebar {
     display: flex;
     flex-direction: column;
     gap: 2vh;
+}
+
+@media (max-width: 800px) {
+    .profileSidebar {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    .profileSidebar > div > div{
+        width: 70%;
+    }
+}
+
+
+.profilePage{
+    display: flex;
+    justify-content: space-between;
+    width:80%;
+    gap: 2rem;
+    margin: 0 auto;
 }
 
 .profileSidebarButton {
@@ -23,6 +43,7 @@
 
 .profileInput:read-only {
     background-color: #f5f5f5;
+    /*cursor: not-allowed;*/
     opacity: 1;
 }
 
@@ -32,12 +53,22 @@
     gap: 5vh;
 }
 
-.profileAdminPanel>div>table {
+.logoutButton {
+    display: flex;
+    width: 5rem;
+    justify-content: center;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+}
+.profileAdminPanel>div>Table {
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .profileAdminPanel>div>div>button {
-    padding: 1rem 2rem;
+    padding: 1rem 2rem 1rem 2rem;
     background-color: black;
     border: none;
     color: white;
@@ -58,12 +89,15 @@
     border: 1px solid #e5e7eb;
     font-size: 1rem;
     background-color: white;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .productFormCheckSelect>div {
     display: flex;
     align-items: center;
+
 }
 
 .categoryFormSelect {
@@ -73,43 +107,126 @@
     padding: 1rem;
     border: 1px solid #e5e7eb;
     background-color: white;
-    box-shadow: 0px 0 px 4px 0px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     font-size: 1rem;
 }
 
-.productCreateContainer {
-    display: flex;
+.productCreateContainer{
+    display:flex;
     flex-direction: column;
     row-gap: 5vh;
 }
-
-/* Responsive CSS for Phones */
-@media (max-width: 768px) {
-    .profileSidebarButton {
-        width: 80%;
-        /* Full width on mobile */
-        margin: 0 auto;
-        /* Center button */
-    }
-
-    .productFormCheckSelect {
-        flex-direction: column;
-        /* Stack elements vertically */
-    }
-
-    .productFormCheckSelect>select {
-        width: 100%;
-        /* Full width for select on mobile */
-    }
-
-    .profileInput,
-    .categoryFormSelect {
-        font-size: 0.9rem;
-        /* Slightly smaller font for mobile */
-    }
-
-    .productCreateContainer {
-        row-gap: 3vh;
-        /* Adjust spacing for mobile */
-    }
+/*
+.profile-Layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: flex-start;
 }
+
+.profile-Sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-Item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 12px 36px;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    border: 2px solid transparent;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+}
+
+.sidebar-Item i {
+    opacity: 0.5;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-Item.active {
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+}
+
+.sidebar-Item.active i {
+    opacity: 1;
+}
+
+.sidebar-Item:not(.active) {
+    border: 2px solid #e5e7eb;
+}
+
+.sidebar-Item:not(.active):hover {
+    background-color: #f5f5f5;
+    border-color: #d1d5db;
+}
+
+.profile-Form {
+    flex: 1;
+    min-width: min(100%, 800px);
+    padding: 2rem;
+    background-color: white;
+    border: none;
+}
+
+.profile-Form form {
+    width: 100%;
+}
+
+.inputLabel {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: #333;
+}
+
+.inputWrapper {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.formInput {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+}
+.formInput:read-only {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+input[type="date"].formInput {
+    font-family: inherit;
+    color: inherit;
+}
+
+input[type="date"].formInput::-webkit-calendar-picker-indicator {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.profile-Card-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: min(100%, 800px);
+}
+
+*/
