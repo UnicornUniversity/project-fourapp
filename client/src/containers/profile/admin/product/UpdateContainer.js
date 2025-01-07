@@ -57,7 +57,7 @@ function ProductUpdateContainer() {
     };
 
     fetchProduct();
-  }, [productId, handlerMap, isFormInitialized]);
+  }, [productId, isFormInitialized]);
 
   const handleUpdateProduct = () => {
     const updatedProductData = {
