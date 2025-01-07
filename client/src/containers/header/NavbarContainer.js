@@ -57,13 +57,6 @@ function NavbarContainer() {
           onClick={() => handleCategoryClick(category._id)} // Otevře/zavře dropdown po kliknutí
         >
           <a onClick={(e) => e.stopPropagation()}>{category.name}</a> {/* Zastaví propagaci kliknutí */}
-          <i
-            className={`fa-solid fa-caret-down ${openDropdown === category._id ? "fa-caret-up" : ""}`}
-            onClick={(e) => {
-              e.stopPropagation(); // Zastaví propagaci kliknutí
-              handleCategoryClick(category._id); // Otevře/zavře dropdown
-            }}
-          ></i> {/* Rozbalovací ikona */}
           <div
             className={`dropdown ${
               openDropdown === category._id ? "show" : ""

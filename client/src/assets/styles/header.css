@@ -169,7 +169,14 @@
 .swiper-pagination-bullet-active {
     background-color: black !important;
 }
-
+@media (min-width: 768px) {
+    .menu {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 /* Responsive Styles */
 @media (max-width: 768px) {
     .navbarBarContainer {
@@ -188,7 +195,7 @@
         opacity: 1; /* Nastaví opacity na 1, aby dropdown zůstal viditelný */
         visibility: visible; /* Nastaví visibility na visible, aby dropdown zůstal viditelný */
       }
-      
+
     .menu {
         position: fixed;
         top: 0;
