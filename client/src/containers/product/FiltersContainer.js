@@ -344,6 +344,7 @@ function ProductFiltersContainer({ filtersSettings }) {
               </Popup>
             </div>
           </div>
+
         </div>
 
         <div class="selectedFilterList">

@@ -2,11 +2,57 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../providers/CartProvider';
 import Card from '../../components/card/Card';
+import { WishlistContext } from '../../providers/WishlistProvider';
+import "../../assets/styles/product.css";
 
 function CartItem({ item }) {
-  const { removeFromCart, updateQuantity, toggleFavorite } = useContext(CartContext);
+  const { removeFromCart, updateQuantity } = useContext(CartContext);
+   const { addToWishlist, removeFromWishlist, isInWishlist } = useContext(WishlistContext);
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const [notification, setNotification] = useState({ show: false, message: "" });
+
+  const showNotification = (message) => {
+    setNotification({ show: true, message });
+    setTimeout(() => {
+      setNotification({ show: false, message: "" });
+    }, 3000);
+  };
+
+  function handleWishlistToggle(){
+    if(isInWishlist(item.variantId)){
+      removeFromWishlist(item)
+      showNotification("Product removed from wishlist")
+    }else{
+      console.log("NIGGA")
+      addToWishlist(item)
+      showNotification("Product added to wishlist")
+    }
+  }
+
+
+  const handleQuantityToggle = () => {
+    if (!item) return;
+
+    const itemId = `${item._id}-${item._id}`;
+    const isItemInWishlist = isInWishlist(itemId);
+
+    const wishlistItem = {
+    
+      productId: item._id,
+      variantId: item._id,
+      
+    };
+
+    if (isItemInWishlist) {
+      removeFromWishlist(itemId);
+      showNotification("Product removed from wishlist");
+    } else {
+      addToWishlist(wishlistItem);
+      showNotification("Product added to wishlist");
+    }
+  };
 
   const handleProductClick = (e) => {
     if (
@@ -26,7 +72,7 @@ function CartItem({ item }) {
 
   const confirmRemove = (e) => {
     e.stopPropagation();
-    removeFromCart(item.id);
+    removeFromCart(item);
     setShowConfirmation(false);
   };
 
@@ -36,7 +82,7 @@ function CartItem({ item }) {
   };
 
   return (
-    <div className="cartItemWrapper">
+    <div key={item.variantId} className="cartItemWrapper">
       <Card 
         className="cartItem" 
         onClick={handleProductClick}
@@ -77,10 +123,10 @@ function CartItem({ item }) {
             </div>
             
             <button 
-              className={`favoriteButton ${item.isFavorite ? 'active' : ''}`}
+              className={`favoriteButton ${isInWishlist(item.variantId) ? 'active' : ''}`}
               onClick={(e) => {
+                handleWishlistToggle();
                 e.stopPropagation();
-                toggleFavorite(item.id);
               }}
             >
               <i className="fa-solid fa-heart"></i>

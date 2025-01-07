@@ -14,8 +14,12 @@ function NavbarContainer() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false); // State to toggle the mobile menu
 
-  const handleCategoryHover = (id) => {
-    setOpenDropdown(id);
+  const handleCategoryClick = (id) => {
+    if (openDropdown === id) {
+      setOpenDropdown(null); // Zavři dropdown
+    } else {
+      setOpenDropdown(id); // Otevři dropdown
+    }
   };
 
   const handleNavbarLeave = () => {
@@ -35,6 +39,8 @@ function NavbarContainer() {
     setMenuOpen(false); // Close the menu when navigating
   }, [location.pathname]);
 
+  
+
   return (
     <nav className="navbar" onMouseLeave={handleNavbarLeave}>
       <div className="navbarBarContainer" onClick={toggleMenu}>
@@ -44,41 +50,41 @@ function NavbarContainer() {
         <img onClick={() => navigate("/")} src={Logo} alt="Logo" />
       </div>
       <ul className={`menu ${menuOpen ? "menu-open" : ""}`}>
-        {categoryAllTree
-          ? categoryAllTree.map((category) => (
-              <li
-                key={category._id}
-                onMouseEnter={() => handleCategoryHover(category._id)}
-              >
-                <a onClick={() => handleNavigate(category)}>{category.name}</a>
-                <div
-                  className={`dropdown ${
-                    openDropdown === category._id ? "show" : ""
-                  }`}
-                >
-                  <div className="dropdown-container">
-                    {category.subcategories ? (
-                      category.subcategories.map((subcategory) => (
-                        <div className="column" key={subcategory._id}>
-                          <h4 onClick={() => handleNavigate(subcategory)}>
-                            {subcategory.name}
-                          </h4>
-                          {subcategory.subcategories.map((sub) => (
-                            <a onClick={() => handleNavigate(sub)} key={sub._id}>
-                              {sub.name}
-                            </a>
-                          ))}
-                        </div>
-                      ))
-                    ) : (
-                      <></>
-                    )}
+  {categoryAllTree
+    ? categoryAllTree.map((category) => (
+        <li
+          key={category._id}
+          onClick={() => handleCategoryClick(category._id)} // Otevře/zavře dropdown po kliknutí
+        >
+          <a onClick={(e) => e.stopPropagation()}>{category.name}</a> {/* Zastaví propagaci kliknutí */}
+          <div
+            className={`dropdown ${
+              openDropdown === category._id ? "show" : ""
+            }`}
+          >
+            <div className="dropdown-container">
+              {category.subcategories ? (
+                category.subcategories.map((subcategory) => (
+                  <div className="column" key={subcategory._id}>
+                    <h4 onClick={() => handleNavigate(subcategory)}>
+                      {subcategory.name}
+                    </h4>
+                    {subcategory.subcategories.map((sub) => (
+                      <a onClick={() => handleNavigate(sub)} key={sub._id}>
+                        {sub.name}
+                      </a>
+                    ))}
                   </div>
-                </div>
-              </li>
-            ))
-          : null}
-      </ul>
+                ))
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+        </li>
+      ))
+    : null}
+</ul>
       <div className="navbarIconContainer">
         <i
           className="fa-solid fa-user"
@@ -89,6 +95,11 @@ function NavbarContainer() {
           onClick={() => navigate(token ? "/user/cart" : "/user/login")}
         ></i>
       </div>
+      {menuOpen && (
+        <div className="close-menu-button" onClick={toggleMenu}>
+          <i className="fa-solid fa-xmark"></i>
+        </div>
+      )}
     </nav>
   );
 }
