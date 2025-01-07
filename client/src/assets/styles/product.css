@@ -247,7 +247,7 @@
     #filterForm {
         display: none;
         position: fixed;
-        top: 5rem;
+        top: 4rem;
         left: 0;
         z-index: 1000;
         overflow-y: auto;
@@ -264,8 +264,8 @@
 }
 
 .no-scroll {
-    overflow: hidden; /* Zablokuje scrollování */
-    height: 100%; /* Zajistí, že stránka nebude scrollovat */
+    overflow: hidden;
+    height: 100%;
 }
 
 input[type="number"] {
@@ -446,7 +446,7 @@ input{
 /* Notification */
 .notification {
     position: fixed;
-    top: 2rem;
+    top: 5rem;
     right: 1rem;
     padding: 1rem;
     background-color: white;
