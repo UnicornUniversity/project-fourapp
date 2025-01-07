@@ -16,15 +16,10 @@ function NavbarContainer() {
 
   const handleCategoryClick = (id) => {
     if (openDropdown === id) {
-      setOpenDropdown(null); // Zavři dropdown
-
+      setOpenDropdown(null); // Close dropdown
     } else {
-      setOpenDropdown(id); // Otevři dropdown
+      setOpenDropdown(id); // Open dropdown
     }
-  };
-
-  const handleNavbarLeave = () => {
-    setOpenDropdown(null);
   };
 
   const handleNavigate = (category) => {
@@ -40,10 +35,11 @@ function NavbarContainer() {
     setMenuOpen(false); // Close the menu when navigating
   }, [location.pathname]);
 
-
-
   return (
-    <nav className="navbar" onMouseLeave={handleNavbarLeave}>
+    <nav
+      className="navbar"
+      onMouseLeave={() => setOpenDropdown(null)} // Close dropdown when leaving the navbar
+    >
       <div className="navbarBarContainer" onClick={toggleMenu}>
         <i className="fa-solid fa-bars"></i>
       </div>
@@ -55,12 +51,11 @@ function NavbarContainer() {
           ? categoryAllTree.map((category) => (
             <li
               key={category._id}
-              onClick={() => handleCategoryClick(category._id)} // Otevře/zavře dropdown po kliknutí
+              onMouseEnter={() => setOpenDropdown(category._id)} // Open dropdown on hover
             >
-              <a onClick={() => handleNavigate(category._id)}>{category.name}</a> {/* Zastaví propagaci kliknutí */}
+              <a onClick={() => handleNavigate(category)}>{category.name}</a>
               <div
-                className={`dropdown ${openDropdown === category._id ? "show" : ""
-                  }`}
+                className={`dropdown ${openDropdown === category._id ? "show" : ""}`}
               >
                 <div className="dropdown-container">
                   {category.subcategories ? (
