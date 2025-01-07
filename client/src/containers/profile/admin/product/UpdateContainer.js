@@ -11,9 +11,8 @@ import { useParams } from "react-router-dom";
 function ProductUpdateContainer() {
   const { categories } = useContext(CategoryContext);
   const { handlerMap } = useContext(ProductContext);
-  const { id: productId } = useParams(); // Destructure the id parameter from URL
+  const { id: productId } = useParams();
 
-  // State for product details and variants
   const [product, setProduct] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -24,26 +23,23 @@ function ProductUpdateContainer() {
     variants: [],
   });
 
-  const [isFormInitialized, setIsFormInitialized] = useState(false); // Track if formData is initialized
+  const [isFormInitialized, setIsFormInitialized] = useState(false);
   const [variantForm, setVariantForm] = useState({
     name: "",
     size: "",
     color: "",
     stock: "",
-    images: [],
   });
 
-  const headers = ["Variety", "Size", "Color", "Stock", "Images"];
-  const columnKeys = ["name", "size", "color", "stock", "images"];
+  const headers = ["Variety", "Size", "Color", "Stock"];
+  const columnKeys = ["name", "size", "color", "stock"];
 
-  // Fetch product data when the component mounts
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const productData = await handlerMap.handleGet(productId);
         setProduct(productData);
 
-        // Initialize formData only if not already done
         if (!isFormInitialized) {
           setFormData({
             name: productData.name || "",
@@ -53,7 +49,7 @@ function ProductUpdateContainer() {
             categories: productData.categories || [],
             variants: productData.variants || [],
           });
-          setIsFormInitialized(true); // Mark as initialized
+          setIsFormInitialized(true);
         }
       } catch (error) {
         console.error("Error fetching product data:", error);
@@ -61,9 +57,8 @@ function ProductUpdateContainer() {
     };
 
     fetchProduct();
-  }, [productId, handlerMap, isFormInitialized]); // Add isFormInitialized as a dependency
+  }, [productId, handlerMap, isFormInitialized]);
 
-  // Update the product
   const handleUpdateProduct = () => {
     const updatedProductData = {
       ...formData,
@@ -73,15 +68,13 @@ function ProductUpdateContainer() {
     console.log("Updated product:", updatedProductData);
   };
 
-  // Add a new variant
   const handleAddVariant = (event) => {
     event.preventDefault();
     const updatedVariants = [...formData.variants, variantForm];
     setFormData({ ...formData, variants: updatedVariants });
-    setVariantForm({ name: "", size: "", color: "", stock: "", images: [] });
+    setVariantForm({ name: "", size: "", color: "", stock: "" });
   };
 
-  // Remove a variant by index
   const handleRemoveVariant = (index) => {
     const updatedVariants = formData.variants.filter((_, i) => i !== index);
     setFormData({ ...formData, variants: updatedVariants });
@@ -161,10 +154,7 @@ function ProductUpdateContainer() {
         {formData.variants.length > 0 ? (
           <Table
             className="varietyTable"
-            data={formData.variants.map((variant) => ({
-              ...variant,
-              images: variant.images.map((image) => image.name).join(", "), // Display file names
-            }))}
+            data={formData.variants}
             headers={headers}
             columnKeys={columnKeys}
             renderAction={(variant, index) => (
@@ -230,19 +220,6 @@ function ProductUpdateContainer() {
             }}
           >
             <label className="inputLabel">Stock</label>
-          </Input>
-          <Input
-            type="file"
-            className="profileInput"
-            placeholder="Upload Images"
-            name="images"
-            multiple
-            onChange={(e) => {
-              const files = Array.from(e.target.files);
-              setVariantForm({ ...variantForm, images: files });
-            }}
-          >
-            <label className="inputLabel">Upload Images</label>
           </Input>
           <Input
             type="submit"
