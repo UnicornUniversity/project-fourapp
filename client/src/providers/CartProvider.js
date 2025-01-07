@@ -106,7 +106,7 @@ function CartProvider({ children }) {
   const updateQuantity = (itemId, quantity) => {
     setCartItems((prev) =>
       prev.map((item) =>
-        item.id === itemId ? { ...item, quantity } : item
+        item.productId === itemId ? { ...item, quantity } : item
       )
     );
   };
@@ -114,7 +114,7 @@ function CartProvider({ children }) {
   const toggleFavorite = (itemId) => {
     setCartItems((prev) =>
       prev.map((item) =>
-        item.id === itemId ? { ...item, isFavorite: !item.isFavorite } : item
+        item.productId === itemId ? { ...item, isFavorite: !item.isFavorite } : item
       )
     );
   };

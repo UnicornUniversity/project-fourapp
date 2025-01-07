@@ -30,7 +30,7 @@ function WishlistProvider({ children }) {
   };
 
   const isInWishlist = (itemId) => {
-    return wishlistItems.some(item => item.id === itemId);
+    return wishlistItems.some(item => item.productId === itemId);
   };
 
   const clearWishlist = () => {
