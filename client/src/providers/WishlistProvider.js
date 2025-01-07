@@ -52,7 +52,7 @@ function WishlistProvider({ children }) {
   
   const addToWishlist = async (item) => {
     // Check if item already exists in wishlist
-    if (wishlistItems.some(wishlistItem => wishlistItem.id === item.id)) {
+    if (wishlistItems.some(wishlistItem => wishlistItem.variantId === item.variantId)) {
       return;
     }
     const wishlistItem = {
@@ -112,7 +112,7 @@ function WishlistProvider({ children }) {
   };
 
   const isInWishlist = (itemId) => {
-    return wishlistItems.some(item => item.productId === itemId);
+    return wishlistItems.some(item => item.variantId === itemId);
   };
 
   const clearWishlist = () => {

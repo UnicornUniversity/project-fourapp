@@ -107,9 +107,28 @@ function CartProvider({ children }) {
     }
   }
 
-  const removeFromCart = (itemId) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== itemId));
+  const removeFromCart = async (item) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/cart/remove-item`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          productId: item.productId,
+          variantId: item.variantId
+        })
+      });
+
+      if (response.ok) {
+        setCartItems((prev) => prev.filter((cartItem) => cartItem.variantId !== item.variantId));
+      }
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
   };
+
 
   const updateQuantity = (itemId, quantity) => {
     setCartItems((prev) =>
