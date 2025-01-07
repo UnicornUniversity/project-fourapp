@@ -12,15 +12,7 @@ function NavbarContainer() {
   const location = useLocation();
 
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false); // State to toggle the mobile menu
-
-  const handleCategoryClick = (id) => {
-    if (openDropdown === id) {
-      setOpenDropdown(null); // Close dropdown
-    } else {
-      setOpenDropdown(id); // Open dropdown
-    }
-  };
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleNavigate = (category) => {
     navigate(`/product/list/${category._id}`);
@@ -32,14 +24,11 @@ function NavbarContainer() {
 
   useEffect(() => {
     setOpenDropdown(null);
-    setMenuOpen(false); // Close the menu when navigating
+    setMenuOpen(false);
   }, [location.pathname]);
 
   return (
-    <nav
-      className="navbar"
-      onMouseLeave={() => setOpenDropdown(null)} // Close dropdown when leaving the navbar
-    >
+    <nav className="navbar" onMouseLeave={() => setOpenDropdown(null)}>
       <div className="navbarBarContainer" onClick={toggleMenu}>
         <i className="fa-solid fa-bars"></i>
       </div>
@@ -47,37 +36,48 @@ function NavbarContainer() {
         <img onClick={() => navigate("/")} src={Logo} alt="Logo" />
       </div>
       <ul className={`menu ${menuOpen ? "menu-open" : ""}`}>
+        {menuOpen && (
+          <div className="close-menu-button" onClick={toggleMenu}>
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+        )}
         {categoryAllTree
           ? categoryAllTree.map((category) => (
-            <li
-              key={category._id}
-              onMouseEnter={() => setOpenDropdown(category._id)} // Open dropdown on hover
-            >
-              <a onClick={() => handleNavigate(category)}>{category.name}</a>
-              <div
-                className={`dropdown ${openDropdown === category._id ? "show" : ""}`}
+              <li
+                key={category._id}
+                onMouseEnter={() => setOpenDropdown(category._id)}
+                onClick={() => setOpenDropdown(category._id)}
               >
-                <div className="dropdown-container">
-                  {category.subcategories ? (
-                    category.subcategories.map((subcategory) => (
-                      <div className="column" key={subcategory._id}>
-                        <h4 onClick={() => handleNavigate(subcategory)}>
-                          {subcategory.name}
-                        </h4>
-                        {subcategory.subcategories.map((sub) => (
-                          <a onClick={() => handleNavigate(sub)} key={sub._id}>
-                            {sub.name}
-                          </a>
-                        ))}
-                      </div>
-                    ))
-                  ) : (
-                    <></>
-                  )}
+                <a onClick={() => handleNavigate(category)}>{category.name}</a>
+                <div
+                  className={`dropdown ${
+                    openDropdown === category._id ? "show" : ""
+                  }`}
+                >
+                  <div className="dropdown-container">
+                    {category.subcategories ? (
+                      category.subcategories.map((subcategory) => (
+                        <div className="column" key={subcategory._id}>
+                          <h4 onClick={() => handleNavigate(subcategory)}>
+                            {subcategory.name}
+                          </h4>
+                          {subcategory.subcategories.map((sub) => (
+                            <a
+                              onClick={() => handleNavigate(sub)}
+                              key={sub._id}
+                            >
+                              {sub.name}
+                            </a>
+                          ))}
+                        </div>
+                      ))
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </li>
-          ))
+              </li>
+            ))
           : null}
       </ul>
       <div className="navbarIconContainer">
@@ -90,11 +90,6 @@ function NavbarContainer() {
           onClick={() => navigate(token ? "/user/cart" : "/user/login")}
         ></i>
       </div>
-      {menuOpen && (
-        <div className="close-menu-button" onClick={toggleMenu}>
-          <i className="fa-solid fa-xmark"></i>
-        </div>
-      )}
     </nav>
   );
 }

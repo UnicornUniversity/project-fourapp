@@ -72,8 +72,11 @@ export function ProductProvider({ children }) {
       const serverResponse = await response.json();
       if (response.ok) {
         // Filter out products that have no variants or isOnline is false
-        const filteredProducts = serverResponse.products.filter(product =>
-          product.variants && product.variants.length > 0 && product.isOnline !== false
+        const filteredProducts = serverResponse.products.filter(
+          (product) =>
+            product.variants &&
+            product.variants.length > 0 &&
+            product.isOnline !== false
         );
 
         setProducts(filteredProducts); // Assuming setProducts is defined in your component
@@ -131,16 +134,15 @@ export function ProductProvider({ children }) {
         },
         body: JSON.stringify(product),
       });
-      handleLoad();
-      const serverResponse = await response.json();
-      if (serverResponse.ok) {
-        await handleLoad();
+
+      if (response.ok) {
+        navigate("/user/profile/admin");
+        handleLoad();
       }
     } catch (error) {
       console.error("Error updating product:", error);
     }
   }
-
 
   async function handleGetRecent() {
     try {
@@ -156,11 +158,13 @@ export function ProductProvider({ children }) {
 
       const serverResponse = await response.json();
 
-
       if (response.ok) {
         // Filter out products that have no variants or isOnline is false
-        const filteredProducts = serverResponse.products.filter(product =>
-          product.variants && product.variants.length > 0 && product.isOnline !== false
+        const filteredProducts = serverResponse.products.filter(
+          (product) =>
+            product.variants &&
+            product.variants.length > 0 &&
+            product.isOnline !== false
         );
         setRecentProducts(filteredProducts); // Assuming setRecentProducts is defined in your component
       }

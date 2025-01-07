@@ -178,6 +178,10 @@
     background-color: black !important;
 }
 
+.close-menu-button>i {
+    display: none;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .navbarBarContainer {
@@ -191,14 +195,6 @@
         transform: translate(-50%, -50%);
     }
 
-    .dropdown.show {
-        display: block;
-        /* Zobraz dropdown, pokud má třídu "show" */
-        opacity: 1;
-        /* Nastaví opacity na 1, aby dropdown zůstal viditelný */
-        visibility: visible;
-        /* Nastaví visibility na visible, aby dropdown zůstal viditelný */
-    }
 
     .menu {
         position: fixed;
@@ -219,6 +215,7 @@
 
     .close-menu-button i {
         font-size: 0.3rem;
+        display: contents;
         /* Snížení velikosti ikony */
     }
 
@@ -234,24 +231,6 @@
         padding: 0.5rem 0;
     }
 
-    .dropdown {
-        position: static;
-        opacity: 1;
-        visibility: visible;
-        width: 100%;
-        padding: 0;
-        box-shadow: none;
-    }
-
-
-    .dropdown {
-        display: none;
-    }
-
-    /* Zobraz dropdown, pokud má třídu "open" */
-    .dropdown.open {
-        display: block;
-    }
 
 
 
@@ -278,4 +257,32 @@
         cursor: default;
         /* Nastaví kurzor na default pro a */
     }
+
+    /* Add styles for subcategories */
+    .submenu {
+        list-style: none;
+        margin: 0;
+        padding: 0 1rem;
+        display: none;
+        /* Hidden by default */
+    }
+
+    .menu>li>.submenu {
+        display: block;
+    }
+
+    .menu-open li .submenu {
+        margin-top: 0.5rem;
+    }
+
+    .menu li .submenu .subcategory {
+        padding: 0.5rem 0;
+        color: black;
+        cursor: pointer;
+    }
+
+    .menu li .submenu .subcategory:hover {
+        text-decoration: underline;
+    }
+
 }

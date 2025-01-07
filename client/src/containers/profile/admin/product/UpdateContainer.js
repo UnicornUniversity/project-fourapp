@@ -215,7 +215,7 @@ function ProductUpdateContainer() {
             onChange={(e) => {
               const value = e.target.value;
               if (/^\d*$/.test(value)) {
-                setVariantForm({ ...variantForm, stock: value });
+                setVariantForm({ ...variantForm, stock: Number(value) });
               }
             }}
           >
