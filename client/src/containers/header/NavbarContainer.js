@@ -80,7 +80,6 @@ function NavbarContainer() {
           : null}
       </ul>
       <div className="navbarIconContainer">
-        <i className="fa-solid fa-magnifying-glass"></i>
         <i
           className="fa-solid fa-user"
           onClick={() => navigate(token ? "/user/profile" : "/user/login")}
