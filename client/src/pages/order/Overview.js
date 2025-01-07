@@ -4,10 +4,12 @@ import { OrderContext } from "../../providers/OrderProvider";
 import Input from "../../components/input/Input";
 import "../../assets/styles/overview.css";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from '../../providers/CartProvider';
 
 export function Overview() {
     const { order, completeOrder } = useContext(OrderContext);
     const navigate = useNavigate()
+      const { setCartItems } = useContext(CartContext);
 
     const calculateTotal = () => {
         const total = order.products.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -28,7 +30,8 @@ export function Overview() {
         };
 
         completeOrder(order.orderId, shippingDetails); // Call completeOrder with the orderId and shipping details
-        navigate("/")
+        setCartItems([]) ;// Clear the cart
+        navigate("/user/profile/orders")
     }
 
     return (
