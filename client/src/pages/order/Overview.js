@@ -10,8 +10,9 @@ export function Overview() {
     const navigate = useNavigate()
 
     const calculateTotal = () => {
-        return order.products.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    };
+        const total = order.products.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        return parseFloat(total.toFixed(2)); // Round to 2 decimal places and convert back to a number
+      };
 
     function handleCompleteOrder() {
         const shippingDetails = {

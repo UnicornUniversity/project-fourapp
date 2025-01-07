@@ -72,7 +72,7 @@ function CartItem({ item }) {
 
   const confirmRemove = (e) => {
     e.stopPropagation();
-    removeFromCart(item.id);
+    removeFromCart(item);
     setShowConfirmation(false);
   };
 
