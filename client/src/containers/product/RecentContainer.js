@@ -4,101 +4,18 @@ import { ProductContext } from "../../providers/ProductProvider";
 import "../../assets/styles/product.css";
 
 function RecentContainer() {
-  // const { recentProducts } = useContext(ProductContext);
-
-  const recentProducts = [
-    {
-      name: "test",
-      price: 200,
-      description: "AA",
-      isOnline: true,
-      variants: [
-        {
-          variantId: 1,
-          name: "testVar",
-          size: "XL",
-          color: "test",
-          stock: 2,
-          images: [],
-        },
-      ],
-    },
-    {
-      name: "test",
-      price: 200,
-      description: "AA",
-      isOnline: true,
-      variants: [
-        {
-          variantId: 1,
-          name: "testVar",
-          size: "XL",
-          color: "test",
-          stock: 2,
-          images: [],
-        },
-      ],
-    },
-    {
-      name: "test",
-      price: 200,
-      description: "AA",
-      isOnline: true,
-      variants: [
-        {
-          variantId: 1,
-          name: "testVar",
-          size: "XL",
-          color: "test",
-          stock: 2,
-          images: [],
-        },
-      ],
-    },
-    {
-      name: "test",
-      price: 200,
-      description: "AA",
-      isOnline: true,
-      variants: [
-        {
-          variantId: 1,
-          name: "testVar",
-          size: "XL",
-          color: "test",
-          stock: 2,
-          images: [],
-        },
-      ],
-    },
-    {
-      name: "test",
-      price: 200,
-      description: "AA",
-      isOnline: true,
-      variants: [
-        {
-          variantId: 1,
-          name: "testVar",
-          size: "XL",
-          color: "test",
-          stock: 2,
-          images: [],
-        },
-      ],
-    },
-  ];
+  const { recentProducts } = useContext(ProductContext);
 
   return (
     <section className="recentContainer">
       <h3>Newest additions</h3>
       <div>
-        {recentProducts ? (
+        {recentProducts && recentProducts.length > 0 ? (
           recentProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
         ) : (
-          <></>
+          <p className="no-products-message">No recent products available.</p>
         )}
       </div>
     </section>

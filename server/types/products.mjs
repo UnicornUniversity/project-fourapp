@@ -13,7 +13,7 @@ export const createProductRequestSchema = z.object({
   description: z.string().optional(),
   price: z.number().nonnegative(),
   isOnline: z.boolean(),
-  variants: z.array(productVariantSchema).nonempty(),
+  variants: z.array(productVariantSchema),
   categories: z.array(z.string()).optional(),
 });
 

@@ -1,20 +1,21 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
+import { env } from "../utils/env";
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
   const [user, setUser] = useState({});
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("");
   const navigate = useNavigate();
-  const [error , setError] = useState();
+  const [error, setError] = useState();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const newToken = Cookies.get('token');
+      const newToken = Cookies.get("token");
       if (newToken !== token) {
         setToken(newToken); // Update state when the token changes
-        console.log('Token updated:', newToken);
+        //console.log('Token updated:', newToken);
       }
     }, 500); // Poll every 500ms (adjust as needed)
 
@@ -22,62 +23,56 @@ function UserProvider({ children }) {
   }, [token]);
 
   useEffect(() => {
-    console.log("here")
-    getUser()
-  },[token])
+    //console.log("here")
+    getUser();
+  }, [token]);
 
   async function getUser() {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/user", //OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/auth/user`, //OUR API ENDPOINT
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            
           },
-          credentials: "include"
+          credentials: "include",
         }
       );
       const serverResponse = await response.json();
-      console.log(serverResponse)
+      //console.log(serverResponse)
       if (response.ok) {
-        setUser(serverResponse)
+        setUser(serverResponse);
       } else {
       }
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
-  async function  handleUpdate(_id , body) {
+  async function handleUpdate(_id, body) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/users/${_id}`, //OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/users/${_id}`, //OUR API ENDPOINT
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            
           },
-          body:JSON.stringify(body)
+          body: JSON.stringify(body),
         }
       );
       const serverResponse = await response.json();
-      console.log(serverResponse)
+      console.log(serverResponse);
       if (response.ok) {
-        getUser()
+        getUser();
       } else {
       }
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
   async function handleRegister(user) {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/register", //OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/auth/register`, //OUR API ENDPOINT
         {
           method: "POST",
           headers: {
@@ -87,25 +82,23 @@ function UserProvider({ children }) {
         }
       );
       const serverResponse = await response.json();
-      console.log(serverResponse)
+      console.log(serverResponse);
       if (response.ok) {
         navigate("/user/login");
         //console.log("Token verified successfully:", data); //WENT THROUGH RESPONSE
       } else {
         //console.error("Token verification failed:"); //SOME ERROR
-        setError(serverResponse)
+        setError(serverResponse);
       }
     } catch (error) {
       //console.error("Error sending token to backend:", error);
     }
   }
 
-  
-
-  async function handleLogin( user ) {
+  async function handleLogin(user) {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/login", //OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/auth/login`, //OUR API ENDPOINT
         {
           method: "POST",
           credentials: "include",
@@ -117,7 +110,7 @@ function UserProvider({ children }) {
       );
 
       const serverResponse = await response.json(); //SHOULD BE TOKEN
-      console.log(serverResponse)
+      console.log(serverResponse);
       if (response.ok) {
         navigate("/user/profile");
         //console.log("Token verified successfully:", data); //SAVE TOKEN TO LOCAL BROWSER STORAGE ?
@@ -131,14 +124,11 @@ function UserProvider({ children }) {
 
   async function handleGoogleLogin() {
     try {
-      window.location.href = "http://localhost:5000/api/auth/google"; // URL backendu
-      
+      window.location.href = `${env.REACT_APP_API_URL}/api/auth/google`; // URL backendu
     } catch (error) {
       //console.error("Error sending token to backend:", error);
     }
   }
-
-
 
   const updateUserProfile = (userData) => {
     setUser((prevUser) => ({
@@ -148,7 +138,8 @@ function UserProvider({ children }) {
   };
 
   const value = {
-    user, error,
+    user,
+    error,
     handlerMap: {
       handleRegister,
       handleLogin,

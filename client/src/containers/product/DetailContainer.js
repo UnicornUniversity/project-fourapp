@@ -158,6 +158,10 @@ function ProductDetailContainer() {
 
   const currentVariantImages = selectedVariant?.images || [];
 
+  const handleImageError = (event) => {
+    event.target.src = "/images/default/image-placeholder.webp";
+  };
+
   return (
     <div className="productContent">
       {notification.show && (
@@ -170,7 +174,9 @@ function ProductDetailContainer() {
         <div className="productMainImage">
           <img
             src={currentVariantImages[currentImage]}
-            alt={`${selectedProduct.name} - ${selectedVariant?.color || ""}`}
+            onError={handleImageError}
+            alt={`${selectedProduct.name} - ${selectedVariant?.color || ""}`
+            }
           />
         </div>
         <div className="productThumbnails">
@@ -182,6 +188,7 @@ function ProductDetailContainer() {
             >
               <img
                 src={image}
+                onError={handleImageError}
                 alt={`${selectedProduct.name} view ${index + 1}`}
               />
             </div>

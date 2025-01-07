@@ -1,8 +1,8 @@
 import "./../../assets/styles/global.css";
 
-function Checkbox({ value, title = "" }) {
+function Checkbox({ value, title = "", onChange }) {
   return (
-    <div className="checkboxWrapper">
+    <div className="checkboxWrapper" onChange={onChange}>
       <div>
         <input
           type="checkbox"
@@ -10,7 +10,7 @@ function Checkbox({ value, title = "" }) {
           className="hidden-xs-up"
           checked={value}
         />
-        <label for="cbx" className="cbx"></label>
+        <label htmlFor="cbx" className="cbx"></label>
       </div>
       <p>{title}</p>
     </div>

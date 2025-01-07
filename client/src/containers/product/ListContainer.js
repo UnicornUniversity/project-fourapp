@@ -3,11 +3,13 @@ import { ProductContext } from "../../providers/ProductProvider";
 import ProductFilters from "../product/FiltersContainer";
 import ProductCard from "./CardContainer";
 import "../../assets/styles/product.css";
+import { useParams } from "react-router-dom";
 
 function ProductListContainer() {
-  const { products } = useContext(ProductContext);
+  const { products, handlerMap } = useContext(ProductContext);
   const [filtersSettings, setFilterSetting] = useState();
   const [filtersInitialized, setFiltersInitialized] = useState(false); // New state to track initialization
+  const {categoryId} = useParams()
 
   function getMinMaxPrice(products) {
     let minPrice = Infinity;
@@ -64,10 +66,17 @@ function ProductListContainer() {
     }
   }, [products, filtersInitialized]); // Run effect when products change
 
+  useEffect(() => {
+    console.log(categoryId)
+    handlerMap.setCategory(categoryId)
+  },[categoryId])
+
+
   return (
     <div>
       {filtersSettings ? <ProductFilters filtersSettings={filtersSettings} /> : <></>}
       <div className="productList">
+        {console.log(products)}
         {products ? (
           products.map((product) => (
             <ProductCard key={product._id} product={product} />

@@ -10,44 +10,36 @@ function Footer() {
           <img onClick={() => navigate("/")} src={Logo} alt="Logo" />
         </div>
         <div className="footerColumnContainer">
-          <h3>Learn more</h3>
+          <h3>Help</h3>
           <div>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
+            <p>Service</p>
+            <p>My account</p>
+            <p>Gift cards</p>
+            <p>Stores</p>
           </div>
         </div>
         <div className="footerColumnContainer">
-          <h3>Something</h3>
+          <h3>About</h3>
           <div>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
+            <p>Company</p>
+            <p>Customers</p>
+            <p>Careers</p>
           </div>
         </div>
         <div className="footerColumnContainer">
           <h3>Contact us</h3>
           <div>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
-            <p>Text</p>
+            <p>+420 123 456 789</p>
+            <p>fourapp@gmail.com</p>
+            <p>Kolbenova 942/38a</p>
           </div>
         </div>
         <div className="footerSocialsContainer">
           <h3>Socials</h3>
           <div>
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-facebook"></i>
-            <i class="fa-brands fa-x-twitter"></i>
+            <i className="fa-brands fa-instagram"></i>
+            <i className="fa-brands fa-facebook"></i>
+            <i className="fa-brands fa-x-twitter"></i>
           </div>
         </div>
       </div>

@@ -15,6 +15,21 @@ export default class ProductController {
     }
   }
 
+  static async addVariant(req, res, next) {
+    try {
+      const productId = requireParam("productId", req.params);
+
+      if (!Types.ObjectId.isValid(productId)) {
+        throw ApiError.badRequest("Invalid product ID");
+      }
+
+      const updatedProduct = await ProductAbl.addVariant(productId, req.body);
+      res.status(201).json(updatedProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async delete(req, res, next) {
     try {
       const id = requireParam("productId", req.params);
@@ -93,6 +108,33 @@ export default class ProductController {
     try {
       const latestProducts = await ProductAbl.getLatest();
       res.status(200).json({ products: latestProducts });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async uploadVariantImages(req, res, next) {
+    try {
+      const { productId, variantId } = req.params;
+
+      if (!req.files || req.files.length === 0) {
+        throw ApiError.badRequest("No files uploaded");
+      }
+
+      const imageUrls = req.files.map(
+        (file) => `/images/products/${file.filename}`
+      );
+
+        await ProductAbl.updateVariantImages(
+        productId,
+        variantId,
+        imageUrls
+      );
+
+      res.status(200).json({
+        message: "Images uploaded successfully",
+        images: imageUrls,
+      });
     } catch (error) {
       next(error);
     }

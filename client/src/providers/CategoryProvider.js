@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { env } from "../utils/env";
 export const CategoryContext = createContext();
 
 function CategoryProvider({ children }) {
@@ -11,16 +11,18 @@ function CategoryProvider({ children }) {
   const [categoryAllTree, setCategoryAllTree] = useState([]);
 
   const navigate = useNavigate();
+  useEffect(() => {
+    handleLoad(); // Load categories on mount
+  }, []); // Only run once on mount
 
   useEffect(() => {
-    handleLoad();
     handleGetCategoryAllTree();
   }, [categories]);
 
   async function handleGet(id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories/${id}`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories/${id}`, // OUR API ENDPOINT
         {
           method: "GET",
           headers: {
@@ -39,37 +41,11 @@ function CategoryProvider({ children }) {
     }
   }
 
-  async function handleUpdate(id, body) {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/categories/${id}`, // OUR API ENDPOINT
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-
-      const serverResponse = await response.json(); // SHOULD BE TOKEN
-      if (response.ok) {
-        setNavbarCategories(serverResponse.categories);
-        setCategories(serverResponse.categories);
-        // console.log("Token verified successfully:", data); // SAVE TOKEN TO LOCAL BROWSER STORAGE ?
-      } else {
-        // console.error("Token verification failed:", data); // SOME ERROR
-      }
-    } catch (error) {
-      // console.error("Error sending token to backend:", error);
-    }
-  }
-
   // Add this useEffect to log the updated category whenever it changes
   async function handleLoad() {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/categories", // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories`, // OUR API ENDPOINT
         {
           method: "GET",
           headers: {
@@ -91,10 +67,38 @@ function CategoryProvider({ children }) {
     }
   }
 
+  async function handleUpdate(id, body) {
+    try {
+      const response = await fetch(
+        `${env.REACT_APP_API_URL}/api/categories/${id}`, // OUR API ENDPOINT
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        }
+      );
+      handleLoad();
+      const serverResponse = await response.json(); // SHOULD BE TOKEN
+      if (response.ok) {
+        setNavbarCategories(serverResponse.categories);
+        /*await handleLoad();*/
+        setCategories(serverResponse.categories);
+
+        // console.log("Token verified successfully:", data); // SAVE TOKEN TO LOCAL BROWSER STORAGE ?
+      } else {
+        // console.error("Token verification failed:", data); // SOME ERROR
+      }
+    } catch (error) {
+      // console.error("Error sending token to backend:", error);
+    }
+  }
+
   async function handleDelete(id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories/${id}`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories/${id}`, // OUR API ENDPOINT
         {
           method: "DELETE",
           headers: {
@@ -105,6 +109,7 @@ function CategoryProvider({ children }) {
 
       handleLoad();
       const serverResponse = await response.json(); // SHOULD BE TOKEN
+
       if (response.ok) {
         console.log("deleted " + id);
       } else {
@@ -119,7 +124,7 @@ function CategoryProvider({ children }) {
     const body = JSON.stringify(category);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories`, // OUR API ENDPOINT
         {
           method: "POST",
           headers: {
@@ -129,9 +134,10 @@ function CategoryProvider({ children }) {
         }
       );
 
-      handleLoad();
+      /*handleLoad();*/
       const serverResponse = await response.json(); // SHOULD BE TOKEN
       if (response.ok) {
+        await handleLoad();
         navigate("/user/profile/admin");
       } else {
         // console.error("Token verification failed:", data); // SOME ERROR
@@ -144,7 +150,7 @@ function CategoryProvider({ children }) {
   async function handleGetCategoryTree(category_id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories/${category_id}/tree`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories/${category_id}/tree`, // OUR API ENDPOINT
         {
           method: "GET",
           headers: {
@@ -166,7 +172,7 @@ function CategoryProvider({ children }) {
   async function handleGetCategoryAllTree() {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/categories/alltree`, // OUR API ENDPOINT
+        `${env.REACT_APP_API_URL}/api/categories/alltree`, // OUR API ENDPOINT
         {
           method: "GET",
           headers: {
@@ -184,6 +190,17 @@ function CategoryProvider({ children }) {
       // console.error("Error sending token to backend:", error);
     }
   }
+  /*
+    handleLoad().then((response) => {
+      setNavbarCategories(response.categories);
+      setCategories(response.categories);
+    });
+
+    handleGetCategoryAllTree().then((response) => {
+      setCategoryAllTree(response);
+    });
+  }, []);
+*/
 
   const value = {
     navbarCategories,
@@ -198,7 +215,6 @@ function CategoryProvider({ children }) {
       handleGetCategoryTree,
       handleLoad,
       handleUpdate,
-      // Added handleUpdate to the handlerMap
     },
   };
 

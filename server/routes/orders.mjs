@@ -1,11 +1,14 @@
 import { Router } from "express";
-import OrderController from "../api/controllers/order-controller.js";
+import { OrderController } from "../api/controllers/order-controller.js";
+import authMiddleware from "../middleware/auth-middleware.js";
 
 const router = new Router();
 
-router.post("/", OrderController.create);
-router.post("/:id/complete", OrderController.complete);
+router.get("/", OrderController.list);
+router.post("/", authMiddleware, OrderController.create);
+router.delete("/:id", OrderController.deleteOrder);
+router.post("/:id/complete", OrderController.completeOrder);
 router.patch("/:id/payment", OrderController.addPaymentMethod);
-router.get("/filter", OrderController.filterByUser);
+router.get("/user/:userId", authMiddleware, OrderController.getUserOrders);
 
 export default router;
