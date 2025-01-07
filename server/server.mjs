@@ -59,4 +59,4 @@ app.use(errorHandler);
 
 // Spuštění serveru
 const PORT = env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server běží na portu ${PORT}`));
+app.listen(PORT, "0.0.0.0", () => console.log(`Server běží na portu ${PORT}`));
