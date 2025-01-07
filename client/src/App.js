@@ -44,73 +44,70 @@ import { Overview } from "./pages/order/Overview";
 function App() {
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
         <UserProvider>
           <CategoryProvider>
             <ProductProvider>
               <CartProvider>
                 <OrderProvider>
-                  <WishlistProvider>
-                    <Layout>
-                      <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route
-                          path="/product/list/:categoryId"
-                          element={<ProductList />}
-                        />
-                        <Route path="/user/login" element={<Login />} />
-                  <Route path="/user/register" element={<Register />} />
-                  <Route
-                    path="/product/:productId"
-                    element={<ProductDetail />}
-                  />
-                  <Route path="/user/cart" element={<Cart />} />
-                  <Route path="/Shipping" element={<Shipping/>} />
-                  <Route path="/Overview" element={<Overview />} />
-                </Routes>
-
-                      <ProfileLayout>
+                  <OrdersProvider>
+                    <WishlistProvider>
+                      <Layout>
                         <Routes>
+                          <Route path="/" element={<Home />} />
                           <Route
-                            path="/user/profile/admin/category/create"
-                            element={<CategoryCreate />}
+                            path="/product/list/:categoryId"
+                            element={<ProductList />}
                           />
+                          <Route path="/user/login" element={<Login />} />
+                          <Route path="/user/register" element={<Register />} />
                           <Route
-                            path="/user/profile/admin/product/create"
-                            element={<ProductCreate />}
+                            path="/product/:productId"
+                            element={<ProductDetail />}
                           />
+                          <Route path="/user/cart" element={<Cart />} />
+                          <Route path="/shipping" element={<Shipping />} />
+                          <Route path="/overview" element={<Overview />} />
+
+                          {/* Profile routes */}
                           <Route
-                            path="/user/profile/admin/product/:id/update"
-                            element={<ProductUpdate />}
-                          />
-                          <Route
-                            path="/user/profile/admin/category/:id/update"
-                            element={<CategoryUpdate />}
-                          />
-                          <Route
-                            path="/user/profile"
-                            element={<ProfileOverview />}
-                          />
-                          <Route
-                            path="/user/profile/update"
-                            element={<ProfileUpdate />}
-                          />
-                          <Route
-                            path="/user/profile/orders"
-                            element={<ProfileOrders />}
-                          />
-                          <Route
-                            path="/user/profile/wishlist"
-                            element={<ProfileWishlist />}
-                          />
-                          <Route
-                            path="/user/profile/admin"
-                            element={<ProfileAdminPanel />}
-                          />
+                            path="/user/profile/*"
+                            element={<ProfileLayout />}
+                          >
+                            <Route index element={<ProfileOverview />} />
+                            <Route path="update" element={<ProfileUpdate />} />
+                            <Route path="orders" element={<ProfileOrders />} />
+                            <Route
+                              path="wishlist"
+                              element={<ProfileWishlist />}
+                            />
+                            <Route
+                              path="admin"
+                              element={<ProfileAdminPanel />}
+                            />
+                            <Route
+                              path="admin/category/create"
+                              element={<CategoryCreate />}
+                            />
+                            <Route
+                              path="admin/product/create"
+                              element={<ProductCreate />}
+                            />
+                            <Route
+                              path="admin/product/:id/update"
+                              element={<ProductUpdate />}
+                            />
+                            <Route
+                              path="admin/category/:id/update"
+                              element={<CategoryUpdate />}
+                            />
+                          </Route>
                         </Routes>
-                      </ProfileLayout>
-                    </Layout>
-                  </WishlistProvider>
+                      </Layout>
+                    </WishlistProvider>
+                  </OrdersProvider>
                 </OrderProvider>
               </CartProvider>
             </ProductProvider>

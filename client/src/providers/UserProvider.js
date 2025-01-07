@@ -28,23 +28,23 @@ function UserProvider({ children }) {
 
   async function getUser() {
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/auth/user", //OUR API ENDPOINT
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${env.REACT_APP_API_URL}/api/auth/user`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          ...(Cookies.get("token") && {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          }),
+        },
+        credentials: "include",
+      });
       const serverResponse = await response.json();
-      //console.log(serverResponse)
       if (response.ok) {
         setUser(serverResponse);
-      } else {
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
   }
 
   async function handleUpdate(_id, body) {
