@@ -178,8 +178,17 @@
     cursor: pointer;
 }
 
+.closeMark{
+    display: none;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
+    .closeMark{
+        display: block;
+    }
+
+
     .menu {
         position: fixed;
         top: 0;
