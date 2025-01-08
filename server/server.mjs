@@ -16,6 +16,9 @@ import userRouter from "./routes/users.mjs";
 import ordersRouter from "./routes/orders.mjs";
 import path from "path";
 import { fileURLToPath } from "url";
+import main from "./importMongoData.js";
+
+main()
 
 const app = express();
 

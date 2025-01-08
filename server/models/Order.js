@@ -19,10 +19,10 @@ const orderSchema = new Schema({
     country: { type: String, required: false },
   },
   shipping_address: {
-    street: { type: String, required: false },
-    city: { type: String, required: false },
-    zip_code: { type: String, required: false },
-    country: { type: String, required: false },
+    shipping_street_address: { type: String, required: false },
+    shipping_city: { type: String, required: false },
+    shipping_zip_code: { type: String, required: false },
+    shipping_country: { type: String, required: false },
   },
   total_cost: { type: Number, required: false },
   status: {
