@@ -207,6 +207,10 @@ body{
   overflow: hidden;
 }
 
+.accordionPanel > form{
+  margin-top: 1rem;
+}
+
 /*------------*/
 
 

@@ -144,7 +144,7 @@ function ProductDetailContainer() {
     };
 
     if (isItemInWishlist) {
-      removeFromWishlist(itemId);
+      removeFromWishlist(wishlistItem);
       showNotification("Product removed from wishlist");
     } else {
       addToWishlist(wishlistItem);
@@ -248,10 +248,11 @@ function ProductDetailContainer() {
             className={`addToBasketButton ${
               !selectedVariant || selectedVariant.stock === 0 ? "disabled" : ""
             }`}
-            buttonText="Add to basket"
             onClick={handleAddToCart}
             disabled={!selectedVariant || selectedVariant.stock === 0}
-          />
+          >
+            <i className="fa-solid fa-cart-shopping"></i> Add to basket
+          </Button>
           
           <Button
             className={`wishlistButton ${

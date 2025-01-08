@@ -32,20 +32,23 @@ function CategoryUpdateContainer({ category }) {
 
   return (
     <div className="categoryCreateForm">
+      <div>
+      <h2>Update Category</h2>
+      </div>
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
-          className="profileInput"
+          className="profileInput form-input"
           placeholder="Name"
           name="name"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         >
-          <label className="inputLabel">Name</label>
+          <label className="inputLabel form-label">Name</label>
         </Input>
         <select
           name="parentCategoryId"
-          className="categoryFormSelect"
+          className="categoryFormSelect form-input"
           value={formData.parentCategoryId} // Set value to parentCategoryId
           onChange={(e) =>
             setFormData({ ...formData, parentCategoryId: e.target.value }) // Corrected key
