@@ -6,6 +6,7 @@
     align-items: center;
     position: relative;
     z-index: 2;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
 
 .navbarIconContainer {
@@ -51,6 +52,7 @@
     z-index: 999;
     padding-bottom: 1rem;
     transition: opacity 0.25s ease, visibility 0.25s ease;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
 
 .dropdown-container {
