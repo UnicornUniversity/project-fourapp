@@ -66,12 +66,9 @@ function ProductListContainer() {
   }, [products, filtersInitialized]); // Run effect when products change
 
   useEffect(() => {
-    // Update filters while keeping existing ones
-    handlerMap.setFilters(prevFilters => ({
-      ...prevFilters,
-      category: categoryId, // Update or add the category filter
-    }));
-  }, [categoryId]);
+    console.log(categoryId)
+    handlerMap.setCategory(categoryId)
+  },[categoryId])
 
   return (
     <div>
