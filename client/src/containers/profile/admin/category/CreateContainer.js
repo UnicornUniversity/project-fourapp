@@ -20,16 +20,19 @@ function CategoryCreateContainer() {
 
   return (
     <div className="categoryCreateForm">
+      <div>
+      <h2>Create Category</h2>
+      </div>
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
-          className="profileInput"
+          className="profileInput form-input"
           placeholder="Name"
           name="name"
         >
-          <label className="inputLabel">Name</label>
+          <label className="inputLabel form-label">Name</label>
         </Input>
-        <select name="parentCategoryId" className="categoryFormSelect">
+        <select name="parentCategoryId" className="categoryFormSelect form-input">
           <option value={""}>Select Category</option>
           {categories.map((category) => (
             <option key={category._id} value={category._id}>

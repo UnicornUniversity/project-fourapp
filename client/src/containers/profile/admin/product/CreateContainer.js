@@ -60,21 +60,24 @@ function ProductCreateContainer() {
 
   return (
     <div className="productCreateContainer">
+      <div>
+      <h2>Create Product</h2>
+      </div>
       <Accordion accordionTitle="Product" className="productAccordion">
         <form onSubmit={handleSubmitProduct}>
           <Input
             type="text"
-            className="profileInput"
+            className="profileInput form-input"
             placeholder="Name"
             name="name"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           >
-            <label className="inputLabel">Name</label>
+            <label className="inputLabel form-label">Name</label>
           </Input>
           <Input
             type="text" // Keep as text to allow for decimal input
-            className="profileInput"
+            className="profileInput form-input"
             placeholder="Price"
             name="price"
             value={formData.price}
@@ -85,17 +88,17 @@ function ProductCreateContainer() {
               }
             }} // Use the custom price change handler
           >
-            <label className="inputLabel">Price</label>
+            <label className="inputLabel form-label">Price</label>
           </Input>
+          <label className="inputLabel">Description</label>
           <textarea
-            className="profileInput"
+            className="profileInput form-input"
             name="description"
             value={formData.description}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
           >
-            <label className="inputLabel">Description</label>
           </textarea>
 
           <div className="productFormCheckSelect">
@@ -107,6 +110,7 @@ function ProductCreateContainer() {
               }
             />
             <select
+              className="form-input"
               name="category"
               value={formData.category}
               onChange={handleCategoryChange} // Use the new handler
@@ -146,7 +150,7 @@ function ProductCreateContainer() {
         <form onSubmit={handleAddVariant}>
           <Input
             type="text"
-            className="profileInput"
+            className="profileInput form-input"
             placeholder="Variant Name"
             name="variantName"
             value={variantForm.name}
@@ -154,11 +158,11 @@ function ProductCreateContainer() {
               setVariantForm({ ...variantForm, name: e.target.value })
             }
           >
-            <label className="inputLabel">Variant Name</label>
+            <label className="inputLabel form-label">Variant Name</label>
           </Input>
           <Input
             type="text"
-            className="profileInput"
+            className="profileInput form-input"
             placeholder="Size"
             name="size"
             value={variantForm.size}
@@ -166,11 +170,11 @@ function ProductCreateContainer() {
               setVariantForm({ ...variantForm, size: e.target.value })
             }
           >
-            <label className="inputLabel">Size</label>
+            <label className="inputLabel form-label">Size</label>
           </Input>
           <Input
             type="text"
-            className="profileInput"
+            className="profileInput form-input"
             placeholder="Color"
             name="color"
             value={variantForm.color}
@@ -178,11 +182,11 @@ function ProductCreateContainer() {
               setVariantForm({ ...variantForm, color: e.target.value })
             }
           >
-            <label className="inputLabel">Color</label>
+            <label className="inputLabel form-label">Color</label>
           </Input>
           <Input
             type="text"
-            className="profileInput"
+            className="profileInput form-input"
             placeholder="Stock"
             name="stock"
             value={variantForm.stock}
@@ -193,7 +197,7 @@ function ProductCreateContainer() {
               }
             }}
           >
-            <label className="inputLabel">Stock</label>
+            <label className="inputLabel form-label">Stock</label>
           </Input>
           <Input
             type="submit"

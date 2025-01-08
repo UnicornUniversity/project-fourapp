@@ -86,6 +86,9 @@ function ProductUpdateContainer() {
 
   return (
     <div className="productUpdateContainer">
+      <div>
+      <h2>Update Product</h2>
+      </div>
       <Accordion accordionTitle="Product" className="productAccordion">
         <form>
           <Input
