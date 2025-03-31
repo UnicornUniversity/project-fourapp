@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    networks:
+      - app_network
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - client
+      - server
+    networks:
+      - app_network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_API_URL=
+    networks:
+      - app_network
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://root:example@mongodb:27017/four-app?authSource=admin
+      - CLIENT_URL=https://srv687262.hstgr.cloud
+      - JWT_SECRET=7b4a66d02b3d8a54d9d25c3ad7a073242f9f8ff153c5396feb7603206f234c0dde181d2bfac6fd8b51739d1f16753a019921caa8a1b1b874f5f473aac9d999cf
+      - JWT_EXPIRES_IN=24h
+      - GOOGLE_CLIENT_ID=654654061376-qiioo6edtf23gvg96tmvgep61lop6m44.apps.googleusercontent.com
+      - GOOGLE_CLIENT_SECRET=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
+      - GOOGLE_CALLBACK_URL=https://srv687262.hstgr.cloud/api/auth/google/callback
+    ports:
+      - "5000:5000"
+    networks:
+      - app_network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config: 
+  mongodb_data:

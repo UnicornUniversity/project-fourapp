@@ -1,0 +1,290 @@
+.navbar {
+    background-color: white;
+    padding: 1rem 2.5% 1rem 2.5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+
+.navbarIconContainer {
+    display: flex;
+    gap: 2rem;
+}
+
+.navbarLogoContainer>img {
+    max-height: 50%;
+    max-width: 50px;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu>li {
+    position: static;
+    cursor: pointer;
+}
+
+.menu>li>a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.dropdown {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 999;
+    padding-bottom: 1rem;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+
+.dropdown-container {
+    max-width: fit-content;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+}
+
+.dropdown h4 {
+    font-weight: lighter;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.dropdown .column {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+
+.dropdown a {
+    color: black;
+    text-decoration: none;
+}
+
+.dropdown a:hover {
+    text-decoration: underline;
+}
+
+.menu>li:hover .dropdown,
+.menu>li:focus-within .dropdown,
+.dropdown:hover {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Remove the :focus-within and :hover triggers for the dropdown */
+.menu>li:hover .dropdown,
+.dropdown:hover {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.navbarLogoContainer>img {
+    max-height: 50%;
+    max-width: 50px;
+    object-fit: contain;
+}
+
+.navbarIconContainer {
+    display: flex;
+    gap: 2rem;
+}
+
+.navbarIconContainer>i {
+    cursor: pointer;
+}
+
+.navbarBarContainer {
+    display: none;
+    cursor: pointer;
+}
+
+.swiper {
+    width: 100%;
+    height: auto;
+}
+
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+
+.carouselImageWrapper {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%;
+    background-size: 100% 100%;
+    /*Maintains 16:9 aspect ratio */
+}
+
+.carouselImage {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    /* Makes the image fill the wrapper */
+    top: 0;
+    left: 0;
+}
+
+
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: white !important;
+    background-color: transparent;
+    font-size: 30px;
+}
+
+.swiper-pagination-bullet {
+    background-color: white !important;
+    opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: black !important;
+}
+
+.close-menu-button>i {
+    display: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbarBarContainer {
+        display: block;
+    }
+
+    .navbarLogoContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+
+    .menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        width: 50%;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 4rem 1rem;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        z-index: 99;
+    }
+
+    .close-menu-button i {
+        font-size: 0.3rem;
+        display: contents;
+        /* Snížení velikosti ikony */
+    }
+
+    .menu-open {
+        left: 0;
+    }
+
+
+
+
+
+    .menu>li>a {
+        padding: 0.5rem 0;
+    }
+
+
+
+
+    .close-menu-button {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        cursor: pointer;
+        z-index: 100;
+        margin-bottom: 2rem;
+        font-weight: 800;
+    }
+
+    .close-menu-button i {
+        font-size: 1.5rem;
+    }
+
+    .menu>li {
+        cursor: pointer;
+        /* Nastaví kurzor na pointer pro li */
+    }
+
+    .menu>li>a {
+        cursor: default;
+        /* Nastaví kurzor na default pro a */
+    }
+
+    /* Add styles for subcategories */
+    .submenu {
+        list-style: none;
+        margin: 0;
+        padding: 0 1rem;
+        display: none;
+        /* Hidden by default */
+    }
+
+    .menu>li>.submenu {
+        display: block;
+    }
+
+    .menu-open li .submenu {
+        margin-top: 0.5rem;
+    }
+
+    .menu li .submenu .subcategory {
+        padding: 0.5rem 0;
+        color: black;
+        cursor: pointer;
+    }
+
+    .menu li .submenu .subcategory:hover {
+        text-decoration: underline;
+    }
+
+}

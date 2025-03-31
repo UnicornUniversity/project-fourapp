@@ -1,0 +1,39 @@
+{
+    # Global options
+    admin off
+    auto_https disable_redirects
+}
+
+srv687262.hstgr.cloud {
+    tls {
+        protocols tls1.2 tls1.3
+    }
+
+    handle /api/* {
+        reverse_proxy server:5000
+    }
+
+    handle /* {
+        reverse_proxy client:80
+    }
+
+    encode gzip
+
+    # Add security headers
+    header {
+        # Enable HSTS
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        # Disable clients from sniffing the media type
+        X-Content-Type-Options "nosniff"
+        # Keep referrer data off of HTTP connections
+        Referrer-Policy "strict-origin-when-cross-origin"
+        # Enable cross-site filter (XSS) and tell browser to block detected attacks
+        X-XSS-Protection "1; mode=block"
+        # Prevent site from being embedded in iframes
+        X-Frame-Options "DENY"
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization"
+        Access-Control-Allow-Credentials true
+    }
+} 

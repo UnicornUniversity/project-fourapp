@@ -1,0 +1,80 @@
+.auth {
+    display: flex;
+    justify-content: center;
+}
+
+.authCard {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1%;
+    text-align: center;
+}
+
+.authCard>form {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.authTitle {
+    margin-bottom: 10%;
+    margin-top: 5%;
+}
+
+.authInput {
+    padding: 1rem 10rem 1rem 1rem;
+    border: none;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 0.75rem;
+}
+
+.authInput[type="submit"] {
+    padding: 1rem 9rem 1rem 9rem;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+
+}
+
+.authCard>div:nth-child(1)>h3 {
+    font-size: 1.5rem;
+    padding: 0;
+    margin-top: 0vh;
+}
+
+.authPassword {
+    text-align: right;
+}
+
+.authPassword>p {
+    display: inline;
+    cursor: pointer;
+    opacity: 50%;
+}
+
+
+
+.authSocial>i {
+    font-size: 1.75rem;
+    cursor: pointer;
+}
+
+.authSocial {
+    display: flex;
+    justify-content: center;
+    gap: 3vw;
+    margin-bottom: 3vh;
+}
+
+.authText>span {
+    opacity: 50%;
+}
+
+.authLink {
+    color: black;
+    text-decoration: none;
+}
