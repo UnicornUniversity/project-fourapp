@@ -1,0 +1,120 @@
+[{
+  "_id": {
+    "$oid": "677bf4f169c0c72a5edcd439"
+  },
+  "user_id": {
+    "$oid": "674b41dcb5a658613a9871c8"
+  },
+  "products_array": [
+    {
+      "id": {
+        "$oid": "6758c4c5c78fa24271c453e0"
+      },
+      "variantId": "6758c4c5c78fa24271c453e2",
+      "quantity": 1,
+      "_id": {
+        "$oid": "677bf4f169c0c72a5edcd43a"
+      }
+    }
+  ],
+  "total_cost": 99.98,
+  "status": "processing",
+  "createdAt": {
+    "$date": "2025-01-06T15:21:21.008Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-06T15:21:21.008Z"
+  },
+  "__v": 0,
+  "shipping_address": {}
+},
+{
+  "_id": {
+    "$oid": "677d96c56db4decad97e3da7"
+  },
+  "user_id": {
+    "$oid": "674b41dcb5a658613a9871c8"
+  },
+  "products_array": [
+    {
+      "id": {
+        "$oid": "6758c4bec78fa24271c453db"
+      },
+      "variantId": "6758c4bec78fa24271c453dd",
+      "quantity": 1,
+      "_id": {
+        "$oid": "677d96c56db4decad97e3da8"
+      }
+    }
+  ],
+  "total_cost": 29.99,
+  "status": "shipped",
+  "createdAt": {
+    "$date": "2024-10-07T21:04:05.414Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-07T21:04:05.415Z"
+  },
+  "__v": 0,
+  "shipping_address": {}
+},
+{
+  "_id": {
+    "$oid": "677d96f06db4decad97e3ea2"
+  },
+  "user_id": {
+    "$oid": "674b41dcb5a658613a9871c8"
+  },
+  "products_array": [
+    {
+      "id": {
+        "$oid": "70299310cadeaf57d82927fa"
+      },
+      "variantId": "70299310cadeaf57d82927fb",
+      "quantity": 1,
+      "_id": {
+        "$oid": "677d96f06db4decad97e3ea3"
+      }
+    }
+  ],
+  "total_cost": 59.99,
+  "status": "completed",
+  "createdAt": {
+    "$date": "2024-11-07T21:04:48.906Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-07T21:04:48.907Z"
+  },
+  "__v": 0,
+  "shipping_address": {}
+},
+{
+  "_id": {
+    "$oid": "677d97706db4decad97e409f"
+  },
+  "user_id": {
+    "$oid": "674b41dcb5a658613a9871c8"
+  },
+  "products_array": [
+    {
+      "id": {
+        "$oid": "59ea43fcacdd7e840313127a"
+      },
+      "variantId": "59ea43fcacdd7e840313127b",
+      "quantity": 1,
+      "_id": {
+        "$oid": "677d97706db4decad97e40a0"
+      }
+    }
+  ],
+  "total_cost": 39.99,
+  "status": "canceled",
+  "createdAt": {
+    "$date": "2024-12-07T21:06:56.660Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-07T21:06:56.660Z"
+  },
+  "__v": 0,
+  "shipping_address": {}
+}]
